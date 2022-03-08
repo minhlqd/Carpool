@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="4dp"
+            android:id="@+id/congratulation_card"
+            app:cardElevation="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/profileLayout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/car_image"
+                        android:src="@drawable/car_image"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:id="@+id/usernameTxt"
+                        android:layout_marginStart="80dp"
+                        android:text="@string/username" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/carEditText"
+                        android:text="@string/car_name"
+                        android:layout_below="@id/usernameTxt"
+                        android:layout_marginStart="80dp"
+                        android:layout_marginTop="3dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_grey"
+                        android:id="@+id/licencePlateEditText"
+                        android:text="@string/registration"
+                        android:layout_below="@id/carEditText"
+                        android:layout_marginStart="80dp"
+                        android:layout_marginTop="3dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="13sp"
+                        android:textColor="@color/dark_grey"
+                        android:id="@+id/seatsEditText"
+                        android:text="@string/_3_seats_left" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/costLayout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/costHeadingTxt"
+                        android:text="@string/cost" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:id="@+id/costEditText"
+                        android:hint="@string/money"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:background="@android:color/transparent"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/ridersHeadingTxt"
+                        android:text="@string/date_of_journey"
+                        android:layout_marginStart="150dp"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="150dp"
+                        android:focusedByDefault="false"
+                        android:textSize="17sp"
+                        android:id="@+id/DateOfJourneyEditText"
+                        android:hint="@string/tap_for_date"
+                        android:focusable="false"
+                        android:textColor="@color/black"
+                        android:background="@android:color/transparent"
+                        android:layout_marginTop="20dp" />
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time2Layout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/pickupLocationTxt"
+                        android:text="@string/pick_up_location" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/pickupLocationEditText"
+                        android:background="@android:color/transparent"
+                        android:focusedByDefault="false"
+                        android:hint="@string/tap_for_location"
+                        android:focusable="false"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pickupLayout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/departureTxt"
+                        android:text="@string/pick_up_time" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/pickupEditText"
+                        android:focusable="false"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/tap_for_time"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_marginStart="150dp"
+                        android:id="@+id/extraTimeAddedTxt"
+                        android:text="@string/extra_time_added" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/extraTimeEditText"
+                        android:hint="@string/enter_extra_time"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/black"
+                        android:inputType="number"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="20dp" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/destinationLayout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <ImageView
+                        android:layout_width="23dp"
+                        android:layout_height="130dp"
+                        android:id="@+id/profile_logo"
+                        android:background="@drawable/destination_line" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/locationTxt"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/from" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_below="@id/locationTxt"
+                        android:id="@+id/destinationEditText"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/destinationTxt"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="180dp"
+                        android:text="@string/to" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_below="@id/locationTxt"
+                        android:id="@+id/fromEditText"
+                        android:layout_marginStart="180dp"
+                        android:text="@string/location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/durationTxt"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/duration_1_hour_14_mins" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timeLayout"
+                    android:background="@drawable/white_border_bottom"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:id="@+id/sameGenderTxt"
+                        android:text="@string/same_gender" />
+
+                    <com.github.kmenager.materialanimatedswitch.MaterialAnimatedSwitch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/genderSwitch"
+                        android:layout_marginTop="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_marginStart="150dp"
+                        android:id="@+id/maxLugageTxt"
+                        android:text="@string/maxiumum_luggage_kg" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:id="@+id/luggageEditText"
+                        android:hint="@string/enter_luggage"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="150dp"
+                        android:inputType="number"
+                        android:layout_marginTop="20dp" />
+                </RelativeLayout>
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_ride"
+                    android:id="@+id/snippetOfferRideButton"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/btn_style" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+</merge>

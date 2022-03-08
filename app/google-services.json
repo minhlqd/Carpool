@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "876497108442",
+    "firebase_url": "https://gopool-92b35-default-rtdb.firebaseio.com",
+    "project_id": "gopool-92b35",
+    "storage_bucket": "gopool-92b35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876497108442:android:7ce434465b845acc25d4e3",
+        "android_client_info": {
+          "package_name": "com.example.carpool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TixdelGRtIvtPlcIKXtLIouwC1pW69g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876497108442:android:7727b579069cb4f025d4e3",
+        "android_client_info": {
+          "package_name": "com.example.gopool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TixdelGRtIvtPlcIKXtLIouwC1pW69g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

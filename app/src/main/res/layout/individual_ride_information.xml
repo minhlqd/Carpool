@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/view"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/profileLayout"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="80dp"
+                    android:src="@drawable/blank_profile_picture"
+                    android:id="@+id/indiviual_profile_picture"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="80dp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="90dp"
+                    android:layout_marginTop="9dp"
+                    android:textStyle="bold"
+                    android:id="@+id/fromTxt"
+                    android:text="@string/from_hanoi_vn" />
+
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fromTxt"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:id="@+id/toTxt"
+                android:text="@string/to_nam_dinh_vn" />
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toTxt"
+                    android:textSize="16sp"
+                    android:textColor="@color/light_black"
+                    android:layout_marginStart="90dp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:id="@+id/individualTimeTxt"
+                    android:text="@string/_23th_november_12_55_am" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toTxt"
+                    android:textSize="22sp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentTop="true"
+                    android:gravity="end"
+                    android:textStyle="bold"
+                    android:id="@+id/priceTxt"
+                    android:text="@string/_6_00" />
+
+                <RatingBar
+                    android:id="@+id/individualRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rating="0"
+                    style="@style/customRatingBar"
+                    android:progressTint="@color/rating_scale"
+                    android:layout_below="@id/indiviual_profile_picture"
+                    android:numStars="5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:id="@+id/indivcompletedRidesTxt"
+                    android:text="@string/_0_rides"
+                    android:layout_below="@id/individualRatingBar"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:id="@+id/seatsTxt"
+                    android:text="@string/_3_seats_left"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="90dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

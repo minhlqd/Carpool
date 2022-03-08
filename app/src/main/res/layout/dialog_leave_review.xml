@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                android:layout_marginTop="32dp"
+                android:id="@+id/congratulation_card"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardElevation="0dp"
+                android:layout_gravity="bottom">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/title"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/primary_text_light"
+                        android:layout_marginTop="48dp"
+                        android:text="Leave a review"/>
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rating="3.0"
+                        android:layout_marginTop="24dp"
+                        android:layout_gravity="center"
+                        style="@style/customRatingBar"
+                        android:progressTint="@color/rating_scale"
+                        android:numStars="5" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="24dp"
+                        android:id="@+id/usernameLayout">
+                        <EditText
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:inputType="textPersonName"
+                            android:drawableStart="@drawable/ic_comment"
+                            android:drawablePadding="10dp"
+                            android:padding="8dp"
+                            android:width="400dp"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:id="@+id/userCommentEditText"
+                            android:hint="@string/comment" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/leave_feedback"
+                        android:id="@+id/leaveFeedbackBtn"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/btn_style" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/dark_grey"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="center"
+                        android:text="@string/dismiss"
+                        android:id="@+id/dialogCancel"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_review"
+                android:background="@drawable/ic_review"
+                android:layout_gravity="center_horizontal|top" />
+
+        </FrameLayout>
+</LinearLayout>
