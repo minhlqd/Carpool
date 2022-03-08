@@ -1,79 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+        <RelativeLayout
+            android:background="#EAEAEA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/relLayout1">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:id="@+id/relLayout1">
-
-            <!-- Username layout -->
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/text_input_email"
+                android:background="@drawable/background_btn_register"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/usernameLayout">
-                <EditText
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailStepOneEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
                     android:background="@android:color/transparent"
-                    android:inputType="textEmailAddress"
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="10dp"
-                    android:padding="8dp"
-                    android:width="400dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/emailStepOneEditText"
-                    android:hint="@string/email" />
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Email layout -->
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/text_input_email"
+                android:id="@+id/text_input_password"
+                android:background="@drawable/background_btn_register"
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/usernameLayout"
-                android:id="@+id/emailLayout">
-                <EditText
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:paddingStart="10dp"
+                tools:ignore="RtlSymmetry">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordStepOneEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
                     android:background="@android:color/transparent"
-                    android:inputType="textPassword"
                     android:drawableStart="@drawable/ic_password"
                     android:drawablePadding="10dp"
-                    android:padding="8dp"
-                    android:width="400dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/passwordStepOneEditText"
-                    android:hint="@string/password" />
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textSize="16sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+       <!-- &lt;!&ndash; Username layout &ndash;&gt;
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameLayout">
+            <EditText
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="10dp"
+                android:padding="8dp"
+                android:width="400dp"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:id="@+id/emailStepOneEditText"
+                android:hint="@string/email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-
+        &lt;!&ndash; Email layout &ndash;&gt;
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameLayout"
+            android:id="@+id/emailLayout">
+            <EditText
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="10dp"
+                android:padding="8dp"
+                android:width="400dp"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:id="@+id/passwordStepOneEditText"
+                android:hint="@string/password" />
+        </com.google.android.material.textfield.TextInputLayout>-->
 
             <Button
                 android:id="@+id/nextBtn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@id/emailLayout"
-                android:layout_below="@id/emailLayout"
+                android:layout_below="@id/text_input_password"
+                android:layout_alignEnd="@id/text_input_password"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="23.5dp"
-                android:background="@android:color/transparent"
+                android:background="@drawable/btn_next_one"
                 android:fontFamily="@font/madeleina"
-                android:text="Next"
-                android:textSize="15dp"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
-        </RelativeLayout>
-    </merge>
+    </RelativeLayout>
+</merge>
