@@ -261,5 +261,8 @@
     <string name="length_of_journey">Length of journey</string>
     <string name="seats_available">Seats available</string>
     <string name="registration_plate">Registration Plate</string>
-    <string name="gl06_zfa">GL06 ZFA</string>
+    <string name="current_location">Current Location</string>
+    <string name="confirm_location">Confirm location</string>
+    <string name="gl06_zfa">18E1 - 09874</string>
+    <string name="options">Option</string>
 </resources>
