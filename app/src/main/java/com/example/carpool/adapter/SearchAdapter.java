@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
@@ -41,14 +42,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.individual_ride_information, parent, false));
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new MyViewHolder(LayoutInflater.from(mContext)
+                .inflate(R.layout.individual_ride_information, parent, false));
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         final String username = ride.get(position).getUsername();
         final String rides = String.valueOf(ride.get(position).getCompleteRides() + " Rides");
@@ -119,7 +120,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return ride.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    static class MyViewHolder extends RecyclerView.ViewHolder
     {
         LinearLayout view;
         TextView rides, from, to, date, seats, costs;
@@ -149,7 +150,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
      * @return
      */
     public String parseDateToddMMyyyy(String time) {
-        String inputPattern = "dd/MM/yy";
+        String inputPattern = "dd/MM/yyyy";
         String outputPattern = "dd MMMM";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);

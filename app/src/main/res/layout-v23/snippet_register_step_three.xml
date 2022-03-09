@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/registrationPicture"
-                    android:id="@+id/fullnameLayout">
+                    android:id="@+id/full_name_layout">
                     <EditText
                         android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
@@ -43,15 +43,15 @@
                         android:width="400dp"
                         android:textSize="16sp"
                         android:fontFamily="sans-serif"
-                        android:id="@+id/fullnameStepThreeEditText"
+                        android:id="@+id/full_name"
                         android:hint="@string/full_name" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fullnameLayout"
-                    android:id="@+id/dobLayout">
+                    android:layout_below="@id/full_name_layout"
+                    android:id="@+id/date_of_birth_layout">
                     <EditText
                         android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/dobLayout"
+                    android:layout_below="@id/date_of_birth_layout"
                     android:id="@+id/usernameLayout">
                     <EditText
                         android:layout_centerHorizontal="true"

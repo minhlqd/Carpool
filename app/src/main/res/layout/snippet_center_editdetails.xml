@@ -8,26 +8,26 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_change"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:id="@+id/profile_change"
-                app:civ_border_color="@color/black"
                 android:layout_centerHorizontal="true"
-                app:civ_border_width="2dp"/>
+                app:civ_border_color="@color/black"
+                app:civ_border_width="2dp" />
 
             <TextView
+                android:id="@+id/changeProfilePhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/change_photo"
-                android:id="@+id/changeProfilePhoto"
                 android:layout_below="@id/profile_change"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/link_blue"/>
+                android:text="@string/change_photo"
+                android:textColor="@color/link_blue" />
 
             <!-- Username edit text field -->
             <RelativeLayout

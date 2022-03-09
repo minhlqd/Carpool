@@ -134,12 +134,7 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
 
         setupFirebaseAuth();
 
-        mChangeEmailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveEmailSettings();
-            }
-        });
+        mChangeEmailButton.setOnClickListener(v -> saveEmailSettings());
 
         //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);

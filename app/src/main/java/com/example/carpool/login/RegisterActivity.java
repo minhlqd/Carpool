@@ -3,21 +3,17 @@ package com.example.carpool.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
-import com.example.carpool.utils.NonSwipeableViewPager;
 import com.example.carpool.utils.SectionsStatePageAdapter;
 import com.example.carpool.models.User;
 import com.example.carpool.register.RegisterStepFourFragment;
@@ -156,7 +152,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepTwoFragment).commit();
                 break;
 
-            case R.id.nextBtn2:
+            case R.id.next_btn_register_two:
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(2);
                 Log.d(TAG, "onButtonClicked: " + "next 2");
@@ -169,7 +165,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepFourFragment).commit();
                 break;
 
-            case R.id.nextBtn4:
+            case R.id.finish:
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(currPos + 1);
                 //getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepFourFragment).commit();

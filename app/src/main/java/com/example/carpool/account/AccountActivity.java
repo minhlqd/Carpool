@@ -38,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Objects;
+
 
 public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "AccountActivity";
@@ -89,7 +91,8 @@ public class AccountActivity extends AppCompatActivity {
         mEmailUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setViewPager(0);
+                /*setViewPager(0);*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit();
             }
         });
 
@@ -101,47 +104,41 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        mSignoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mSignoutButton.setOnClickListener(v -> {
 
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
 
-                mAuth.signOut();
-                Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
+            mAuth.signOut();
+            Intent intent = new Intent(AccountActivity.this,
+                    LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
 
-        mHelpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccountActivity.this, HelpFragment.class);
-                startActivity(intent);
-            }
+        mHelpBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, HelpFragment.class);
+            startActivity(intent);
         });
 
 
-        leaderboards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, LeaderboardActivity.class);
-                startActivity(intent);
-            }
+        leaderboards.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, LeaderboardActivity.class);
+            startActivity(intent);
         });
 
         mPasswordUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setViewPager(1);
+                /*setViewPager(1);*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit();
             }
         });
 
         mDetailsUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setViewPager(2);
+                /*setViewPager(2);*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new DetailsUpdateFragment()).commit();
             }
         });
 
@@ -156,7 +153,8 @@ public class AccountActivity extends AppCompatActivity {
         mCarUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setViewPager(3);
+                /*setViewPager(3);*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
             }
         });
     }
@@ -173,6 +171,7 @@ public class AccountActivity extends AppCompatActivity {
         mRelativeLayout.setVisibility(View.GONE);
         Log.d(TAG, "setViewPager: navigating to fragment #: " + fragmentNumber);
         mViewPager.setAdapter(pageAdapter);
+        Objects.requireNonNull(mViewPager.getAdapter()).notifyDataSetChanged();
         mViewPager.setCurrentItem(fragmentNumber);
     }
 

@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -97,7 +96,7 @@ public class RegisterStepThreeFragment extends Fragment {
         //instantiate objects
         mNextButton3 = (Button) mView.findViewById(R.id.nextBtn3);
         mDob = (EditText) mView.findViewById(R.id.dobStepThreeEditText);
-        mFullname = (EditText) mView.findViewById(R.id.fullnameStepThreeEditText);
+        mFullname = (EditText) mView.findViewById(R.id.full_name);
         mMobileNumber = (EditText) mView.findViewById(R.id.mobileStepThreeEditText);
         mGenderGroup = (RadioGroup) mView.findViewById(R.id.genderToggle);
         maleRadioButton = (RadioButton) mView.findViewById(R.id.femaleButton);
@@ -108,14 +107,11 @@ public class RegisterStepThreeFragment extends Fragment {
         mBio = (EditText) mView.findViewById(R.id.bioEditTextStepThree);
 
         mCalandar = Calendar.getInstance();
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mCalandar.set(Calendar.YEAR, year);
-                mCalandar.set(Calendar.MONTH, month);
-                mCalandar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
+        date = (view, year, month, dayOfMonth) -> {
+            mCalandar.set(Calendar.YEAR, year);
+            mCalandar.set(Calendar.MONTH, month);
+            mCalandar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         };
 
         mNextButton3.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +242,7 @@ public class RegisterStepThreeFragment extends Fragment {
     }
 
     private void updateLabel() {
-        String dateFormat = "dd/MM/yy";
+        String dateFormat = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
 
         mDob.setText(simpleDateFormat.format(mCalandar.getTime()));

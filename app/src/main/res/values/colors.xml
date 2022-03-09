@@ -38,4 +38,6 @@
     <color name="light_black">#595959</color>
     <color name="toolbar">#40CF7F</color>
     <color name="red">#fc0000</color>
+    <color name="background_regitser">#EAEAEA</color>
+    <color name="background_icon">#838383</color>
 </resources>

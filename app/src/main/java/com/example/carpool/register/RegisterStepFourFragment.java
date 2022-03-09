@@ -93,7 +93,7 @@ public class RegisterStepFourFragment extends Fragment {
         storageReference = storage.getReference();
 
         //instantiate objects
-        mNextButton4 = (Button) mView.findViewById(R.id.nextBtn4);
+        mNextButton4 = (Button) mView.findViewById(R.id.finish);
         mLicence = (EditText) mView.findViewById(R.id.licenceStepFourEditText);
         mCar = (EditText) mView.findViewById(R.id.carStepFourEditText);
         mSeats = (EditText) mView.findViewById(R.id.seatsStepFourEditText);

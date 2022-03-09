@@ -34,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailsUpdateFragment extends Fragment {
 
-    private static final String TAG = "DetailsUpdateFragment";
+    private static final String TAG = "MinhMX";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -46,7 +46,7 @@ public class DetailsUpdateFragment extends Fragment {
     //Fragment view
     private View view;
     private CircleImageView mProfilePhoto;
-    private EditText mUsername, mFullname, mMobileNumber, mDob;
+    private EditText mUsername, mFullName, mMobileNumber, mDob;
     private TextView mChangePhoto;
     private Button mSnippetDetailsBtn;
 
@@ -59,7 +59,7 @@ public class DetailsUpdateFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_update_details, container, false);
         mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_change);
         mUsername = (EditText) view.findViewById(R.id.usernameEditText);
-        mFullname = (EditText) view.findViewById(R.id.fullnameEditText);
+        mFullName = (EditText) view.findViewById(R.id.fullnameEditText);
         mMobileNumber = (EditText) view.findViewById(R.id.phoneEditText);
         mDob = (EditText) view.findViewById(R.id.dobEditText);
         mChangePhoto = (TextView) view.findViewById(R.id.changeProfilePhoto);
@@ -70,12 +70,9 @@ public class DetailsUpdateFragment extends Fragment {
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         mSnippetDetailsBtn = (Button) view.findViewById(R.id.snippetDetailsBtn);
-        mSnippetDetailsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveProfileSettings();
-            }
-        });
+        mSnippetDetailsBtn.setOnClickListener(v -> saveProfileSettings());
+
+        Log.d(TAG, "onCreateView: " + true);
 
         setupFirebaseAuth();
 
@@ -99,7 +96,7 @@ public class DetailsUpdateFragment extends Fragment {
      */
     private void saveProfileSettings(){
         final String username = mUsername.getText().toString();
-        final String fullName = mFullname.getText().toString();
+        final String fullName = mFullName.getText().toString();
         final String mobileNumber = mMobileNumber.getText().toString();
         final Long dob = Long.parseLong(mDob.getText().toString());
 
@@ -179,7 +176,7 @@ public class DetailsUpdateFragment extends Fragment {
         UniversalImageLoader.setImage(user.getProfile_photo(), mProfilePhoto, null,"");
 
         mUsername.setText(user.getUsername());
-        mFullname.setText(user.getFull_name());
+        mFullName.setText(user.getFull_name());
         mMobileNumber.setText(String.valueOf(user.getMobile_number()));
         mDob.setText(String.valueOf(user.getDob()));
 

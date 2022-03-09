@@ -20,4 +20,9 @@
         <include layout="@layout/layout_bottom_navigation_view"/>
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/account_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

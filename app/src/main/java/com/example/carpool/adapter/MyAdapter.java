@@ -136,7 +136,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      * @return
      */
     public String parseDateToddMMyyyy(String time) {
-        String inputPattern = "dd/MM/yy";
+        String inputPattern = "dd/MM/yyyy";
         String outputPattern = "dd MMMM";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);

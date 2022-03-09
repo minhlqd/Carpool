@@ -55,7 +55,7 @@ public class RegisterStepTwoFragment extends Fragment {
 
         mUsernameStepTwoEditText = (EditText) mView.findViewById(R.id.usernameStepTwoEditText);
 
-        Button mNextBtn2 = (Button) mView.findViewById(R.id.nextBtn2);
+        Button mNextBtn2 = (Button) mView.findViewById(R.id.next_btn_register_two);
         mNextBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

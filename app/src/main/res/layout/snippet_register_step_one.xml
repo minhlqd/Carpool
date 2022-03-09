@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
         <RelativeLayout
-            android:background="#EAEAEA"
+            android:background="@color/background_regitser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:id="@+id/relLayout1">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/text_input_email"
                 android:background="@drawable/background_btn_register"
@@ -33,13 +33,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/text_input_email"
                 android:id="@+id/text_input_password"
                 android:background="@drawable/background_btn_register"
-
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:paddingStart="10dp"
@@ -112,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_input_password"
                 android:layout_alignEnd="@id/text_input_password"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="23.5dp"
                 android:background="@drawable/btn_next_one"

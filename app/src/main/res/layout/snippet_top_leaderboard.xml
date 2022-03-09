@@ -6,8 +6,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/white_grey_border_bottom"
-        android:backgroundTint="#40CF7F">
+        android:background="@drawable/background_app_bar">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
