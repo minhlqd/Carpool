@@ -169,11 +169,11 @@
 
             <Button
                 android:id="@+id/finish"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/seatsLayout"
                 android:layout_alignEnd="@id/seatsLayout"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="23.5dp"
                 android:background="@drawable/btn_next_one"
                 android:fontFamily="@font/madeleina"

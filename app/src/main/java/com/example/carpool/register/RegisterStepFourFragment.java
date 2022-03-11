@@ -52,7 +52,7 @@ public class RegisterStepFourFragment extends Fragment {
 
     //Widgets
     private View mView;
-    private Button mNextButton4;
+    private Button finish;
     private ImageView mBackButton4, mCarPhoto, mRestartRegistration;
     private EditText mLicence, mCar, mSeats, mRegistration;
     private TextInputLayout mLicenceLayout, mCarLayout, mRegistrationLayout, mSeatsLayout;
@@ -70,13 +70,9 @@ public class RegisterStepFourFragment extends Fragment {
     //Interface variables
     private OnButtonClickListener mOnButtonClickListener;
 
-    private RegisterStepOneFragment.OnButtonClickListener mOnButtonClickListenerMain;
-
     public interface OnButtonClickListener{
         void onButtonClicked(View view);
     }
-
-
 
     @SuppressLint("NonConstantResourceId")
     @Nullable
@@ -93,19 +89,19 @@ public class RegisterStepFourFragment extends Fragment {
         storageReference = storage.getReference();
 
         //instantiate objects
-        mNextButton4 = (Button) mView.findViewById(R.id.finish);
-        mLicence = (EditText) mView.findViewById(R.id.licenceStepFourEditText);
-        mCar = (EditText) mView.findViewById(R.id.carStepFourEditText);
-        mSeats = (EditText) mView.findViewById(R.id.seatsStepFourEditText);
-        mRegistration = (EditText) mView.findViewById(R.id.registrationStepFourEditText);
-        mCarToggle = (RadioGroup) mView.findViewById(R.id.carToggle);
-        mCarToggleFalse = (RadioButton) mView.findViewById(R.id.noCarButton);
-        mCarToggleTrue = (RadioButton) mView.findViewById(R.id.yesCarButton);
-        mLicenceLayout = (TextInputLayout) mView.findViewById(R.id.licenceLayout);
-        mCarLayout = (TextInputLayout) mView.findViewById(R.id.carLayout);
-        mRegistrationLayout = (TextInputLayout) mView.findViewById(R.id.registrationLayout);
-        mSeatsLayout = (TextInputLayout) mView.findViewById(R.id.seatsLayout);
-        mCarPhoto = (ImageView) mView.findViewById(R.id.uploadCarPicture);
+        finish = mView.findViewById(R.id.finish);
+        mLicence = mView.findViewById(R.id.licenceStepFourEditText);
+        mCar = mView.findViewById(R.id.carStepFourEditText);
+        mSeats = mView.findViewById(R.id.seatsStepFourEditText);
+        mRegistration = mView.findViewById(R.id.registrationStepFourEditText);
+        mCarToggle = mView.findViewById(R.id.carToggle);
+        mCarToggleFalse = mView.findViewById(R.id.noCarButton);
+        mCarToggleTrue = mView.findViewById(R.id.yesCarButton);
+        mLicenceLayout = mView.findViewById(R.id.licenceLayout);
+        mCarLayout = mView.findViewById(R.id.carLayout);
+        mRegistrationLayout = mView.findViewById(R.id.registrationLayout);
+        mSeatsLayout = mView.findViewById(R.id.seatsLayout);
+        mCarPhoto = mView.findViewById(R.id.uploadCarPicture);
 
         mCarPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +113,6 @@ public class RegisterStepFourFragment extends Fragment {
 
         mCarToggle.check(mCarToggleFalse.getId());
         mCarToggle.setOnCheckedChangeListener((group, checkedId) -> {
-
             switch (checkedId)
             {
                 case R.id.yesCarButton:
@@ -153,7 +148,7 @@ public class RegisterStepFourFragment extends Fragment {
         mRegistrationLayout.setVisibility(View.INVISIBLE);
         mSeatsLayout.setVisibility(View.INVISIBLE);
 
-        mNextButton4.setOnClickListener(v -> {
+        finish.setOnClickListener(v -> {
             switch (mCarToggle.getCheckedRadioButtonId())
             {
                 case R.id.yesCarButton:
@@ -169,7 +164,7 @@ public class RegisterStepFourFragment extends Fragment {
             }
         });
 
-        mBackButton4 = (ImageView) mView.findViewById(R.id.loginBackArrowStep);
+        mBackButton4 = mView.findViewById(R.id.loginBackArrowStep);
         mBackButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +172,7 @@ public class RegisterStepFourFragment extends Fragment {
             }
         });
 
-        mRestartRegistration = (ImageView) mView.findViewById(R.id.restartRegistrationBtn);
+        mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +185,6 @@ public class RegisterStepFourFragment extends Fragment {
         return mView;
     }
 
-    /** ----------------------------------- UPLOADS IMAGE TO FIREBASE STORAGE -------------------------------------------- **/
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -206,9 +200,11 @@ public class RegisterStepFourFragment extends Fragment {
             filePath = data.getData();
             Log.i("STEP3", "onActivityResult: " + filePath);
             try {
+                if (getActivity() != null) {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 mCarPhoto.setImageBitmap(bitmap);
                 uploadImage();
+                }
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -241,12 +237,8 @@ public class RegisterStepFourFragment extends Fragment {
         }
     }
 
-    /**
-     * Interface attach on view show
-     * @param context
-     */
     @Override
-    public void onAttach(final Context context) {
+    public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
         try {
             mOnButtonClickListener = (OnButtonClickListener) context;
@@ -289,10 +281,6 @@ public class RegisterStepFourFragment extends Fragment {
         return imgURL;
     }
 
-    /** --------------------------- Firebase ---------------------------- **/
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

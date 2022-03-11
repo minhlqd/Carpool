@@ -53,45 +53,21 @@ public class FirebaseMethods {
         return userID;
     }
 
-    
-    /**
-     * Register a new email and password to Firebase auth
-     * @param email
-     * @param password
-     */
+
     public void createAccount(final String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(mContext, "Authenticated failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else if(task.isSuccessful()){
-                            userID = mAuth.getCurrentUser().getUid();
-                            Log.d(TAG, "onComplete: Authstate changed: " + userID);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(mContext, "Authenticated failed",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else if(task.isSuccessful()){
+                        userID = mAuth.getCurrentUser().getUid();
+                        Log.d(TAG, "onComplete: Authstate changed: " + userID);
                     }
                 });
     }
 
-
-    /**
-     * @param user_id
-     * @param currentLocation
-     * @param destination
-     * @param dateOfJourney
-     * @param seatsAvailable
-     * @param licencePlate
-     * @param currentlongitude
-     * @param currentlatitude
-     * @param sameGender
-     * @param luggageAllowance
-     * @param car
-     * @param pickupTime
-     * @param extraTime
-     */
     public void offerRide(String user_id, String username, String currentLocation, String destination, String dateOfJourney,
                           int seatsAvailable, String licencePlate, double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car,
                           String pickupTime, int extraTime, String profile_photo, int cost, int completeRides, int userRating, String duration, String pickupLocation){
@@ -109,10 +85,6 @@ public class FirebaseMethods {
     }
 
 
-    /**
-     * Deletes current user ride from database
-     * @param rideID
-     */
     public void deleteRide(String rideID){
 
         myRef.child("availableRide")
@@ -122,8 +94,10 @@ public class FirebaseMethods {
     }
 
     int totalPoints = 0;
+
     public void addPoints(String userID, int points) {
         myRef.child("user").child(userID).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 totalPoints = dataSnapshot.getValue(Integer.class);
@@ -151,16 +125,12 @@ public class FirebaseMethods {
                 .setValue(userReview);
     }
 
-    /***
-     * Added information to database (users node)
-     * @param email
-     * @param username
-     */
     public void addNewUser(String email, String full_name, String username, String profile_photo, long mobile_number, String dob, String licence_number,
                            String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo){
 
         User user = new User(userID ,email, full_name, username, profile_photo, mobile_number, dob, licence_number, 0, 0,  car, registration_plate, seats,education, work, bio, carOwner, gender, 50 ,car_photo);
 
+        Log.d(TAG, "addNewUser: " + username);
         myRef.child("user")
                 .child(userID)
                 .setValue(user);
@@ -180,7 +150,7 @@ public class FirebaseMethods {
                if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
-                            if (dataSnapshot2.getValue().equals(notificationComment)){
+                            if (dataSnapshot2.getValue() != null && dataSnapshot2.getValue().equals(notificationComment)){
                                 deleteReminder(dataSnapshot1.getKey());
                             }
                         }
@@ -203,7 +173,7 @@ public class FirebaseMethods {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
-                            if (dataSnapshot2.getValue().equals(notificationComment)){
+                            if (dataSnapshot2.getValue() != null && dataSnapshot2.getValue().equals(notificationComment)){
                                 deleteReminder(dataSnapshot1.getKey());
                             }
                         }
@@ -241,11 +211,6 @@ public class FirebaseMethods {
         });
     }
 
-    /**
-     * retrieves user settings from current logged in user
-     * @param dataSnapshot
-     * @return
-     */
     public User getUserSettings(DataSnapshot dataSnapshot){
         Log.d(TAG, "getUserSettings: retrieving user settings from firebase");
 
@@ -350,86 +315,84 @@ public class FirebaseMethods {
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
-            if(ds.getKey().equals("user")){
+            if(ds.getKey() != null && ds.getKey().equals("user")){
                 Log.d(TAG, "getUserSettings: dataSnapshot: " + ds);
-
                 try {
                     user.setUsername(ds.child(user_id)
                             .getValue(User.class)
                             .getUsername());
 
-                    user.setEmail(ds.child(user_id)
-                            .getValue(User.class)
-                            .getEmail());
+                        user.setEmail(ds.child(user_id)
+                                .getValue(User.class)
+                                .getEmail());
 
-                    user.setProfile_photo(ds.child(user_id)
-                            .getValue(User.class)
-                            .getProfile_photo());
+                        user.setProfile_photo(ds.child(user_id)
+                                .getValue(User.class)
+                                .getProfile_photo());
 
-                    user.setFull_name(ds.child(user_id)
-                            .getValue(User.class)
-                            .getFull_name());
+                        user.setFull_name(ds.child(user_id)
+                                .getValue(User.class)
+                                .getFull_name());
 
-                    user.setDob(ds.child(user_id)
-                            .getValue(User.class)
-                            .getDob());
+                        user.setDob(ds.child(user_id)
+                                .getValue(User.class)
+                                .getDob());
 
-                    user.setMobile_number(ds.child(user_id)
-                            .getValue(User.class)
-                            .getMobile_number());
+                        user.setMobile_number(ds.child(user_id)
+                                .getValue(User.class)
+                                .getMobile_number());
 
-                    user.setLicence_number(ds.child(user_id)
-                            .getValue(User.class)
-                            .getLicence_number());
+                        user.setLicence_number(ds.child(user_id)
+                                .getValue(User.class)
+                                .getLicence_number());
 
-                    user.setCompletedRides(ds.child(user_id)
-                            .getValue(User.class)
-                            .getCompletedRides());
+                        user.setCompletedRides(ds.child(user_id)
+                                .getValue(User.class)
+                                .getCompletedRides());
 
-                    user.setUserRating(ds.child(user_id)
-                            .getValue(User.class)
-                            .getUserRating());
+                        user.setUserRating(ds.child(user_id)
+                                .getValue(User.class)
+                                .getUserRating());
 
-                    user.setLicence_number(ds.child(user_id)
-                            .getValue(User.class)
-                            .getLicence_number());
+                        user.setLicence_number(ds.child(user_id)
+                                .getValue(User.class)
+                                .getLicence_number());
 
-                    user.setCar(ds.child(user_id)
-                            .getValue(User.class)
-                            .getCar());
+                        user.setCar(ds.child(user_id)
+                                .getValue(User.class)
+                                .getCar());
 
-                    user.setRegistration_plate(ds.child(user_id)
-                            .getValue(User.class)
-                            .getRegistration_plate());
+                        user.setRegistration_plate(ds.child(user_id)
+                                .getValue(User.class)
+                                .getRegistration_plate());
 
-                    user.setSeats(ds.child(user_id)
-                            .getValue(User.class)
-                            .getSeats());
+                        user.setSeats(ds.child(user_id)
+                                .getValue(User.class)
+                                .getSeats());
 
-                    user.setCarOwner(ds.child(user_id)
-                            .getValue(User.class)
-                            .getCarOwner());
+                        user.setCarOwner(ds.child(user_id)
+                                .getValue(User.class)
+                                .getCarOwner());
 
-                    user.setGender(ds.child(user_id)
-                            .getValue(User.class)
-                            .getGender());
+                        user.setGender(ds.child(user_id)
+                                .getValue(User.class)
+                                .getGender());
 
-                    user.setCar_photo(ds.child(user_id)
-                            .getValue(User.class)
-                            .getCar_photo());
+                        user.setCar_photo(ds.child(user_id)
+                                .getValue(User.class)
+                                .getCar_photo());
 
-                    user.setEducation(ds.child(user_id)
-                            .getValue(User.class)
-                            .getEducation());
+                        user.setEducation(ds.child(user_id)
+                                .getValue(User.class)
+                                .getEducation());
 
-                    user.setWork(ds.child(user_id)
-                            .getValue(User.class)
-                            .getWork());
+                        user.setWork(ds.child(user_id)
+                                .getValue(User.class)
+                                .getWork());
 
-                    user.setBio(ds.child(user_id)
-                            .getValue(User.class)
-                            .getBio());
-
+                        user.setBio(ds.child(user_id)
+                                .getValue(User.class)
+                                .getBio());
                 } catch (NullPointerException e){
                     Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }
@@ -447,10 +410,6 @@ public class FirebaseMethods {
                 .setValue(username);
     }
 
-    /***
-     * Updates email in the user node in the real time database
-     * @param email
-     */
     public void updateEmail(String email){
         Log.d(TAG, "updateUsername: updating email to: " + email);
         myRef.child("user")

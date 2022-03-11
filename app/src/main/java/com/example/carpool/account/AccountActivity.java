@@ -251,10 +251,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * Checks if there are notifications available for the current logged in user.
-     */
+    
     private void checkNotifications(){
         mRef.child("Reminder").child(userID).addValueEventListener(new ValueEventListener() {
             @Override

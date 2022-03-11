@@ -44,17 +44,32 @@ import java.util.Locale;
 import java.util.UUID;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RegisterStepThreeFragment extends Fragment {
+
+    private static final int NUMBER_PHONE = 10;
+
+    private static final int ZERO_FIELD = 0;
+
 
     //widgets
     private View mView;
     private Button mNextButton3;
-    private ImageView mbackButton3, mRegistrationPicture, mRestartRegistration;
+    private ImageView mBackButton3;
+    private ImageView mRegistrationPicture;
+    private ImageView mRestartRegistration;
     private RadioGroup mGenderGroup;
-    private RadioButton maleRadioButton, femaleRadioButton;
-    private EditText mFullname, mMobileNumber, mDob, mWork, mEducation, mBio;
-    private String gender, imgURL;
-    private Calendar mCalandar;
+    private RadioButton maleRadioButton;
+    private RadioButton femaleRadioButton;
+    private EditText mFullName;
+    private EditText mMobileNumber;
+    private EditText mDob;
+    private EditText mWork;
+    private EditText mEducation;
+    private EditText mBio;
+    private String gender;
+    private String imgURL;
+    private Calendar mCalendar;
     private DatePickerDialog.OnDateSetListener date;
 
 
@@ -67,7 +82,7 @@ public class RegisterStepThreeFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -87,8 +102,8 @@ public class RegisterStepThreeFragment extends Fragment {
 
         //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -96,7 +111,7 @@ public class RegisterStepThreeFragment extends Fragment {
         //instantiate objects
         mNextButton3 = (Button) mView.findViewById(R.id.nextBtn3);
         mDob = (EditText) mView.findViewById(R.id.dobStepThreeEditText);
-        mFullname = (EditText) mView.findViewById(R.id.full_name);
+        mFullName = (EditText) mView.findViewById(R.id.full_name);
         mMobileNumber = (EditText) mView.findViewById(R.id.mobileStepThreeEditText);
         mGenderGroup = (RadioGroup) mView.findViewById(R.id.genderToggle);
         maleRadioButton = (RadioButton) mView.findViewById(R.id.femaleButton);
@@ -106,36 +121,33 @@ public class RegisterStepThreeFragment extends Fragment {
         mEducation = (EditText) mView.findViewById(R.id.educationEditTextStepThree);
         mBio = (EditText) mView.findViewById(R.id.bioEditTextStepThree);
 
-        mCalandar = Calendar.getInstance();
+        mCalendar = Calendar.getInstance();
         date = (view, year, month, dayOfMonth) -> {
-            mCalandar.set(Calendar.YEAR, year);
-            mCalandar.set(Calendar.MONTH, month);
-            mCalandar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            mCalendar.set(Calendar.YEAR, year);
+            mCalendar.set(Calendar.MONTH, month);
+            mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateLabel();
         };
 
-        mNextButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(maleRadioButton.isChecked() || femaleRadioButton.isChecked()) {
-                    if (mDob.getText().length() > 0 && mFullname.getText().length() > 0 && mMobileNumber.getText().length() > 0 &&
-                            mWork.getText().length() > 0 && mEducation.getText().length() > 0 && mBio.getText().length() > 0 ){
-                        if (mMobileNumber.getText().length() >= 7) {
-                            mOnButtonClickListener.onButtonClicked(v);
-                        } else {
-                            Toast.makeText(mView.getContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
-                        }
+        mNextButton3.setOnClickListener(v -> {
+            if(maleRadioButton.isChecked() || femaleRadioButton.isChecked()) {
+                if (mDob.getText().length() > ZERO_FIELD && mFullName.getText().length() > ZERO_FIELD && mMobileNumber.getText().length() > ZERO_FIELD &&
+                        mWork.getText().length() > ZERO_FIELD && mEducation.getText().length() > ZERO_FIELD && mBio.getText().length() > ZERO_FIELD ){
+                    if (mMobileNumber.getText().length() == NUMBER_PHONE) {
+                        mOnButtonClickListener.onButtonClicked(v);
                     } else {
-                        Toast.makeText(mView.getContext(), "All fields must be filled in", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mView.getContext(), "Invalid phone number", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(mView.getContext(), "Please select gender", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mView.getContext(), "All fields must be filled in", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(mView.getContext(), "Please select gender", Toast.LENGTH_SHORT).show();
             }
         });
 
-        mbackButton3 = (ImageView) mView.findViewById(R.id.loginBackArrowStep);
-        mbackButton3.setOnClickListener(new View.OnClickListener() {
+        mBackButton3 = (ImageView) mView.findViewById(R.id.loginBackArrowStep);
+        mBackButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnButtonClickListener.onButtonClicked(v);
@@ -158,24 +170,20 @@ public class RegisterStepThreeFragment extends Fragment {
             }
         });
 
-        mDob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
+        mDob.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 0);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), date, mCalandar
-                        .get(Calendar.YEAR), mCalandar.get(Calendar.MONTH),
-                        mCalandar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-                datePickerDialog.show();
-            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), date, mCalendar
+                    .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
         });
 
         return mView;
     }
 
-    /** ----------------------------------- UPLOADS IMAGE TO FIREBASE STORAGE -------------------------------------------- **/
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -189,11 +197,12 @@ public class RegisterStepThreeFragment extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
-            Log.i("STEP3", "onActivityResult: " + filePath);
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                mRegistrationPicture.setImageBitmap(bitmap);
-                uploadImage();
+                if (getActivity() != null) {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                    mRegistrationPicture.setImageBitmap(bitmap);
+                    uploadImage();
+                }
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -202,36 +211,19 @@ public class RegisterStepThreeFragment extends Fragment {
 
     private void uploadImage(){
         if (filePath != null){
-            final StorageReference ref = storageReference.child("profileImages/"+UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Log.i("STEP3", "onActivityResult: Image uploaded" + uri);
-                                    imgURL = uri.toString();
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show();
-                            Log.i("STEP3", "onActivityResult: failed to upload" + e.getMessage());
-                        }
+            final StorageReference ref = storageReference.child("profile/"+UUID.randomUUID().toString());
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
+                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        imgURL = uri.toString();
+                    }))
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show();
                     });
         }
     }
 
-    /**
-     * Interface attach on view show
-     * @param context
-     */
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mOnButtonClickListener = (OnButtonClickListener) context;
@@ -245,12 +237,12 @@ public class RegisterStepThreeFragment extends Fragment {
         String dateFormat = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
 
-        mDob.setText(simpleDateFormat.format(mCalandar.getTime()));
+        mDob.setText(simpleDateFormat.format(mCalendar.getTime()));
     }
 
 
-    public String getFullname() {
-        return mFullname.getText().toString().trim();
+    public String getFullName() {
+        return mFullName.getText().toString().trim();
     }
 
     public long getMobileNumber() {
@@ -287,10 +279,6 @@ public class RegisterStepThreeFragment extends Fragment {
         return mBio.getText().toString().trim();
     }
 
-    /** --------------------------- Firebase ---------------------------- **/
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

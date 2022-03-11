@@ -215,6 +215,8 @@
                     android:background="@drawable/btn_next_one"
                     android:fontFamily="@font/madeleina"
                     android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </RelativeLayout>

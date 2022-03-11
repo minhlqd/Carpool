@@ -30,11 +30,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RegisterStepOneFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -66,8 +67,8 @@ public class RegisterStepOneFragment extends Fragment {
         Log.d("MinhMX", "onCreateView: " + true);
         //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         //instantiate objects
@@ -79,12 +80,9 @@ public class RegisterStepOneFragment extends Fragment {
         mPassword = (EditText) mView.findViewById(R.id.passwordStepOneEditText);
 
         mNextButton1.setOnClickListener(v -> {
-            Log.d("MinhMX", "onCreateView: " + true + "next");
             if(mEmail.getText().length() > 0  && mPassword.getText().length() > 0) {
                 if (isValidEmailAddress(mEmail.getText().toString())){
-                    if (mPassword.getText().length() >= 6) {
-                        Log.d("MinhMX", "onCreateView: " + true + getPassword());
-                        //Creates Account with email and password entered
+                    if (mPassword.getText().length() >= 8) {
                         mOnButtonClickListener.onButtonClicked(v);
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new RegisterStepTwoFragment()).commit();
                     } else {
@@ -114,18 +112,17 @@ public class RegisterStepOneFragment extends Fragment {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         Pattern p = Pattern.compile(ePattern);
         Matcher m = p.matcher(email);
-        Log.d("MinhMX", "isValidEmailAddress: " + m.matches());
         return m.matches();
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        activity = (Activity) context;
         try {
             mOnButtonClickListener = (OnButtonClickListener) context;
-            activity = (Activity) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(((Activity) context).getLocalClassName()
+            throw new ClassCastException((activity).getLocalClassName()
                     + " must implement OnButtonClickListener");
         }
     }
@@ -138,14 +135,6 @@ public class RegisterStepOneFragment extends Fragment {
         return mPassword.getText().toString().trim();
     }
 
-
-
-
-    /** --------------------------- Firebase ---------------------------- **/
-
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

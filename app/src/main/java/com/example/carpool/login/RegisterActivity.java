@@ -1,5 +1,6 @@
 package com.example.carpool.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,6 +134,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         Log.d(TAG, "setViewPager: " + mViewPager.getCurrentItem());
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onButtonClicked(View view) {
         int currPos = mViewPager.getCurrentItem();
@@ -181,6 +183,8 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             case R.id.loginBackArrowStep:
                 mViewPager.setCurrentItem(currPos - 1);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + view.getId());
         }
     }
 
@@ -191,11 +195,10 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.email = mRegisterStepOneFragment.getEmail();
         String password = mRegisterStepOneFragment.getPassword();
 
-        //Fragment 2 data (username check)
         this.username = mRegisterStepTwoFragment.getUsername();
+        Log.d(TAG, "gatherData: "  + username);
 
-        //Fragment 3 data (personal info for database)
-        this.fullName = mRegisterStepThreeFragment.getFullname();
+        this.fullName = mRegisterStepThreeFragment.getFullName();
         this.dob = mRegisterStepThreeFragment.getDob();
         this.mobileNumber = mRegisterStepThreeFragment.getMobileNumber();
         this.gender = mRegisterStepThreeFragment.getGender();
@@ -204,7 +207,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.work = mRegisterStepThreeFragment.getWork();
         this.bio = mRegisterStepThreeFragment.getBio();
 
-        //Fragment 4 car data (car info for firebase)
         this.licence_number = mRegisterStepFourFragment.getLicence();
         this.car = mRegisterStepFourFragment.getCar();
         this.registration_plate = mRegisterStepFourFragment.getRegistration();
@@ -212,18 +214,9 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.carOwner = mRegisterStepFourFragment.getCarToggle();
         this.car_photo = mRegisterStepFourFragment.getCarPhoto();
 
-        //Main registration once all data is gathered
         mFirebaseMethods.createAccount(this.email, password);
     }
 
-   /*
-    ------------------------------------ Firebase ---------------------------------------------
-     */
-
-    /**
-     * Check is @param username already exists in teh database
-     * @param username
-     */
     private void checkIfUsernameExists(final String username) {
         Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
 

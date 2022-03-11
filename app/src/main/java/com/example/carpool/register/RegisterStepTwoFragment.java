@@ -22,11 +22,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RegisterStepTwoFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -47,47 +48,38 @@ public class RegisterStepTwoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_register_two, container, false);
 
-        //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         mUsernameStepTwoEditText = (EditText) mView.findViewById(R.id.usernameStepTwoEditText);
 
         Button mNextBtn2 = (Button) mView.findViewById(R.id.next_btn_register_two);
-        mNextBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mUsernameStepTwoEditText.getText().length() > 0){
-                    mOnButtonClickListener.onButtonClicked(v);
-                } else {
-                    Toast.makeText(mView.getContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
-                }
+        mNextBtn2.setOnClickListener(v -> {
+            if(mUsernameStepTwoEditText.getText().length() > 0){
+                mOnButtonClickListener.onButtonClicked(v);
+            } else {
+                Toast.makeText(mView.getContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
             }
         });
 
         backButton2 = (ImageView) mView.findViewById(R.id.loginBackArrowStep);
-        backButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+        backButton2.setOnClickListener(v ->
+                mOnButtonClickListener.onButtonClicked(v)
+        );
 
         mRestartRegistration = (ImageView) mView.findViewById(R.id.restartRegistrationBtn);
-        mRestartRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+
+        mRestartRegistration.setOnClickListener(v ->
+                mOnButtonClickListener.onButtonClicked(v)
+        );
 
         return mView;
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             mOnButtonClickListener = (OnButtonClickListener) context;
@@ -101,11 +93,6 @@ public class RegisterStepTwoFragment extends Fragment {
         return mUsernameStepTwoEditText.getText().toString().trim().replaceAll("\\s+","");
     }
 
-
-    /** --------------------------- Firebase ---------------------------- **/
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
