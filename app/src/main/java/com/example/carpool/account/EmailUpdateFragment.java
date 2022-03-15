@@ -69,7 +69,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User re-authenticated.");
 
                             // -- check to see if email is already in databse -- //
                             mAuth.fetchSignInMethodsForEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
@@ -78,11 +77,8 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
                                     if (task.isSuccessful()){
                                         try {
                                             if (task.getResult().getSignInMethods().size() == 1) {
-                                                Log.d(TAG, "onComplete: email is already in use");
                                                 Toast.makeText(getActivity(), "Email in use", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Log.d(TAG, "onComplete: email is available");
-
                                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                                                 //Updating email method
@@ -92,7 +88,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if (task.isSuccessful()) {
-                                                                    Log.d(TAG, "User email address updated.");
                                                                     Toast.makeText(getActivity(), "User email address updated.", Toast.LENGTH_SHORT).show();
 
                                                                     mFirebaseMethods.updateEmail(mEmail.getText().toString());
@@ -141,7 +136,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to ProfileActivity");
                 Intent intent = new Intent(view.getContext(), AccountActivity.class);
                 startActivity(intent);
             }
@@ -174,8 +168,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
     }
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
-
         User user = userSettings;
 
         mUserSettings = userSettings;
@@ -183,10 +175,9 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
         mEmail.setText(user.getEmail());
     }
 
-    /** --------------------------- Firebase ---------------------------- **/
+
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         userID = mAuth.getCurrentUser().getUid();
 

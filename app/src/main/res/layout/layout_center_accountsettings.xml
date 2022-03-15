@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,18 +12,18 @@
         <include layout="@layout/layout_center_viewpager"/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
             android:id="@+id/detailsView"
-            android:background="@drawable/account_background"
-            android:layout_height="205dp">
+            android:layout_width="match_parent"
+            android:layout_height="205dp"
+            android:background="@color/background_register">
 
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:layout_marginTop="40dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
                 android:src="@drawable/blank_profile_picture" />
 
 
@@ -30,22 +31,22 @@
                 android:id="@+id/displayUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/name_heading"
-                android:layout_centerHorizontal="true"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
                 android:layout_below="@id/profile_image"
-                android:text="@string/field_username" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/field_username"
+                android:textColor="@color/name_heading"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/email_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/email_heading"
                 android:layout_below="@id/displayUsername"
                 android:layout_centerHorizontal="true"
-                android:textSize="15sp"
-                android:text="" />
+                android:text=""
+                android:textColor="@color/email_heading"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/signoutButton"
@@ -55,67 +56,67 @@
                 android:layout_marginTop="23dp"
                 android:layout_toEndOf="@id/profile_image"
                 android:background="@android:color/transparent"
-                android:textAllCaps="false"
                 android:text="@string/log_out"
+                android:textAllCaps="false"
                 android:textColor="@color/theme"
                 android:textSize="13sp" />
 
             <ImageView
+                android:id="@+id/leaderboards"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:id="@+id/leaderboards"
-                android:background="@drawable/ic_leaderboard"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_marginEnd="7dp"
                 android:layout_marginBottom="40dp"
-                android:layout_marginEnd="7dp"/>
+                android:background="@drawable/ic_leaderboard" />
 
             <TextView
                 android:id="@+id/rides_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginEnd="7dp"
+                android:layout_marginBottom="20dp"
+                android:text=""
                 android:textColor="@color/email_heading"
-                android:textSize="15sp"
-                android:text="" />
+                android:textSize="15sp" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
+                style="@style/customRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:rating="4.0"
                 android:layout_alignParentEnd="true"
-                style="@style/customRatingBar"
-                android:progressTint="@color/rating_scale"
-                android:numStars="5"
-                android:stepSize="0.1"
                 android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp" />
+                android:layout_marginBottom="0dp"
+                android:numStars="5"
+                android:progressTint="@color/rating_scale"
+                android:rating="4.0"
+                android:stepSize="0.1" />
 
             <Button
                 android:id="@+id/settingsBtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_settings"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="3dp"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="@color/color_primary"/>
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/ic_settings"
+                android:backgroundTint="@color/color_primary" />
 
             <Button
                 android:id="@+id/helpBtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_help"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="3dp"
                 android:layout_marginStart="38dp"
-                android:backgroundTint="@color/color_primary"/>
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/ic_help"
+                android:backgroundTint="@color/color_primary" />
         </RelativeLayout>
 
 
@@ -123,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/detailsView"
-            android:background="@color/account_background"
+            android:background="@color/background_register"
             android:paddingLeft="30dp"
             android:paddingTop="10dp"
             android:paddingRight="30dp">
@@ -148,13 +149,15 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/background_register">
 
 
                     <LinearLayout
                         android:id="@+id/emailUpdateView"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:background="@drawable/background_linear">
 
                         <ImageView
                             android:layout_width="35dp"
@@ -177,16 +180,18 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="14dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginEnd="14dp"
                             android:background="@drawable/ic_chevron_right_black_24dp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/background_linear"
                         android:id="@+id/changePasswordUpdateView"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@id/emailUpdateView">
+                        android:layout_below="@id/emailUpdateView"
+                        android:layout_marginTop="20dp">
 
                         <ImageView
                             android:layout_width="35dp"
@@ -209,16 +214,18 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="14dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginEnd="14dp"
                             android:background="@drawable/ic_chevron_right_black_24dp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/background_linear"
                         android:id="@+id/detailsUpdateView"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@id/changePasswordUpdateView">
+                        android:layout_below="@id/changePasswordUpdateView"
+                        android:layout_marginTop="20dp">
 
                         <ImageView
                             android:layout_width="35dp"
@@ -241,16 +248,18 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="14dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginEnd="14dp"
                             android:background="@drawable/ic_chevron_right_black_24dp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/background_linear"
                         android:id="@+id/carsUpdateView"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@id/detailsUpdateView">
+                        android:layout_below="@id/detailsUpdateView"
+                        android:layout_marginTop="20dp">
 
                         <ImageView
                             android:layout_width="35dp"
@@ -273,8 +282,8 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="14dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginEnd="14dp"
                             android:background="@drawable/ic_chevron_right_black_24dp" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -298,7 +307,8 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/paymentMethodsHeader"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp">
+                android:layout_marginBottom="30dp"
+                app:cardCornerRadius="25dp">
 
                 <LinearLayout
                     android:id="@+id/paymentMethodUpdateView"
@@ -327,8 +337,8 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="14dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginEnd="14dp"
                         android:background="@drawable/ic_chevron_right_black_24dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

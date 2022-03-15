@@ -63,8 +63,6 @@ public class RegisterStepOneFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          final View mView = inflater.inflate(R.layout.fragment_register_one, container, false);
-
-        Log.d("MinhMX", "onCreateView: " + true);
         //Firebase setup
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -75,16 +73,15 @@ public class RegisterStepOneFragment extends Fragment {
         mViewPager = (ViewPager) mView.findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) mView.findViewById(R.id.removeableLayout);
 
-        mNextButton1 = (Button) mView.findViewById(R.id.nextBtn1);
-        mEmail = (EditText) mView.findViewById(R.id.emailStepOneEditText);
-        mPassword = (EditText) mView.findViewById(R.id.passwordStepOneEditText);
+        mNextButton1 = (Button) mView.findViewById(R.id.next_btn_one);
+        mEmail = (EditText) mView.findViewById(R.id.email);
+        mPassword = (EditText) mView.findViewById(R.id.password);
 
         mNextButton1.setOnClickListener(v -> {
             if(mEmail.getText().length() > 0  && mPassword.getText().length() > 0) {
                 if (isValidEmailAddress(mEmail.getText().toString())){
                     if (mPassword.getText().length() >= 8) {
                         mOnButtonClickListener.onButtonClicked(v);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new RegisterStepTwoFragment()).commit();
                     } else {
                         Toast.makeText(mView.getContext(), "Please use stronger password", Toast.LENGTH_SHORT).show();
                     }

@@ -132,7 +132,6 @@
                         android:scaleType="fitXY"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_undo"/>
-
                 </LinearLayout>
 
             </RelativeLayout>

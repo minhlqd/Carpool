@@ -61,137 +61,147 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/detailsView">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/workandEducationTextview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/workandEducationTextview"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="7dp"
                     android:layout_marginTop="30dp"
+                    android:layout_marginEnd="7dp"
+                    android:text="@string/work_and_education"
                     android:textColor="@color/dark_grey"
-                    android:textStyle="bold"
                     android:textSize="17sp"
-                    android:text="@string/work_and_education"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/workLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/workLayout"
+                    android:layout_below="@+id/workandEducationTextview"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/workandEducationTextview"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="30dp"
-                        android:src="@drawable/ic_work"
-                        android:layout_height="30dp" />
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_work" />
 
                     <TextView
+                        android:id="@+id/workTextview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/workTextview"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="7dp"
                         android:layout_marginTop="6dp"
+                        android:layout_marginEnd="7dp"
+                        android:text="@string/navy_express"
                         android:textColor="@color/dark_grey"
-                        android:textSize="13sp"
-                        android:text="@string/navy_express"/>
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/educationLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/educationLayout"
+                    android:layout_below="@+id/workLayout"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/workLayout"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="30dp"
-                        android:src="@drawable/ic_education"
-                        android:layout_height="30dp" />
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_education" />
 
                     <TextView
+                        android:id="@+id/educationTextview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/educationTextview"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="7dp"
                         android:layout_marginTop="6dp"
+                        android:layout_marginEnd="7dp"
+                        android:text="@string/engineering_and_technology_of_university"
                         android:textColor="@color/dark_grey"
-                        android:textSize="13sp"
-                        android:text="@string/engineering_and_technology_of_university"/>
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
 
                 <TextView
+                    android:id="@+id/personalBio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/personalBio"
                     android:layout_below="@+id/educationLayout"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="7dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="7dp"
+                    android:text="@string/Uet"
                     android:textColor="@color/dark_grey"
-                    android:textStyle="bold"
                     android:textSize="17sp"
-                    android:text="@string/Uet"/>
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/personaBioText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/personalBio"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/personaBioText"
-                    android:layout_below="@id/personalBio"
-                    android:text="@string/lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been"/>
+                    android:text="@string/lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been" />
 
                 <TextView
+                    android:id="@+id/ListenToHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ListenToHeading"
                     android:layout_below="@+id/personaBioText"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="7dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="7dp"
+                    android:text="@string/recent_reviews"
                     android:textColor="@color/dark_grey"
-                    android:textStyle="bold"
                     android:textSize="17sp"
-                    android:text="@string/recent_reviews"/>
+                    android:textStyle="bold" />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
                     android:id="@+id/reviewLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
                     android:layout_below="@id/ListenToHeading"
-                    android:layout_height="80dp">
+                    android:orientation="vertical">
 
 
                     <TextView
+                        android:id="@+id/review1"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_centerInParent="true"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="13dp"
                         android:background="@drawable/ic_speech_bubble"
-                        android:id="@+id/review1"
                         android:padding="15dp"
-                        android:textAlignment="center"
-                        android:text="@string/great_driver_got_me_in_time"/>
-
-
+                        android:text="@string/great_driver_got_me_in_time"
+                        android:textAlignment="center" />
 
                 </RelativeLayout>
-
-
             </RelativeLayout>
         </ScrollView>
+        <Button
+            android:id="@+id/logout"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:text="@string/log_out"
+            android:textColor="@color/white"
+            android:background="@drawable/background_btn_login" />
     </RelativeLayout>
 </merge>

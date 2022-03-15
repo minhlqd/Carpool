@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
         <RelativeLayout
-            android:background="@color/background_regitser"
+            android:background="@color/background_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -20,7 +20,7 @@
                 android:paddingStart="10dp"
                 tools:ignore="RtlSymmetry">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailStepOneEditText"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -34,6 +34,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginLeft="20dp"
+                app:passwordToggleEnabled="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/text_input_email"
@@ -44,69 +45,21 @@
                 android:paddingStart="10dp"
                 tools:ignore="RtlSymmetry">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/passwordStepOneEditText"
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_password"
+                    android:drawableStart="@drawable/ic_password_lock"
                     android:drawablePadding="10dp"
+                    android:layout_marginBottom="8dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textSize="16sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-       <!-- &lt;!&ndash; Username layout &ndash;&gt;
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/usernameLayout">
-            <EditText
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_email"
-                android:drawablePadding="10dp"
-                android:padding="8dp"
-                android:width="400dp"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:id="@+id/emailStepOneEditText"
-                android:hint="@string/email" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        &lt;!&ndash; Email layout &ndash;&gt;
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/usernameLayout"
-            android:id="@+id/emailLayout">
-            <EditText
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_password"
-                android:drawablePadding="10dp"
-                android:padding="8dp"
-                android:width="400dp"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:id="@+id/passwordStepOneEditText"
-                android:hint="@string/password" />
-        </com.google.android.material.textfield.TextInputLayout>-->
-
             <Button
-                android:id="@+id/nextBtn1"
+                android:id="@+id/next_btn_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_input_password"

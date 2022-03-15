@@ -50,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Log.d(TAG, "onCreate: started.");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabse = FirebaseDatabase.getInstance();
@@ -95,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void setupAtivityWidgets(){
-        Log.d(TAG, "setupAtivityWidgets: setting up widgets");
         //instantiate objects
         mBackBtn = (ImageView) findViewById(R.id.backBtn);
         profilePhoto = (ImageView) findViewById(R.id.profile_photo);
@@ -113,7 +111,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 
@@ -163,11 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    /** --------------------------- Firebase ---------------------------- **/
-
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
-
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

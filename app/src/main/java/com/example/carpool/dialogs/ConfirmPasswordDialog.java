@@ -35,7 +35,6 @@ public class ConfirmPasswordDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.dialog_confirm_password, container, false);
-        Log.d(TAG, "onCreateView: started");
 
         mPassword = (EditText) view.findViewById(R.id.confirmPassword);
 
@@ -43,7 +42,6 @@ public class ConfirmPasswordDialog extends DialogFragment {
         cancelDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: closing the dialog");
                 getDialog().dismiss();
             }
         });
@@ -52,7 +50,6 @@ public class ConfirmPasswordDialog extends DialogFragment {
         confirmDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: confirm the change");
                 String password = mPassword.getText().toString();
                 if(!password.equals("")) {
                     mOnConfirmPassowrdListener.onConfirmPassword(password);

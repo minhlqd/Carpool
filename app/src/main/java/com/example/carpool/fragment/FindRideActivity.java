@@ -45,7 +45,6 @@ public class FindRideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_search_ride);
-        Log.d(TAG, "onCreate: starting.");
 
         setupWidgets();
         getActivityData();
@@ -56,7 +55,6 @@ public class FindRideActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to ProfileActivity");
                 Intent intent = new Intent(FindRideActivity.this, HomeActivity.class);
                 startActivity(intent);
             }

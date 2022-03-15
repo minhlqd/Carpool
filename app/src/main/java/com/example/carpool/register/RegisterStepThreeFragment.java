@@ -165,7 +165,6 @@ public class RegisterStepThreeFragment extends Fragment {
         mRegistrationPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("STEP3", "onClick: adding profile photo");
                 chooseImage();
             }
         });
@@ -211,7 +210,7 @@ public class RegisterStepThreeFragment extends Fragment {
 
     private void uploadImage(){
         if (filePath != null){
-            final StorageReference ref = storageReference.child("profile/"+UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("profileImages/"+UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         imgURL = uri.toString();

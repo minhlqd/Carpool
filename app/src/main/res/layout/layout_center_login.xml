@@ -76,6 +76,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_password"
+                card_view:passwordToggleEnabled="true"
                 android:background="@drawable/background_btn_register"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
@@ -88,8 +89,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_password"
+                    android:drawableStart="@drawable/ic_password_lock"
                     android:drawablePadding="10dp"
+                    android:layout_marginBottom="8dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textSize="16sp"/>

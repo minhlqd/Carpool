@@ -106,7 +106,6 @@ public class RegisterStepFourFragment extends Fragment {
         mCarPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("STEP4", "onClick: adding profile photo");
                 chooseImage();
             }
         });

@@ -95,7 +95,6 @@ public class CarUpdateFragment extends Fragment {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to ProfileActivity");
                 Intent intent = new Intent(view.getContext(), AccountActivity.class);
                 startActivity(intent);
             }
@@ -158,12 +157,7 @@ public class CarUpdateFragment extends Fragment {
 //        });
     }
 
-    /***
-     * checks if @param username already exisits in the database
-     * @param username
-     */
     private void checkIfUsernameExists(final String username) {
-        Log.d(TAG, "checkIfUsernameExists: Checking if:  " + username + "already exists.");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
@@ -182,7 +176,6 @@ public class CarUpdateFragment extends Fragment {
                 }
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()) {
                     if (singleSnapshot.exists()){
-                        Log.d(TAG, "checkIfUsernameExists: found a match "+ singleSnapshot.getValue(User.class).getUsername());
                         Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
 
                     }
@@ -197,7 +190,6 @@ public class CarUpdateFragment extends Fragment {
     }
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 
@@ -213,7 +205,6 @@ public class CarUpdateFragment extends Fragment {
         mCarPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: changing profile photo");
 //                Intent intent = new Intent(getActivity(), ShareActivity.class);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
 //                getActivity().startActivity(intent);
@@ -223,10 +214,7 @@ public class CarUpdateFragment extends Fragment {
     }
 
 
-    /** --------------------------- Firebase ---------------------------- **/
-
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         userID = mAuth.getCurrentUser().getUid();
 

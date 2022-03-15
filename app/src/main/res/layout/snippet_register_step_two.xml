@@ -6,10 +6,10 @@
         android:id="@+id/backgroundRelativeLayout">
 
         <RelativeLayout
-            android:background="@color/background_regitser"
             android:id="@+id/relLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/background_register"
             android:gravity="center">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -45,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/usernameLayout"
                 android:layout_alignEnd="@id/usernameLayout"
-                android:layout_marginBottom="23.5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="23.5dp"
                 android:background="@drawable/btn_next_one"
                 android:fontFamily="@font/madeleina"
                 android:text="@string/next"

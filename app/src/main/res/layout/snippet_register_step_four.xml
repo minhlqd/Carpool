@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <RelativeLayout
-    android:background="@color/background_regitser"
+    android:background="@color/background_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/backgroundRelativeLayout">
@@ -86,6 +86,7 @@
                 android:id="@+id/licenceLayout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -111,6 +112,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:background="@android:color/transparent"
                     android:inputType="textPersonName"
                     android:drawableStart="@drawable/ic_car_icon"
@@ -134,6 +136,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:inputType="textPersonName"
                     android:drawableStart="@drawable/ic_phone"
                     android:drawablePadding="10dp"
@@ -160,6 +163,7 @@
                     android:inputType="textPersonName"
                     android:drawableStart="@drawable/ic_seat_icon"
                     android:drawablePadding="10dp"
+                    android:layout_marginBottom="5dp"
                     android:padding="5dp"
                     android:textSize="16sp"
                     android:fontFamily="sans-serif"
@@ -178,7 +182,9 @@
                 android:background="@drawable/btn_next_one"
                 android:fontFamily="@font/madeleina"
                 android:text="@string/finish"
-                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 </RelativeLayout>

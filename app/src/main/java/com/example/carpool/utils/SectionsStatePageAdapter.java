@@ -33,7 +33,6 @@ public class SectionsStatePageAdapter extends FragmentStatePagerAdapter {
     }
 
     public void addFragment(Fragment fragment, String fragmentName){
-        Log.d("MinhMX", "addFragment: " + fragment);
         mFragmentList.add(fragment);
         mFragments.put(fragment, mFragmentList.size()-1);
         mFragmentNumbers.put(fragmentName, mFragmentList.size()-1);

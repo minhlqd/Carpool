@@ -12,7 +12,6 @@
         android:id="@+id/homeRelativeLayout"
         android:layout_height="match_parent">
 
-        <!-- Middle section (body) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,12 +68,11 @@
                                 android:background="@drawable/toggle_widget_background"
                                 android:button="@null"
                                 android:gravity="center"
-                                android:text="Offer ride"
+                                android:text="@string/offer_ride"
                                 android:textColor="@color/white" />
                         </RadioGroup>
                 </RelativeLayout>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"

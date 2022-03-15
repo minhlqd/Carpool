@@ -25,7 +25,6 @@ public class BottomNavigationViewHelper {
     private static final String TAG = "BottomNavigationViewHel";
     
     public static void setupBottomNavigationView(BottomNavigationView bottomNavigationView){
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
     }
 
     public static void enableNavigation(final Context context, final BottomNavigationView view){

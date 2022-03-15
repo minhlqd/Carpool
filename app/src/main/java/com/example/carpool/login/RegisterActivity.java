@@ -82,7 +82,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Log.d(TAG, "onCreate: started.");
 
         mContext = RegisterActivity.this;
         mFirebaseMethods = new FirebaseMethods(mContext);
@@ -118,7 +117,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     private void setViewPager() {
         mRelativeLayout.setVisibility(View.GONE);
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
-        /*Log.d(TAG, "setViewPager: navigating to fragment #: " + 0 + pageAdapter.getCount());
+        /*
 
         if (mViewPager.getAdapter() != null) {
             mViewPager.setAdapter(null);
@@ -128,10 +127,9 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         mViewPager.setCurrentItem(0, true);*/
         //mViewPager.postDelayed(() -> mViewPager.setCurrentItem(0), 100);
        /*  mViewPager.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Log.d(TAG, "onGlobalLayout: " + true);
+
             mViewPager.setCurrentItem(0, false);
         });*/
-        Log.d(TAG, "setViewPager: " + mViewPager.getCurrentItem());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -147,7 +145,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 startActivity(loginIntent);
                 break;
 
-            case R.id.nextBtn1:
+            case R.id.next_btn_one:
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(1);
                 //mViewPager.setCurrentItem(2);
@@ -157,7 +155,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             case R.id.next_btn_register_two:
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(2);
-                Log.d(TAG, "onButtonClicked: " + "next 2");
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepThreeFragment).commit();
                 break;
 
@@ -174,7 +171,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 gatherData(); //To create the account on the last step of fragment
                 break;
             case R.id.restartRegistrationBtn:
-                Log.d(TAG, "onButtonClicked: true");
                 //handle currPos is zero
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
                 //mViewPager.setCurrentItem(0);
@@ -218,7 +214,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     }
 
     private void checkIfUsernameExists(final String username) {
-        Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
@@ -231,9 +226,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
 
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     if (singleSnapshot.exists()){
-                        Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + singleSnapshot.getValue(User.class).getUsername());
                         append = myRef.push().getKey().substring(3,10);
-                        Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
                     }
                 }
 
@@ -255,11 +248,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         });
     }
 
-    /**
-     * Setup the firebase auth object
-     */
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -270,7 +259,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
 
             if (user != null) {
                 // User is signed in
-                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

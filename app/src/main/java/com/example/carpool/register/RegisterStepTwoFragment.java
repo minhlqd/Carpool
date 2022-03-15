@@ -3,6 +3,7 @@ package com.example.carpool.register;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class RegisterStepTwoFragment extends Fragment {
     private ImageView mRestartRegistration, backButton2;
 
     private OnButtonClickListener mOnButtonClickListener;
+    private String username;
 
     public interface OnButtonClickListener{
         void onButtonClicked(View view);
@@ -59,6 +61,7 @@ public class RegisterStepTwoFragment extends Fragment {
         mNextBtn2.setOnClickListener(v -> {
             if(mUsernameStepTwoEditText.getText().length() > 0){
                 mOnButtonClickListener.onButtonClicked(v);
+                username = mUsernameStepTwoEditText.getText().toString();
             } else {
                 Toast.makeText(mView.getContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
             }
@@ -90,7 +93,8 @@ public class RegisterStepTwoFragment extends Fragment {
     }
 
     public String getUsername(){
-        return mUsernameStepTwoEditText.getText().toString().trim().replaceAll("\\s+","");
+        //return mUsernameStepTwoEditText.getText().toString().trim().replaceAll("\\s+","");
+        return username;
     }
 
     @Override

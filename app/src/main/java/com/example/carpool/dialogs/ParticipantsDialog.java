@@ -114,7 +114,6 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void findDriverInformation(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -132,7 +131,6 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void setDriverWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 

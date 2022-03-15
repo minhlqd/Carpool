@@ -77,7 +77,6 @@ public class PasswordUpdateFragment extends Fragment {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to ProfileActivity");
                 Intent intent = new Intent(view.getContext(), AccountActivity.class);
                 startActivity(intent);
             }
@@ -104,7 +103,6 @@ public class PasswordUpdateFragment extends Fragment {
     }
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 
@@ -113,8 +111,6 @@ public class PasswordUpdateFragment extends Fragment {
 
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
-
         userID = mAuth.getCurrentUser().getUid();
     }
 

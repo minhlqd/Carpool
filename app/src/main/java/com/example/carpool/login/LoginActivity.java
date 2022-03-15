@@ -42,13 +42,13 @@ public class LoginActivity extends AppCompatActivity {
     private final String append = "";
     private String username;
     private String email;
+    private TextView mForgotPassword;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Log.d(TAG, "onCreate: started.");
 
         mContext = LoginActivity.this;
 
@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.emailEditText);
         mPassword = (EditText) findViewById(R.id.passwordEditText);
         mBtn_signup = (TextView) findViewById(R.id.btn_signup);
+        mForgotPassword = (TextView) findViewById(R.id.forgot_password) ;
 
 
         mProgressBar.setVisibility(GONE);
@@ -72,19 +73,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isStringNull(String string) {
-        Log.d(TAG, "isStringNull: checking string if null");
         if (string.equals("")) {
             return true;
         } else {
             return false;
         }
     }
-
-
-
-    /**
-     * --------------------------- Firebase ----------------------------
-     **/
 
     private void init() {
         //Initialize the button for logging in
@@ -103,35 +97,32 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mBtn_signup.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: navigating to fragment 0");
            Intent intent = new Intent(mContext, RegisterActivity.class);
            startActivity(intent);
         });
 
-//        mAuth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-//                        } else {
-//                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
-//                        }
-//
-//                        // ...
-//                    }
-//                });
+        mForgotPassword.setOnClickListener(v -> {
+            startActivity(new Intent(mContext, ForgotPasswordActivity.class));
+        });
+
+       /* mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });*/
     }
 
-    /**
-     * Sign in method for firebase auth
-     *
-     * @param email
-     * @param password
-     */
     private void signIn(String email, String password) {
         mProgressBar.setVisibility(View.VISIBLE);
         mPleaseWait.setVisibility(View.VISIBLE);
@@ -147,11 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (task.isSuccessful()) {
                             try {
-                                boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                                Log.d("MyTAG", "onComplete: " + (isNew ? "new user" : "old user"));
-                                Log.d(TAG, "onComplete: success. email is verified");
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(intent);
+                                if (task.getResult().getAdditionalUserInfo() != null) {
+                                    boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
+                                    Log.d("MyTAG", "onComplete: " + (isNew ? "new user" : "old user"));
+                                    Log.d(TAG, "onComplete: success. email is verified");
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                }
 
                             } catch (NullPointerException e) {
                                 Log.e(TAG, "instance initializer: NullPointerException " + e.getMessage());

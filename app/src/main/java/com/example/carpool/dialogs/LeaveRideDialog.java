@@ -98,7 +98,6 @@ public class LeaveRideDialog extends Dialog implements
         mRef.child("availableRide").child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: " + dataSnapshot.toString());
                 seatsAvailable = dataSnapshot.getValue(Integer.class);
             }
 

@@ -66,10 +66,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         final String toOnly = parseLocation(ride.get(position).getDestination());
         final String licencePlate = ride.get(position).getLicencePlate();
         final String rideID = ride.get(position).getRideID();
-        Log.d("df", "onBindViewHolder: " + rideID);
         final String duration = ride.get(position).getDuration();
         final String userID = ride.get(position).getUser_id();
-        Log.i("Check", "onBindViewHolder: "+ userID);
         final String profile_photo = ride.get(position).getProfile_picture();
         final String completedRides = String.valueOf(ride.get(position).getCompleteRides());
         final String pickupLocation = ride.get(position).getPickupLocation();

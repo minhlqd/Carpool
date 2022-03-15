@@ -59,7 +59,6 @@ public class BookedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: started.");
         setContentView(R.layout.activity_booked);
         setupBottomNavigationView();
 
@@ -121,7 +120,6 @@ public class BookedActivity extends AppCompatActivity {
      * BottomNavigationView setup
      */
     private void setupBottomNavigationView(){
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
         //BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView);

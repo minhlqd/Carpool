@@ -63,7 +63,6 @@ public class FirebaseMethods {
                     }
                     else if(task.isSuccessful()){
                         userID = mAuth.getCurrentUser().getUid();
-                        Log.d(TAG, "onComplete: Authstate changed: " + userID);
                     }
                 });
     }
@@ -130,7 +129,6 @@ public class FirebaseMethods {
 
         User user = new User(userID ,email, full_name, username, profile_photo, mobile_number, dob, licence_number, 0, 0,  car, registration_plate, seats,education, work, bio, carOwner, gender, 50 ,car_photo);
 
-        Log.d(TAG, "addNewUser: " + username);
         myRef.child("user")
                 .child(userID)
                 .setValue(user);
@@ -212,12 +210,10 @@ public class FirebaseMethods {
     }
 
     public User getUserSettings(DataSnapshot dataSnapshot){
-        Log.d(TAG, "getUserSettings: retrieving user settings from firebase");
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(ds.getKey().equals("user")){
-                Log.d(TAG, "getUserSettings: dataSnapshot: " + ds);
 
                 try {
                     user.setUsername(ds.child(userID)
@@ -305,18 +301,11 @@ public class FirebaseMethods {
         return user;
     }
 
-    /**
-     * retrieves user settings from current logged in user
-     * @param dataSnapshot
-     * @return
-     */
     public User getSpeficUserSettings(DataSnapshot dataSnapshot, String user_id){
-        Log.d(TAG, "getUserSettings: retrieving user settings from firebase");
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(ds.getKey() != null && ds.getKey().equals("user")){
-                Log.d(TAG, "getUserSettings: dataSnapshot: " + ds);
                 try {
                     user.setUsername(ds.child(user_id)
                             .getValue(User.class)
@@ -394,7 +383,6 @@ public class FirebaseMethods {
                                 .getValue(User.class)
                                 .getBio());
                 } catch (NullPointerException e){
-                    Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }
 
             }
@@ -403,7 +391,6 @@ public class FirebaseMethods {
     }
 
     public void updateUsername(String username){
-        Log.d(TAG, "updateUsername: updating username to: " + username);
         myRef.child("user")
                 .child(userID)
                 .child(mContext.getString(R.string.field_username))
@@ -411,7 +398,6 @@ public class FirebaseMethods {
     }
 
     public void updateEmail(String email){
-        Log.d(TAG, "updateUsername: updating email to: " + email);
         myRef.child("user")
                 .child(userID)
                 .child(mContext.getString(R.string.field_email))

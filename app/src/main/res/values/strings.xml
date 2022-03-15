@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Carpool</string>
 
-    <string name="fragment">Fragment</string>
+    <string name="fragment" translatable="false">Fragment</string>
 
-    <string name="edit_email">Edit email</string>
-    <string name="edit_password">Edit password</string>
-    <string name="edit_details">Edit details</string>
+    <string name="edit_email" translatable="false">Edit email</string>
+    <string name="edit_password" translatable="false">Edit password</string>
+    <string name="edit_details" translatable="false">Edit details</string>
     <string name="payment_information">Payment Information</string>
     <string name="car_information">Car Information</string>
     <string name="offer_ride">Offer ride</string>
@@ -13,30 +13,30 @@
 
     <!-- Firebase database fields -->
     <string name="dbName_user">user</string>
-    <string name="dbName_availableRide">availableRide</string>
-    <string name="field_username">username</string>
-    <string name="field_email">email</string>
+    <string name="dbName_availableRide" translatable="false">availableRide</string>
+    <string name="field_username" translatable="false">username</string>
+    <string name="field_email" translatable="false">email</string>
 
     <!-- Settings preference fragment -->
-    <string name="pref_sort_label">Sort Order</string>
-    <string name="pref_sort_label_popular">Most Popular</string>
-    <string name="pref_sort_label_rating">Top Rated</string>
-    <string name="pref_sort_label_favorite">Favorites</string>
+    <string name="pref_sort_label" translatable="false">Sort Order</string>
+    <string name="pref_sort_label_popular" translatable="false">Most Popular</string>
+    <string name="pref_sort_label_rating" translatable="false">Top Rated</string>
+    <string name="pref_sort_label_favorite" translatable="false">Favorites</string>
     <string name="pref_sort_key" translatable="false">sort</string>
     <string name="pref_sort_popular" translatable="false">popular</string>
     <string name="pref_sort_rating" translatable="false">rating</string>
     <string name="pref_sort_favorite" translatable="false">favorites</string>
 
     <!-- Dialog names -->
-    <string name="confirm_password_dialog">Confirm Password Dialog</string>
-    <string name="welcome_password_dialog">Welcome Dialog</string>
+    <string name="confirm_password_dialog" translatable="false">Confirm Password Dialog</string>
+    <string name="welcome_password_dialog" translatable="false">Welcome Dialog</string>
 
     <!-- Braintree API keys -->
-    <string name="API_GET_TOKEN">SEE TUTORIAL</string>
-    <string name="API_CHECK_OUT">SEE TUTORIAL</string>
+    <string name="API_GET_TOKEN" translatable="false">SEE TUTORIAL</string>
+    <string name="API_CHECK_OUT" translatable="false">SEE TUTORIAL</string>
 
     <!-- Google maps API key -->
-    <string name="google_maps_api_key">SEE TUTORIAL</string>
+    <string name="google_maps_api_key" translatable="false">SEE TUTORIAL</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -45,11 +45,11 @@
     <string name="pref_header_general">General</string>
 
     <string name="pref_title_social_recommendations">Same gender</string>
-    <string name="pref_description_social_recommendations">Enable this option for same gender carpooling for extra security measures
+    <string name="pref_description_social_recommendations" translatable="false">Enable this option for same gender carpooling for extra security measures
     </string>
 
     <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_default_display_name" translatable="false">John Smith</string>
 
     <string name="pref_title_add_friends_to_messages">Language</string>
     <string-array name="pref_example_list_titles">
@@ -79,9 +79,9 @@
     </string-array>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_data_sync" translatable="false">Data &amp; sync</string>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="pref_title_sync_frequency" translatable="false">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
         <item>15 minutes</item>
         <item>30 minutes</item>
@@ -113,134 +113,134 @@
 
     <string-array name="multi_select_list_preference_default_value" />
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_system_sync_settings" translatable="false">System sync settings</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_new_message_notifications" translatable="false">New message notifications</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_ringtone" translatable="false">Ringtone</string>
+    <string name="pref_ringtone_silent" translatable="false">Silent</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_payment">PaymentActivity</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="welcome_to_carpool">WELCOME TO CARPOOL</string>
-    <string name="carpooling_made_easy">Carpooling made easy</string>
-    <string name="get_connected_with_carpool">GET CONNECTED WITH CARPOOL</string>
-    <string name="email">Email</string>
+    <string name="pref_title_vibrate" translatable="false">Vibrate</string>
+    <string name="title_activity_payment" translatable="false">PaymentActivity</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="welcome_to_carpool" translatable="false">WELCOME TO CARPOOL</string>
+    <string name="carpooling_made_easy" translatable="false">Carpooling made easy</string>
+    <string name="get_connected_with_carpool" translatable="false">GET CONNECTED WITH CARPOOL</string>
+    <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
     <string name="or_sign_up_with_other">Register</string>
-    <string name="loading">Loading…</string>
+    <string name="loading" translatable="false">Loading…</string>
     <string name="find_a_ride">Find a ride</string>
     <string name="location">Location</string>
     <string name="destination">Destination</string>
     <string name="get_directions">Get directions</string>
-    <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey">Hi, i\'m {Username} and would like to request a seat on your journey!</string>
+    <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey" translatable="false">Hi, i\'m {Username} and would like to request a seat on your journey!</string>
     <string name="booking_request">Booking request</string>
-    <string name="from_hanoi_vn">From: HaNoi, VN</string>
-    <string name="to_nam_dinh_vn">To: NamDinh, VN</string>
+    <string name="from_hanoi_vn" translatable="false">From: HaNoi, VN</string>
+    <string name="to_nam_dinh_vn" translatable="false">To: NamDinh, VN</string>
     <string name="seats_required_1">Seats required: 1</string>
-    <string name="todo">TODO</string>
-    <string name="confirmation">Confirmation</string>
-    <string name="please_re_enter_password_for_authentication">Please re-enter password for authentication</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="confirmation" translatable="false">Confirmation</string>
+    <string name="please_re_enter_password_for_authentication" translatable="false">Please re-enter password for authentication</string>
     <string name="confirm">Confirm</string>
-    <string name="or_cancel">Or cancel</string>
-    <string name="delete_ride">Delete ride</string>
-    <string name="are_you_sure_you_want_to_delete_this_ride_this_cannot_be_undone">Are you sure you want to delete this ride? This cannot be undone</string>
-    <string name="delete">Delete</string>
-    <string name="dismiss">Dismiss</string>
-    <string name="comment">Comment</string>
-    <string name="leave_feedback">Leave feedback</string>
-    <string name="leave_ride">Leave ride</string>
-    <string name="are_you_sure_you_want_to_leave_this_ride">Are you sure you want to leave this ride?</string>
-    <string name="yes">Yes</string>
-    <string name="ride_created">Ride created</string>
-    <string name="you_have_successfully_created_a_carpool_ride">You have successfully created a carpool ride.</string>
-    <string name="complete">Complete</string>
-    <string name="user_1">User 1</string>
-    <string name="participants">Participants</string>
-    <string name="_0_rides">0 Rides</string>
-    <string name="cost">Cost</string>
-    <string name="_6_00">£6.00</string>
-    <string name="departure_time">Departure time</string>
-    <string name="_5_00_5_30_pm">5:00 – 5:30 PM</string>
-    <string name="extra_time_added">Extra time added</string>
-    <string name="_5_min">5 min</string>
-    <string name="from">From:</string>
-    <string name="_18_bishop_street">18 Bishop Street</string>
-    <string name="to">To:</string>
-    <string name="extra_time">Extra time</string>
-    <string name="welcome">Welcome</string>
-    <string name="welcome_to_carpool_get_started_viewing_the_help_guide">Welcome to Carpool, get started viewing the help guide.</string>
-    <string name="get_started">GET STARTED</string>
-    <string name="money">£</string>
-    <string name="booking_pending">Booking pending!</string>
-    <string name="_1">1</string>
-    <string name="_0_points">0 points</string>
-    <string name="_09_03_2022">09/03/2022</string>
-    <string name="this_is_a_notification_example">This is a notification example</string>
-    <string name="_23th_november_12_55_am">23th November - 12:55 AM</string>
-    <string name="_3_seats_left">3 Seats Left!</string>
-    <string name="log_out">Log out</string>
-    <string name="account_settings">Account settings</string>
-    <string name="update_email_address">Update email Address</string>
-    <string name="change_password">Change password</string>
-    <string name="update_my_details">Update my details</string>
-    <string name="update_car_details">Update car details</string>
-    <string name="view_profile">View profile</string>
-    <string name="profile">profile</string>
-    <string name="no_rides_booked">No rides booked</string>
-    <string name="connecting_to_server_please_wait">Connecting to server please wait…</string>
-    <string name="payment_confirmation">Payment Confirmation</string>
-    <string name="pay">PAY</string>
-    <string name="cancel">Cancel</string>
-    <string name="MinhMX">John Doe</string>
-    <string name="work_and_education">Work and education</string>
-    <string name="navy_express">Tesco Express</string>
-    <string name="engineering_and_technology_of_university">Engineering and Technology of University</string>
-    <string name="Uet">Personal Bio</string>
-    <string name="lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been…</string>
-    <string name="recent_reviews">Recent reviews</string>
-    <string name="great_driver_got_me_in_time">Great driver! got me in time</string>
-    <string name="luggage_required_1kg">Luggage required: 1kg</string>
-    <string name="no_rides_created">No rides created</string>
+    <string name="or_cancel" translatable="false">Or cancel</string>
+    <string name="delete_ride" translatable="false">Delete ride</string>
+    <string name="are_you_sure_you_want_to_delete_this_ride_this_cannot_be_undone" translatable="false">Are you sure you want to delete this ride? This cannot be undone</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="dismiss" translatable="false">Dismiss</string>
+    <string name="comment" translatable="false">Comment</string>
+    <string name="leave_feedback" translatable="false">Leave feedback</string>
+    <string name="leave_ride" translatable="false">Leave ride</string>
+    <string name="are_you_sure_you_want_to_leave_this_ride" translatable="false">Are you sure you want to leave this ride?</string>
+    <string name="yes" translatable="false">Yes</string>
+    <string name="ride_created" translatable="false">Ride created</string>
+    <string name="you_have_successfully_created_a_carpool_ride" translatable="false">You have successfully created a carpool ride.</string>
+    <string name="complete" translatable="false">Complete</string>
+    <string name="user_1" translatable="false">User 1</string>
+    <string name="participants" translatable="false">Participants</string>
+    <string name="_0_rides" translatable="false">0 Rides</string>
+    <string name="cost" translatable="false">Cost</string>
+    <string name="_6_00" translatable="false">£6.00</string>
+    <string name="departure_time" translatable="false">Departure time</string>
+    <string name="_5_00_5_30_pm" translatable="false">5:00 – 5:30 PM</string>
+    <string name="extra_time_added" translatable="false">Extra time added</string>
+    <string name="_5_min" translatable="false">5 min</string>
+    <string name="from" translatable="false">From:</string>
+    <string name="_18_bishop_street" translatable="false">18 Bishop Street</string>
+    <string name="to" translatable="false">To:</string>
+    <string name="extra_time" translatable="false">Extra time</string>
+    <string name="welcome" translatable="false">Welcome</string>
+    <string name="welcome_to_carpool_get_started_viewing_the_help_guide" translatable="false">Welcome to Carpool, get started viewing the help guide.</string>
+    <string name="get_started" translatable="false">GET STARTED</string>
+    <string name="money" translatable="false">£</string>
+    <string name="booking_pending" translatable="false">Booking pending!</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_0_points" translatable="false">0 points</string>
+    <string name="_09_03_2022" translatable="false">09/03/2022</string>
+    <string name="this_is_a_notification_example" translatable="false">This is a notification example</string>
+    <string name="_23th_november_12_55_am" translatable="false">23th November - 12:55 AM</string>
+    <string name="_3_seats_left" translatable="false">3 Seats Left!</string>
+    <string name="log_out" translatable="false">Log out</string>
+    <string name="account_settings" translatable="false">Account settings</string>
+    <string name="update_email_address" translatable="false">Update email Address</string>
+    <string name="change_password" translatable="false">Change password</string>
+    <string name="update_my_details" translatable="false">Update my details</string>
+    <string name="update_car_details" translatable="false">Update car details</string>
+    <string name="view_profile" translatable="false">View profile</string>
+    <string name="profile" translatable="false">profile</string>
+    <string name="no_rides_booked" translatable="false">No rides booked</string>
+    <string name="connecting_to_server_please_wait" translatable="false">Connecting to server please wait…</string>
+    <string name="payment_confirmation" translatable="false">Payment Confirmation</string>
+    <string name="pay" translatable="false">PAY</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="MinhMX" translatable="false">John Doe</string>
+    <string name="work_and_education" translatable="false">Work and education</string>
+    <string name="navy_express" translatable="false">Tesco Express</string>
+    <string name="engineering_and_technology_of_university" translatable="false">Engineering and Technology of University</string>
+    <string name="Uet" translatable="false">Personal Bio</string>
+    <string name="lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been" translatable="false">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been…</string>
+    <string name="recent_reviews" translatable="false">Recent reviews</string>
+    <string name="great_driver_got_me_in_time" translatable="false">Great driver! got me in time</string>
+    <string name="luggage_required_1kg" translatable="false">Luggage required: 1kg</string>
+    <string name="no_rides_created" translatable="false">No rides created</string>
     <string name="no_results_found">No results found</string>
-    <string name="max_luggage">Max luggage</string>
+    <string name="max_luggage" translatable="false">Max luggage</string>
     <string name="do_you_own_a_vehicle">Do you own a vehicle?</string>
     <string name="no">No</string>
     <string name="licence_number">Licence number</string>
     <string name="car">Car</string>
     <string name="seats">Seats</string>
-    <string name="change_email">Change email</string>
-    <string name="username">Username</string>
-    <string name="car_name">Car name</string>
-    <string name="registration">Registration</string>
-    <string name="date_of_journey">Date of journey</string>
-    <string name="tap_for_date">Tap for date</string>
-    <string name="pick_up_location">Pick up location</string>
-    <string name="tap_for_location">Tap for location</string>
-    <string name="pick_up_time">Pick up time</string>
-    <string name="tap_for_time">Tap for time</string>
-    <string name="enter_extra_time">Enter extra time</string>
-    <string name="duration_1_hour_14_mins">Duration: 1 hour 14 mins</string>
-    <string name="same_gender">Same gender</string>
-    <string name="maxiumum_luggage_kg">Maxiumum luggage (kg)</string>
-    <string name="enter_luggage">Enter luggage</string>
-    <string name="edit_ride">Edit ride</string>
-    <string name="change_photo">Change Photo</string>
+    <string name="change_email" translatable="false">Change email</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="car_name" translatable="false">Car name</string>
+    <string name="registration" translatable="false">Registration</string>
+    <string name="date_of_journey" translatable="false">Date of journey</string>
+    <string name="tap_for_date" translatable="false">Tap for date</string>
+    <string name="pick_up_location" translatable="false">Pick up location</string>
+    <string name="tap_for_location" translatable="false">Tap for location</string>
+    <string name="pick_up_time" translatable="false">Pick up time</string>
+    <string name="tap_for_time" translatable="false">Tap for time</string>
+    <string name="enter_extra_time" translatable="false">Enter extra time</string>
+    <string name="duration_1_hour_14_mins" translatable="false">Duration: 1 hour 14 mins</string>
+    <string name="same_gender" translatable="false">Same gender</string>
+    <string name="maxiumum_luggage_kg" translatable="false">Maxiumum luggage (kg)</string>
+    <string name="enter_luggage" translatable="false">Enter luggage</string>
+    <string name="edit_ride" translatable="false">Edit ride</string>
+    <string name="change_photo" translatable="false">Change Photo</string>
     <string name="fullname">FullName</string>
     <string name="mobile_number">Mobile number</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="update_details">Update details</string>
-    <string name="search_results">Search results</string>
-    <string name="your_rides">Your rides</string>
+    <string name="search_results" translatable="false">Search results</string>
+    <string name="your_rides" translatable="false">Your rides</string>
     <string name="notifications">Notifications</string>
     <string name="create_account">Create account</string>
     <string name="update_profile">Update profile</string>
-    <string name="carpool_journey">Carpool Journey</string>
+    <string name="carpool_journey" translatable="false">Carpool Journey</string>
     <string name="leaderboards">Leaderboards</string>
     <string name="current_rankings">Current Rankings</string>
     <string name="my_points">My points</string>
@@ -258,12 +258,14 @@
     <string name="male">Male</string>
     <string name="finish">Finish</string>
     <string name="create_ride">Create ride</string>
-    <string name="length_of_journey">Length of journey</string>
+    <string name="length_of_journey" translatable="false">Length of journey</string>
     <string name="seats_available">Seats available</string>
     <string name="registration_plate">Registration Plate</string>
     <string name="current_location">Current Location</string>
     <string name="confirm_location">Confirm location</string>
-    <string name="gl06_zfa">18E1 - 09874</string>
+    <string name="gl06_zfa" translatable="false">18E1 - 09874</string>
     <string name="options">Option</string>
     <string name="forgot_password">Forgot password</string>
+    <string name="date">Date</string>
+    <string name="send">Send</string>
 </resources>

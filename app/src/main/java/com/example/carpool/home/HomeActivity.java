@@ -87,11 +87,12 @@ import java.util.List;
 import java.util.Locale;
 
 
+@SuppressWarnings("ALL")
 public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, TaskLoadedCallback {
     private static final String TAG = "HomeActivity";
     private static final int ACTIVITY_NUMBER = 0;
 
-    private Context mContext = HomeActivity.this;
+    private final Context mContext = HomeActivity.this;
 
     //Google map permissions
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -140,21 +141,21 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.d(TAG, "onCreate: starting.");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabse = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabse.getReference();
         if (mAuth.getCurrentUser() != null) {
             //Gets userID of current user signed in
-            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            }
 
             //Disables offer button when the user is logged in and they have no car
-            findButton = (RadioButton) findViewById(R.id.findButton);
-            offerButton = (RadioButton) findViewById(R.id.offerButton);
+            findButton = findViewById(R.id.findButton);
+            offerButton = findViewById(R.id.offerButton);
 
             getUserInformation(userID);
-            ////////////////////////////////////////////////////////////////////////
 
             //Creates token with that new user ID
             updateFirebaseToken();
@@ -167,14 +168,14 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //Intitate widgets
-        destinationTextview = (AutoCompleteTextView) findViewById(R.id.destinationTextview);
-        locationTextView = (AutoCompleteTextView) findViewById(R.id.locationTextview);
+        destinationTextview = findViewById(R.id.destinationTextview);
+        locationTextView = findViewById(R.id.locationTextview);
 
-        mSearchBtn = (Button) findViewById(R.id.searchBtn);
-        mSwitchTextBtn = (Button) findViewById(R.id.switchTextBtn);
-        mDirectionsBtn = (Button) findViewById(R.id.directionsBtn);
-        mRideSelectionRadioGroup = (RadioGroup) findViewById(R.id.toggle);
-        mLocationBtn = (ImageView) findViewById(R.id.locationImage);
+        mSearchBtn = findViewById(R.id.searchBtn);
+        mSwitchTextBtn = findViewById(R.id.switchTextBtn);
+        mDirectionsBtn = findViewById(R.id.directionsBtn);
+        mRideSelectionRadioGroup = findViewById(R.id.toggle);
+        mLocationBtn = findViewById(R.id.locationImage);
 
         mLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,26 +304,15 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
-    /** --------------------------- Setting up google maps / permissions and services ---------------------------- **/
-
-    /**
-     * Check if google play services is enabled or available for mobile device
-     *
-     * @return
-     */
     public boolean isServicesOk() {
-        Log.d(TAG, "isServicesOK: checking google services version");
 
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(HomeActivity.this);
 
         if (available == ConnectionResult.SUCCESS) {
             //everything is ok and user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
             return true;
         } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
             //an error occurred but it can be resolved
-            Log.d(TAG, "isServicesOK: an error occurred but it can be fixed");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(HomeActivity.this, available, ERROR_DIALOG_REQUEST);
             assert dialog != null;
             dialog.show();
@@ -335,7 +325,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d(TAG, "onRequestPermissionsResult: called");
         mLocationPermissionsGranted = false;
 
         switch (requestCode) {
@@ -344,11 +333,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     for (int i = 0; i < grantResults.length; i++) {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
                             return;
                         }
                     }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
                     mLocationPermissionsGranted = true;
                     //initialize our map
                     initMap();
@@ -357,11 +344,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /**
-     * sets up map from the view
-     */
     private void initMap() {
-        Log.d(TAG, "initMap: initializing map");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(HomeActivity.this);
@@ -371,7 +354,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionsGranted) {
@@ -390,7 +372,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -401,7 +382,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful() && task.getResult() != null) {
-                            Log.d(TAG, "onComplete: getting found location!");
                             Location currentLocation = (Location) task.getResult();
                             moveCameraNoMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
@@ -409,7 +389,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                             currentLatitude = currentLocation.getLatitude();
                             currentLongtitude = currentLocation.getLongitude();
                         } else {
-                            Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(HomeActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -421,7 +400,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocationAndAddMarker() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -432,7 +410,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful() && task.getResult() != null) {
-                            Log.d(TAG, "onComplete: getting found location!");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
@@ -442,7 +419,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             geoDecoder(currentLocation);
                         } else {
-                            Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(HomeActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -454,15 +430,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void moveCameraNoMarker(LatLng latLng, float zoom, String title) {
-        Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ", lng: " + latLng.longitude);
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         hideKeyboard(HomeActivity.this);
     }
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
-        Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ", lng: " + latLng.longitude);
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
@@ -478,7 +451,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void moveCamera(LatLng latLng, float zoom, PlaceInfo placeInfo) {
-        Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ", lng: " + latLng.longitude);
 
         hideKeyboard(HomeActivity.this);
 
@@ -542,7 +514,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void init() {
-        Log.d(TAG, "init: initializing");
+
 
         mGeoDataClient = Places.getGeoDataClient(this, null);
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
@@ -612,7 +584,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void goeLocate() {
-        Log.d(TAG, "goeLocate: goeLocating");
 
         String searchString = destinationTextview.getText().toString();
 
@@ -641,7 +612,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         ---------------------------- google places API autocomplete suggestions -------------------------------
      */
 
-    private AdapterView.OnItemClickListener mAuotcompleteClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mAuotcompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             hideKeyboard(HomeActivity.this);
@@ -655,11 +626,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     };
 
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
+    private final ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(@NonNull PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
-                Log.d(TAG, "onResult: Place query did not complete successfully: " + places.getStatus().toString());
                 places.release();
                 return;
             }
@@ -669,23 +639,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 mPlace = new PlaceInfo();
                 mPlace.setName(place.getName().toString());
-                Log.d(TAG, "onResult: name: " + place.getName());
                 mPlace.setAddress(place.getAddress().toString());
-                Log.d(TAG, "onResult: address: " + place.getAddress());
                 // mPlace.setAttributions(place.getAttributions().toString());
-                //Log.d(TAG, "onResult: attributions: " + place.getAttributions());
                 mPlace.setId(place.getId());
-                Log.d(TAG, "onResult: id: " + place.getId());
                 mPlace.setLatLng(place.getLatLng());
-                Log.d(TAG, "onResult: latLng: " + place.getLatLng());
                 mPlace.setRating(place.getRating());
-                Log.d(TAG, "onResult: rating: " + place.getRating());
                 mPlace.setPhoneNumber(place.getPhoneNumber().toString());
-                Log.d(TAG, "onResult: phoneNumber: " + place.getPhoneNumber());
                 mPlace.setWebsiteUri(place.getWebsiteUri());
-                Log.d(TAG, "onResult: websiteUri: " + place.getWebsiteUri());
-                Log.d(TAG, "onResult: place: " + mPlace.toString());
-
                 if (destinationTextview.isFocused()) {
                     currentLocation = mPlace.getLatLng();
                 }
@@ -707,7 +667,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
      * */
 
     private void getLocationPermission() {
-        Log.d(TAG, "getLocationPermission: get location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -725,12 +684,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /***
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView() {
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
         //BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView);
 
@@ -786,13 +741,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         checkCurrentUser(currentUser);
     }
 
-    /**
-     * Cheks to see if the @param 'user' is logged in
-     *
-     * @param user
-     */
     private void checkCurrentUser(FirebaseUser user) {
-        Log.d(TAG, "checkCurrentUser: checking if user if logged in");
 
         if (user == null) {
             Intent intent = new Intent(mContext, LoginActivity.class);
@@ -813,11 +762,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 carOwner = dataSnapshot.getValue(Boolean.class);
-                if (carOwner == false) {
+                if (!carOwner) {
                     offerButton.setEnabled(false);
                     offerButton.setAlpha(.5f);
                     offerButton.setClickable(false);
-
                 }
             }
 

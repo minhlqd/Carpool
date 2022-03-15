@@ -87,7 +87,6 @@ public class EditRideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_ride);
-        Log.d(TAG, "onCreate: starting.");
 
         //Disables focused keyboard on view startup
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -153,7 +152,6 @@ public class EditRideActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to HomeActivity");
                 finish();
             }
         });
@@ -258,7 +256,6 @@ public class EditRideActivity extends AppCompatActivity {
     }
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 
@@ -304,7 +301,6 @@ public class EditRideActivity extends AppCompatActivity {
     /*----------------------------- SETUP FIREBASE -----------------------------------*/
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         userID = mAuth.getCurrentUser().getUid();
 

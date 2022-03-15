@@ -68,7 +68,6 @@ public class RidesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: started.");
         setContentView(R.layout.activity_rides);
         setupBottomNavigationView();
 

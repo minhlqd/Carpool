@@ -137,7 +137,7 @@ public class SearchRideActivity extends AppCompatActivity {
         mFromEditText = (EditText) findViewById(R.id.locationEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.dateEditText);
         mSameGenderSearchSwitch = (Switch) findViewById(R.id.sameGenderSearchSwitch);
-        mSnippetSeachARideBtn = (Button) findViewById(R.id.snippetSeachARideBtn);
+        mSnippetSeachARideBtn = (Button) findViewById(R.id.snippetSearchARideBtn);
 
         //Calander setup
         mCalendar = Calendar.getInstance();
@@ -166,11 +166,9 @@ public class SearchRideActivity extends AppCompatActivity {
 
 
 
-    /** --------------------------- Firebase ---------------------------- **/
+
 
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
-
         userID = mAuth.getCurrentUser().getUid();
     }
 

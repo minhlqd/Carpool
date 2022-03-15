@@ -221,10 +221,10 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp">
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/profile_logo"
                         android:layout_width="23dp"
                         android:layout_height="130dp"
-                        android:id="@+id/profile_logo"
                         android:background="@drawable/destination_line" />
 
                     <TextView
@@ -293,9 +293,10 @@
                         android:text="@string/same_gender" />
 
                     <com.github.kmenager.materialanimatedswitch.MaterialAnimatedSwitch
+                        android:id="@+id/genderSwitch"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/genderSwitch"
                         android:layout_marginTop="20dp" />
 
                     <TextView
@@ -330,7 +331,9 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginBottom="16dp"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/btn_style" />
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    android:background="@drawable/background_btn_login" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </ScrollView>

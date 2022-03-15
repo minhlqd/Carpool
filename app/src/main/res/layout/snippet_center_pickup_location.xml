@@ -22,7 +22,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/btn_style" />
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                android:background="@drawable/background_btn_login" />
 
     </RelativeLayout>
 </merge>

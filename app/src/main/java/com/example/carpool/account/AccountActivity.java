@@ -69,7 +69,6 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        Log.d(TAG, "onCreate: started.");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabse = FirebaseDatabase.getInstance();
@@ -169,14 +168,12 @@ public class AccountActivity extends AppCompatActivity {
 
     private void setViewPager(int fragmentNumber) {
         mRelativeLayout.setVisibility(View.GONE);
-        Log.d(TAG, "setViewPager: navigating to fragment #: " + fragmentNumber);
         mViewPager.setAdapter(pageAdapter);
         Objects.requireNonNull(mViewPager.getAdapter()).notifyDataSetChanged();
         mViewPager.setCurrentItem(fragmentNumber);
     }
 
     private void setupAtivityWidgets(){
-        Log.d(TAG, "setupAtivityWidgets: setting up widgets");
         //instantiate objects
         mViewPager = (ViewPager) findViewById(R.id.container);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayout1);
@@ -198,7 +195,6 @@ public class AccountActivity extends AppCompatActivity {
 
 
     private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
 
         User user = userSettings;
 
@@ -221,7 +217,6 @@ public class AccountActivity extends AppCompatActivity {
      * BottomNavigationView setup
      */
     private void setupBottomNavigationView(){
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
 
@@ -231,10 +226,7 @@ public class AccountActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
-    /** --------------------------- Firebase ---------------------------- **/
-
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
