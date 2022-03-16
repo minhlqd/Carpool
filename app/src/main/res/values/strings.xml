@@ -156,7 +156,7 @@
     <string name="leave_feedback" translatable="false">Leave feedback</string>
     <string name="leave_ride" translatable="false">Leave ride</string>
     <string name="are_you_sure_you_want_to_leave_this_ride" translatable="false">Are you sure you want to leave this ride?</string>
-    <string name="yes" translatable="false">Yes</string>
+    <string name="yes">Yes</string>
     <string name="ride_created" translatable="false">Ride created</string>
     <string name="you_have_successfully_created_a_carpool_ride" translatable="false">You have successfully created a carpool ride.</string>
     <string name="complete" translatable="false">Complete</string>
@@ -268,4 +268,8 @@
     <string name="forgot_password">Forgot password</string>
     <string name="date">Date</string>
     <string name="send">Send</string>
+    <string name="check_your_email">Please check your email</string>
+    <string name="start_point">Start Point</string>
+    <string name="your_car_information">Please enter your car information</string>
+    <string name="your_route">Please enter the route you usually take</string>
 </resources>

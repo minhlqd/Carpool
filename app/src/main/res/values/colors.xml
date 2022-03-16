@@ -40,4 +40,5 @@
     <color name="red">#fc0000</color>
     <color name="background_register">#EAEAEA</color>
     <color name="background_icon">#838383</color>
+    <color name="backdground_float_action_button">#FF5722</color>
 </resources>

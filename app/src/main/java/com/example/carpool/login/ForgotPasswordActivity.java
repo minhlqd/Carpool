@@ -1,14 +1,12 @@
 package com.example.carpool.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carpool.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -30,6 +28,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().sendPasswordResetEmail(txt_email)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+                                Toast.makeText(this, R.string.check_your_email, Toast.LENGTH_LONG).show();
                                 onBackPressed();
                             }
                         });

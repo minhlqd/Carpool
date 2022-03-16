@@ -33,7 +33,6 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="50dp"
-                    android:fontFamily="@font/main"
                     android:gravity="center_horizontal"
                     android:text="@string/create_account"
                     android:textColor="@color/white"

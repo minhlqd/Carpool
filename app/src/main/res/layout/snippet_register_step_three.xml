@@ -1,224 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout android:fitsSystemWindows="true"
+    android:background="@color/background_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/registrationPicture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_change_picture" />
 
-    <RelativeLayout
-        android:background="@color/background_register"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/full_name_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/backgroundRelativeLayout">
+        android:layout_height="50dp"
+        android:layout_below="@id/registrationPicture"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:id="@+id/relLayout1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_fullname"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/full_name"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/registrationPicture"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_change_picture" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/date_of_birth_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/full_name_layout"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/full_name_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/registrationPicture"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/background_btn_register">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dobStepThreeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:drawableStart="@drawable/ic_dob"
+            android:drawablePadding="10dp"
+            android:focusable="false"
+            android:fontFamily="sans-serif"
+            android:hint="@string/date_of_birth"
+            android:inputType="textNoSuggestions"
+            android:padding="5dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/full_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/ic_fullname"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="sans-serif"
-                        android:hint="@string/full_name"
-                        android:inputType="textPersonName"
-                        android:padding="5dp"
-                        android:textSize="16sp" />
-                </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/date_of_birth_layout"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:background="@drawable/background_btn_register"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/full_name_layout"
-                    android:id="@+id/date_of_birth_layout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_dob"
-                        android:drawablePadding="10dp"
-                        android:padding="5dp"
-                        android:focusable="false"
-                        android:background="@null"
-                        android:inputType="textNoSuggestions"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:id="@+id/dobStepThreeEditText"
-                        android:hint="@string/date_of_birth" />
-                </com.google.android.material.textfield.TextInputLayout>
-                
-                <com.google.android.material.textfield.TextInputLayout
-                    android:background="@drawable/background_btn_register"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/date_of_birth_layout"
-                    android:id="@+id/usernameLayout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:inputType="number"
-                        android:drawableStart="@drawable/ic_phone"
-                        android:drawablePadding="10dp"
-                        android:padding="5dp"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:id="@+id/mobileStepThreeEditText"
-                        android:hint="@string/mobile_number" />
-                </com.google.android.material.textfield.TextInputLayout>
-                
-                <com.google.android.material.textfield.TextInputLayout
-                    android:background="@drawable/background_btn_register"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/usernameLayout"
-                    android:id="@+id/workLayout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:inputType="textPersonName"
-                        android:drawableStart="@drawable/ic_work"
-                        android:drawablePadding="10dp"
-                        android:padding="5dp"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:id="@+id/workEditTextStepThree"
-                        android:hint="@string/work_place" />
-                </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mobileStepThreeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/mobile_number"
+            android:inputType="number"
+            android:padding="5dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/workLayout"
-                    android:background="@drawable/background_btn_register"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/educationLayout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:inputType="textPersonName"
-                        android:drawableStart="@drawable/ic_education"
-                        android:drawablePadding="10dp"
-                        android:padding="5dp"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:id="@+id/educationEditTextStepThree"
-                        android:hint="@string/education" />
-                </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/workLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/usernameLayout"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_btn_register"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_below="@id/educationLayout"
-                    android:id="@+id/bioLayout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:inputType="textPersonName"
-                        android:drawableStart="@drawable/ic_bio"
-                        android:drawablePadding="10dp"
-                        android:padding="8dp"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:id="@+id/bioEditTextStepThree"
-                        android:hint="@string/tell_us_abit_about_yourself" />
-                </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/workEditTextStepThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_work"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/work_place"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <RadioGroup
-                    android:checkedButton="@+id/offerButton"
-                    android:id="@+id/genderToggle"
-                    android:layout_width="match_parent"
-                   android:layout_margin="15dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/bioLayout"
-                    android:background="@drawable/green_out_line"
-                    android:orientation="horizontal">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/educationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/workLayout"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
 
-                    <RadioButton
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginStart="1dp"
-                        android:id="@+id/femaleButton"
-                        android:background="@drawable/toggle_widget_green_background"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="@string/female"
-                        android:textColor="@color/dark_grey" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/educationEditTextStepThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_education"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/education"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                    <RadioButton
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:id="@+id/maleButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/toggle_widget_green_background"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="@string/male"
-                        android:textColor="@color/dark_grey" />
-                </RadioGroup>
-                <Button
-                    android:id="@+id/nextBtn3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/genderToggle"
-                    android:layout_alignEnd="@id/genderToggle"
-                    android:layout_marginBottom="23.5dp"
-                    android:background="@drawable/btn_next_one"
-                    android:fontFamily="@font/madeleina"
-                    android:text="@string/next"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-    </RelativeLayout>
-</merge>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bioLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/educationLayout"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/background_btn_register">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bioEditTextStepThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_bio"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/tell_us_abit_about_yourself"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/genderToggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/bioLayout"
+        android:layout_margin="15dp"
+        android:background="@drawable/green_out_line"
+        android:checkedButton="@+id/offerButton"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/femaleButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_green_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/female"
+            android:textColor="@color/dark_grey" />
+
+        <RadioButton
+            android:id="@+id/maleButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_green_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/male"
+            android:textColor="@color/dark_grey" />
+    </RadioGroup>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nextBtnThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/genderToggle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_next_one"
+        android:backgroundTint="@color/backdground_float_action_button"
+        android:src="@drawable/right_arrow"
+        android:contentDescription="@string/todo" />
+</RelativeLayout>

@@ -14,11 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ import androidx.fragment.app.Fragment;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +37,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -52,13 +52,19 @@ public class RegisterStepFourFragment extends Fragment {
 
     //Widgets
     private View mView;
-    private Button finish;
-    private ImageView mBackButton4, mCarPhoto, mRestartRegistration;
+    private FloatingActionButton finish;
+    private ImageView mBackButtonFour, mCarPhoto, mRestartRegistration;
     private EditText mLicence, mCar, mSeats, mRegistration;
+    private EditText mStartPoint;
+    private EditText mDestination;
     private TextInputLayout mLicenceLayout, mCarLayout, mRegistrationLayout, mSeatsLayout;
     private RadioButton mCarToggleTrue, mCarToggleFalse;
     private RadioGroup mCarToggle;
     private Boolean ownVehicle;
+    private TextView mQuestionHeading;
+
+    private LinearLayout mDestinationLinearLayout;
+    private LinearLayout mVehicle;
 
     //Profile picture vars
     private final int PICK_IMAGE_REQUEST = 71;
@@ -102,42 +108,32 @@ public class RegisterStepFourFragment extends Fragment {
         mRegistrationLayout = mView.findViewById(R.id.registrationLayout);
         mSeatsLayout = mView.findViewById(R.id.seatsLayout);
         mCarPhoto = mView.findViewById(R.id.uploadCarPicture);
+        mStartPoint = mView.findViewById(R.id.start_point);
+        mDestination = mView.findViewById(R.id.destination);
+        mVehicle = mView.findViewById(R.id.vehicle);
+        mDestinationLinearLayout = mView.findViewById(R.id.destinationLinearLayout);
+        mQuestionHeading = mView.findViewById(R.id.questionHeading);
 
-        mCarPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
+        mCarPhoto.setOnClickListener(v -> chooseImage());
 
         mCarToggle.check(mCarToggleFalse.getId());
         mCarToggle.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId)
             {
                 case R.id.yesCarButton:
-                    mLicence.setVisibility(View.VISIBLE);
-                    mCar.setVisibility(View.VISIBLE);
-                    mSeats.setVisibility(View.VISIBLE);
-                    mRegistration.setVisibility(View.VISIBLE);
-                    mLicenceLayout.setVisibility(View.VISIBLE);
-                    mCarLayout.setVisibility(View.VISIBLE);
-                    mRegistrationLayout.setVisibility(View.VISIBLE);
-                    mSeatsLayout.setVisibility(View.VISIBLE);
+                    mQuestionHeading.setText(R.string.your_car_information);
+                    mVehicle.setVisibility(View.VISIBLE);
+                    mDestinationLinearLayout.setVisibility(View.GONE);
                     break;
                 case R.id.noCarButton:
-                    mLicence.setVisibility(View.INVISIBLE);
-                    mCar.setVisibility(View.INVISIBLE);
-                    mSeats.setVisibility(View.INVISIBLE);
-                    mRegistration.setVisibility(View.INVISIBLE);
-                    mLicenceLayout.setVisibility(View.INVISIBLE);
-                    mCarLayout.setVisibility(View.INVISIBLE);
-                    mRegistrationLayout.setVisibility(View.INVISIBLE);
-                    mSeatsLayout.setVisibility(View.INVISIBLE);
+                    mQuestionHeading.setText(R.string.your_route);
+                    mVehicle.setVisibility(View.GONE);
+                    mDestinationLinearLayout.setVisibility(View.VISIBLE);
                     break;
             }
         });
 
-        //Make edit fields invisible by default
+        /*//Make edit fields invisible by default
         mLicence.setVisibility(View.INVISIBLE);
         mCar.setVisibility(View.INVISIBLE);
         mSeats.setVisibility(View.INVISIBLE);
@@ -145,7 +141,7 @@ public class RegisterStepFourFragment extends Fragment {
         mLicenceLayout.setVisibility(View.INVISIBLE);
         mCarLayout.setVisibility(View.INVISIBLE);
         mRegistrationLayout.setVisibility(View.INVISIBLE);
-        mSeatsLayout.setVisibility(View.INVISIBLE);
+        mSeatsLayout.setVisibility(View.INVISIBLE);*/
 
         finish.setOnClickListener(v -> {
             switch (mCarToggle.getCheckedRadioButtonId())
@@ -158,28 +154,18 @@ public class RegisterStepFourFragment extends Fragment {
                     break;
 
                 case R.id.noCarButton:
-                    mOnButtonClickListener.onButtonClicked(v);
+                    if (mDestination.getText().length() > 0 && mStartPoint.getText().length() > 0) {
+                        mOnButtonClickListener.onButtonClicked(v);
+                    }
                     break;
             }
         });
 
-        mBackButton4 = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+        mBackButtonFour = mView.findViewById(R.id.loginBackArrowStep);
+        mBackButtonFour.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
-        mRestartRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
-
-
+        mRestartRegistration.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         return mView;
     }
@@ -187,7 +173,7 @@ public class RegisterStepFourFragment extends Fragment {
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_PICK);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
@@ -214,18 +200,10 @@ public class RegisterStepFourFragment extends Fragment {
         if (filePath != null){
             final StorageReference ref = storageReference.child("carImages/"+UUID.randomUUID().toString());
             ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Log.i("STEP3", "onActivityResult: Image uploaded" + uri);
-                                    imgURL = uri.toString();
-                                }
-                            });
-                        }
-                    })
+                    .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        Log.i("STEP3", "onActivityResult: Image uploaded" + uri);
+                        imgURL = uri.toString();
+                    }))
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -260,6 +238,14 @@ public class RegisterStepFourFragment extends Fragment {
             return Integer.parseInt(mSeats.getText().toString());
         }
         return 0;
+    }
+
+    public String getStartPoint() {
+        return mStartPoint.getText().toString();
+    }
+
+    public String getDestination(){
+        return mDestination.getText().toString();
     }
 
     public String getRegistration() {

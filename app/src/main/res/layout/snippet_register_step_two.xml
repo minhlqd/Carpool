@@ -1,59 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+<RelativeLayout
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/backgroundRelativeLayout"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/backgroundRelativeLayout">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_btn_register">
 
-        <RelativeLayout
-            android:id="@+id/relLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background_register"
-            android:gravity="center">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:width="400dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_username"
+            android:drawableEnd="@drawable/ic_tick"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/username"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/usernameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/background_btn_register">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameStepTwoEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:width="400dp"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_username"
-                    android:drawableEnd="@drawable/ic_tick"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="sans-serif"
-                    android:hint="@string/username"
-                    android:inputType="textPersonName"
-                    android:padding="8dp"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/next_btn_register_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/usernameLayout"
-                android:layout_alignEnd="@id/usernameLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="23.5dp"
-                android:background="@drawable/btn_next_one"
-                android:fontFamily="@font/madeleina"
-                android:text="@string/next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_btn_register_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameLayout"
+        android:layout_alignEnd="@id/usernameLayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="23.5dp"
+        android:src="@drawable/right_arrow"
+        android:backgroundTint="@color/backdground_float_action_button"/>
 </RelativeLayout>
-</merge>

@@ -125,9 +125,9 @@ public class FirebaseMethods {
     }
 
     public void addNewUser(String email, String full_name, String username, String profile_photo, long mobile_number, String dob, String licence_number,
-                           String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo){
+                           String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo, String startPoint, String destination){
 
-        User user = new User(userID ,email, full_name, username, profile_photo, mobile_number, dob, licence_number, 0, 0,  car, registration_plate, seats,education, work, bio, carOwner, gender, 50 ,car_photo);
+        User user = new User(userID ,email, full_name, username, profile_photo, mobile_number, dob, licence_number, 0, 0,  car, registration_plate, seats,education, work, bio, carOwner, gender, 50 ,car_photo, startPoint, destination);
 
         myRef.child("user")
                 .child(userID)

@@ -10,11 +10,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -27,15 +25,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,7 +50,7 @@ public class RegisterStepThreeFragment extends Fragment {
 
     //widgets
     private View mView;
-    private Button mNextButton3;
+    private FloatingActionButton mNextButtonThree;
     private ImageView mBackButton3;
     private ImageView mRegistrationPicture;
     private ImageView mRestartRegistration;
@@ -109,17 +105,17 @@ public class RegisterStepThreeFragment extends Fragment {
         storageReference = storage.getReference();
 
         //instantiate objects
-        mNextButton3 = (Button) mView.findViewById(R.id.nextBtn3);
-        mDob = (EditText) mView.findViewById(R.id.dobStepThreeEditText);
-        mFullName = (EditText) mView.findViewById(R.id.full_name);
-        mMobileNumber = (EditText) mView.findViewById(R.id.mobileStepThreeEditText);
-        mGenderGroup = (RadioGroup) mView.findViewById(R.id.genderToggle);
-        maleRadioButton = (RadioButton) mView.findViewById(R.id.femaleButton);
-        femaleRadioButton = (RadioButton) mView.findViewById(R.id.maleButton);
-        mRegistrationPicture= (ImageView) mView.findViewById(R.id.registrationPicture);
-        mWork = (EditText) mView.findViewById(R.id.workEditTextStepThree);
-        mEducation = (EditText) mView.findViewById(R.id.educationEditTextStepThree);
-        mBio = (EditText) mView.findViewById(R.id.bioEditTextStepThree);
+        mNextButtonThree = mView.findViewById(R.id.nextBtnThree);
+        mDob = mView.findViewById(R.id.dobStepThreeEditText);
+        mFullName = mView.findViewById(R.id.full_name);
+        mMobileNumber = mView.findViewById(R.id.mobileStepThreeEditText);
+        mGenderGroup = mView.findViewById(R.id.genderToggle);
+        maleRadioButton = mView.findViewById(R.id.femaleButton);
+        femaleRadioButton = mView.findViewById(R.id.maleButton);
+        mRegistrationPicture= mView.findViewById(R.id.registrationPicture);
+        mWork = mView.findViewById(R.id.workEditTextStepThree);
+        mEducation = mView.findViewById(R.id.educationEditTextStepThree);
+        mBio = mView.findViewById(R.id.bioEditTextStepThree);
 
         mCalendar = Calendar.getInstance();
         date = (view, year, month, dayOfMonth) -> {
@@ -129,7 +125,7 @@ public class RegisterStepThreeFragment extends Fragment {
             updateLabel();
         };
 
-        mNextButton3.setOnClickListener(v -> {
+        mNextButtonThree.setOnClickListener(v -> {
             if(maleRadioButton.isChecked() || femaleRadioButton.isChecked()) {
                 if (mDob.getText().length() > ZERO_FIELD && mFullName.getText().length() > ZERO_FIELD && mMobileNumber.getText().length() > ZERO_FIELD &&
                         mWork.getText().length() > ZERO_FIELD && mEducation.getText().length() > ZERO_FIELD && mBio.getText().length() > ZERO_FIELD ){
@@ -146,7 +142,7 @@ public class RegisterStepThreeFragment extends Fragment {
             }
         });
 
-        mBackButton3 = (ImageView) mView.findViewById(R.id.loginBackArrowStep);
+        mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
         mBackButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +150,7 @@ public class RegisterStepThreeFragment extends Fragment {
             }
         });
 
-        mRestartRegistration = (ImageView) mView.findViewById(R.id.restartRegistrationBtn);
+        mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

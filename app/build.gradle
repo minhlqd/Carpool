@@ -24,6 +24,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -58,14 +62,14 @@ dependencies {
 
      //Firebase connection and authentication
      implementation 'com.google.firebase:firebase-core:20.1.0'
-     implementation 'com.google.firebase:firebase-auth:21.0.1'
-     implementation 'com.google.firebase:firebase-database:20.0.3'
+     implementation 'com.google.firebase:firebase-auth:21.0.2'
+     implementation 'com.google.firebase:firebase-database:20.0.4'
 
      //Firebase storage
-     implementation 'com.google.firebase:firebase-storage:20.0.0'
+     implementation 'com.google.firebase:firebase-storage:20.0.1'
 
      //Firebase messaging
-     implementation 'com.google.firebase:firebase-messaging:23.0.0'
+     implementation 'com.google.firebase:firebase-messaging:23.0.1'
 
      //Google play services
      implementation 'com.google.android.gms:play-services-maps:18.0.2'

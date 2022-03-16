@@ -22,11 +22,13 @@ public class User {
     private int userRating;
     private int points;
     private Boolean carOwner;
+    private String startPoint;
+    private String destination;
 
     public User() { }
 
     public User(String user_id, String email, String full_name, String username, String profile_photo, Long mobile_number, String dob, String licence_number, int completedRides, int userRating,
-                String car, String registration_plate, int seats, String education, String work, String bio, Boolean carOwner, String gender, int points, String car_photo) {
+                String car, String registration_plate, int seats, String education, String work, String bio, Boolean carOwner, String gender, int points, String car_photo, String startPoint, String destination) {
         this.user_id = user_id;
         this.email = email;
         this.full_name = full_name;
@@ -47,6 +49,24 @@ public class User {
         this.work = work;
         this.points = points;
         this.bio = bio;
+        this.startPoint = startPoint;
+        this.destination = destination;
+    }
+
+    public String getStartPoint() {
+        return startPoint;
+    }
+
+    public void setStartPoint(String startPoint) {
+        this.startPoint = startPoint;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public String getUser_id() {
@@ -227,6 +247,8 @@ public class User {
                 ", education='" + education + '\'' +
                 ", work='" + work + '\'' +
                 ", bio='" + bio + '\'' +
+                ", startPoint='" + startPoint + '\'' +
+                ", destination='" + destination + '\'' +
                 ", mobile_number=" + mobile_number +
                 ", completedRides=" + completedRides +
                 ", seats=" + seats +

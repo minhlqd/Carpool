@@ -2,17 +2,18 @@
 <merge xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<RelativeLayout
-    android:background="@color/background_register"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/backgroundRelativeLayout">
+    <RelativeLayout
+        android:fitsSystemWindows="true"
+        android:background="@color/background_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backgroundRelativeLayout">
 
         <RelativeLayout
+            android:id="@+id/relLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/relLayout1">
+            android:gravity="center">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/uploadCarPicture"
@@ -22,15 +23,14 @@
                 android:src="@drawable/ic_upload_car" />
 
             <TextView
+                android:id="@+id/questionHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/do_you_own_a_vehicle"
                 android:layout_below="@id/uploadCarPicture"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:gravity="center_horizontal"
-                android:id="@+id/questionHeading"/>
+                android:text="@string/do_you_own_a_vehicle" />
 
             <RadioGroup
                 android:id="@+id/carToggle"
@@ -75,117 +75,183 @@
                     android:textColor="@color/dark_grey" />
             </RadioGroup>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/background_btn_register"
+            <LinearLayout
+                android:id="@+id/vehicle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/carToggle"
-                android:id="@+id/licenceLayout">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/licenceLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:inputType="textPersonName"
-                    android:drawableStart="@drawable/ic_fullname"
-                    android:drawablePadding="10dp"
-                    android:padding="5dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/licenceStepFourEditText"
-                    android:hint="@string/licence_number" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/background_btn_register"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/licenceStepFourEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_fullname"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/licence_number"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/carLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/carStepFourEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_car_icon"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/car"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/registrationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registrationStepFourEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/registration"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/seatsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/seatsStepFourEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_seat_icon"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/seats"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/destinationLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/licenceLayout"
-                android:id="@+id/carLayout">
-                <com.google.android.material.textfield.TextInputEditText
+                android:layout_below="@id/carToggle"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/startPointLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@android:color/transparent"
-                    android:inputType="textPersonName"
-                    android:drawableStart="@drawable/ic_car_icon"
-                    android:drawablePadding="10dp"
-                    android:padding="5dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/carStepFourEditText"
-                    android:hint="@string/car" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/background_btn_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/carLayout"
-                android:id="@+id/registrationLayout">
-                <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/start_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/journey"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/start_point"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/destinationLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:inputType="textPersonName"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawablePadding="10dp"
-                    android:padding="5dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/registrationStepFourEditText"
-                    android:hint="@string/registration_plate" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/background_btn_register">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/registrationLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/background_btn_register"
-                android:id="@+id/seatsLayout">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:inputType="textPersonName"
-                    android:drawableStart="@drawable/ic_seat_icon"
-                    android:drawablePadding="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="5dp"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:id="@+id/seatsStepFourEditText"
-                    android:hint="@string/seats" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/journey"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/destination"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/finish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/seatsLayout"
-                android:layout_alignEnd="@id/seatsLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="23.5dp"
-                android:background="@drawable/btn_next_one"
-                android:fontFamily="@font/madeleina"
-                android:text="@string/finish"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="20sp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/check"
+                android:backgroundTint="@color/backdground_float_action_button"
+                android:contentDescription="@string/todo" />
         </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>
 </merge>

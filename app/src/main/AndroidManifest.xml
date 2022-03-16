@@ -52,7 +52,8 @@
             android:required="false" />
 
         <activity android:name=".account.AccountActivity" />
-        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".rides.RidesActivity" />
         <activity android:name=".home.OfferRideFragment" />

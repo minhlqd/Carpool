@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -16,7 +17,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.SectionsStatePageAdapter;
-import com.example.carpool.models.User;
 import com.example.carpool.register.RegisterStepFourFragment;
 import com.example.carpool.register.RegisterStepOneFragment;
 import com.example.carpool.register.RegisterStepThreeFragment;
@@ -60,6 +60,8 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     private String education;
     private String work;
     private String bio;
+    private String startPoint;
+    private String destination;
     private Long mobileNumber;
     private int seats;
     private Boolean carOwner;
@@ -149,7 +151,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(1);
                 //mViewPager.setCurrentItem(2);
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepTwoFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepThreeFragment).commit();
                 break;
 
             case R.id.next_btn_register_two:
@@ -158,7 +160,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepThreeFragment).commit();
                 break;
 
-            case R.id.nextBtn3:
+            case R.id.nextBtnThree:
                 //handle currPos is reached last item
                 //mViewPager.setCurrentItem(3);
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepFourFragment).commit();
@@ -191,8 +193,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.email = mRegisterStepOneFragment.getEmail();
         String password = mRegisterStepOneFragment.getPassword();
 
-        this.username = mRegisterStepTwoFragment.getUsername();
-        Log.d(TAG, "gatherData: "  + username);
+        this.username = mRegisterStepOneFragment.getUsername();
 
         this.fullName = mRegisterStepThreeFragment.getFullName();
         this.dob = mRegisterStepThreeFragment.getDob();
@@ -209,6 +210,8 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.seats = mRegisterStepFourFragment.getSeats();
         this.carOwner = mRegisterStepFourFragment.getCarToggle();
         this.car_photo = mRegisterStepFourFragment.getCarPhoto();
+        this.destination = mRegisterStepFourFragment.getDestination();
+        this.startPoint = mRegisterStepFourFragment.getStartPoint();
 
         mFirebaseMethods.createAccount(this.email, password);
     }
@@ -234,7 +237,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 mUsername = username + append;
 
                 //add new user to the database
-                mFirebaseMethods.addNewUser(email, fullName, mUsername, profile_photo, mobileNumber, dob, licence_number, car, registration_plate, seats, education, work, bio, carOwner, gender, car_photo);
+                mFirebaseMethods.addNewUser(email, fullName, mUsername, profile_photo, mobileNumber, dob, licence_number, car, registration_plate, seats, education, work, bio, carOwner, gender, car_photo, startPoint, destination);
 
                 Toast.makeText(mContext, "Signup successful. You may login now!.", Toast.LENGTH_SHORT).show();
 
@@ -258,16 +261,15 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
             if (user != null) {
-                // User is signed in
 
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         checkIfUsernameExists(username);
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });

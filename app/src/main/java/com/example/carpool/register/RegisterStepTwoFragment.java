@@ -3,7 +3,6 @@ package com.example.carpool.register;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,7 @@ public class RegisterStepTwoFragment extends Fragment {
         mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
-        mUsernameStepTwoEditText = (EditText) mView.findViewById(R.id.usernameStepTwoEditText);
+        mUsernameStepTwoEditText = (EditText) mView.findViewById(R.id.username);
 
         Button mNextBtn2 = (Button) mView.findViewById(R.id.next_btn_register_two);
         mNextBtn2.setOnClickListener(v -> {

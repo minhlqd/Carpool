@@ -60,4 +60,9 @@
     <string name="no">Không</string>
     <string name="do_you_own_a_vehicle">Bạn có sở hữu ô tô nào không?</string>
     <string name="no_results_found">Không tìm thấy kết quả</string>
+    <string name="check_your_email">Xin vui lòng kiểm tra email của bạn</string>
+    <string name="start_point">Điểm đi</string>
+    <string name="your_car_information">Vui lòng nhập thông tin xe của bạn</string>
+    <string name="your_route">Vui lòng nhập tuyến đường bạn thường đi</string>
+    <string name="yes">Có</string>
 </resources>

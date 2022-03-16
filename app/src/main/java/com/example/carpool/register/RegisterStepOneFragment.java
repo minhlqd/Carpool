@@ -3,7 +3,6 @@ package com.example.carpool.register;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.SectionsStatePageAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -49,9 +49,10 @@ public class RegisterStepOneFragment extends Fragment {
     private OnButtonClickListener mOnButtonClickListener;
 
     //widgets
-    private Button mNextButton1;
-    private ImageView mbackButton1;
+    private FloatingActionButton mNextButtonOne;
+    private ImageView mBackButtonOne;
     private EditText mEmail, mPassword;
+    private EditText mUsername;
 
     private Activity activity;
 
@@ -70,15 +71,17 @@ public class RegisterStepOneFragment extends Fragment {
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         //instantiate objects
-        mViewPager = (ViewPager) mView.findViewById(R.id.container);
-        mRelativeLayout = (RelativeLayout) mView.findViewById(R.id.removeableLayout);
+        mViewPager = mView.findViewById(R.id.container);
+        mRelativeLayout = mView.findViewById(R.id.removeableLayout);
 
-        mNextButton1 = (Button) mView.findViewById(R.id.next_btn_one);
-        mEmail = (EditText) mView.findViewById(R.id.email);
-        mPassword = (EditText) mView.findViewById(R.id.password);
+        mNextButtonOne = mView.findViewById(R.id.next_btn_one);
+        mEmail = mView.findViewById(R.id.email);
+        mPassword = mView.findViewById(R.id.password);
+        mUsername = mView.findViewById(R.id.username);
 
-        mNextButton1.setOnClickListener(v -> {
-            if(mEmail.getText().length() > 0  && mPassword.getText().length() > 0) {
+        mNextButtonOne.setOnClickListener(v -> {
+            if(mEmail.getText().length() > 0  && mPassword.getText().length() > 0
+                    && mUsername.getText().length() > 0) {
                 if (isValidEmailAddress(mEmail.getText().toString())){
                     if (mPassword.getText().length() >= 8) {
                         mOnButtonClickListener.onButtonClicked(v);
@@ -94,13 +97,8 @@ public class RegisterStepOneFragment extends Fragment {
             }
         });
 
-        mbackButton1 = (ImageView) mView.findViewById(R.id.loginBackArrow);
-        mbackButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+        mBackButtonOne = mView.findViewById(R.id.loginBackArrow);
+        mBackButtonOne.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         return mView;
     }
@@ -130,6 +128,10 @@ public class RegisterStepOneFragment extends Fragment {
 
     public String getPassword(){
         return mPassword.getText().toString().trim();
+    }
+
+    public String getUsername() {
+        return mUsername.getText().toString().trim();
     }
 
     @Override
