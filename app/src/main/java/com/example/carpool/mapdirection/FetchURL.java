@@ -13,9 +13,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Vishal on 10/20/2018.
- */
 
 public class FetchURL extends AsyncTask<String, Void, String> {
     Context mContext;
@@ -54,14 +51,11 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         HttpURLConnection urlConnection = null;
         try {
             URL url = new URL(strUrl);
-            // Creating an http connection to communicate with url
             urlConnection = (HttpURLConnection) url.openConnection();
-            // Connecting to url
             urlConnection.connect();
-            // Reading data from url
             iStream = urlConnection.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             String line = "";
             while ((line = br.readLine()) != null) {
                 sb.append(line);
@@ -70,6 +64,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             br.close();
         } catch (Exception e) {
         } finally {
+            assert iStream != null;
             iStream.close();
             urlConnection.disconnect();
         }

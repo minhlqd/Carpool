@@ -1,9 +1,5 @@
 package com.example.carpool.models;
 
-/**
- * Created by P16174003 on 05/02/2019.
- */
-
 public class RequestUser {
     private String user_id;
     private String profile_photo;

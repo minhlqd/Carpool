@@ -11,10 +11,11 @@
 
 
         <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relativeLayout2">
-            <include layout="@layout/snippet_center_pickup"/>
+            android:layout_height="match_parent">
+
+            <include layout="@layout/snippet_center_pickup" />
         </RelativeLayout>
     </RelativeLayout>
 

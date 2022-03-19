@@ -36,7 +36,7 @@
                     android:layout_marginTop="17dp"
                     android:layout_marginRight="50dp"
                     android:fontFamily="@font/main"
-                    android:text="@string/update_car_details"
+                    android:text="@string/update"
                     android:textSize="16sp"
                     android:textColor="@color/white" />
             </RelativeLayout>

@@ -65,6 +65,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     private Long mobileNumber;
     private int seats;
     private Boolean carOwner;
+    private String role;
 
     //Fragment variables
     private SectionsStatePageAdapter pageAdapter;
@@ -212,6 +213,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.car_photo = mRegisterStepFourFragment.getCarPhoto();
         this.destination = mRegisterStepFourFragment.getDestination();
         this.startPoint = mRegisterStepFourFragment.getStartPoint();
+        this.role = mRegisterStepFourFragment.getRole();
 
         mFirebaseMethods.createAccount(this.email, password);
     }
@@ -237,7 +239,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 mUsername = username + append;
 
                 //add new user to the database
-                mFirebaseMethods.addNewUser(email, fullName, mUsername, profile_photo, mobileNumber, dob, licence_number, car, registration_plate, seats, education, work, bio, carOwner, gender, car_photo, startPoint, destination);
+                mFirebaseMethods.addNewUser(email, fullName, mUsername, profile_photo, mobileNumber, dob, licence_number, car, registration_plate, seats, education, work, bio, carOwner, gender, car_photo, startPoint, destination, role);
 
                 Toast.makeText(mContext, "Signup successful. You may login now!.", Toast.LENGTH_SHORT).show();
 
@@ -245,7 +247,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

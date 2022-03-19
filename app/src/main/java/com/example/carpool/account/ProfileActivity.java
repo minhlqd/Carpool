@@ -1,9 +1,11 @@
 package com.example.carpool.account;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carpool.R;
+import com.example.carpool.login.LoginActivity;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.User;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 
@@ -31,12 +35,13 @@ import java.util.HashMap;
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
 
-    private Context mContext = ProfileActivity.this;
+    private final Context mContext = ProfileActivity.this;
 
     private ImageView profilePhoto, mBackBtn;
     private TextView mDisplayUsername, mPersonalBio, mEducationTextview, mWorkTextview, mReview1, mReview2, mReview3;
     private RatingBar mRatingBar;
     private LinearLayout mReviewLayout;
+    private Button logout;
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -44,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
-    private HashMap<Integer, TextView> textViewHashMap = new HashMap<>();
+    private final HashMap<Integer, TextView> textViewHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +72,15 @@ public class ProfileActivity extends AppCompatActivity {
 //        TextView textView3 =  new TextView(this);
 //        textViewHashMap.put(2, textView3);
 
-        setupAtivityWidgets();
+        setupActivityWidgets();
+
+        logout.setOnClickListener(v -> {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
+            mAuth.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
 
 //        mReviewLayout.addView(textView1);
 //        mReviewLayout.addView(textView2);
@@ -93,17 +106,18 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setupAtivityWidgets(){
+    private void setupActivityWidgets(){
         //instantiate objects
-        mBackBtn = (ImageView) findViewById(R.id.backBtn);
-        profilePhoto = (ImageView) findViewById(R.id.profile_photo);
-        mDisplayUsername = (TextView) findViewById(R.id.nameTextview);
-        mPersonalBio = (TextView) findViewById(R.id.personalBio);
-        mEducationTextview = (TextView) findViewById(R.id.educationTextview);
-        mPersonalBio = (TextView) findViewById(R.id.personaBioText);
-        mWorkTextview = (TextView) findViewById(R.id.workTextview);
+        mBackBtn = findViewById(R.id.backBtn);
+        profilePhoto = findViewById(R.id.profile_photo);
+        mDisplayUsername = findViewById(R.id.nameTextview);
+        mPersonalBio = findViewById(R.id.personalBio);
+        mEducationTextview = findViewById(R.id.educationTextview);
+        mPersonalBio = findViewById(R.id.personaBioText);
+        mWorkTextview = findViewById(R.id.workTextview);
         //mReview1 = (TextView) findViewById(R.id.review1);
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
+        mRatingBar = findViewById(R.id.ratingBar);
+        logout = findViewById(R.id.logout);
 
         //mReviewLayout = (LinearLayout) findViewById(R.id.reviewLayout);
         //mReview1.setVisibility(View.INVISIBLE);
@@ -112,20 +126,15 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setProfileWidgets(User userSettings){
 
-        User user = userSettings;
+        UniversalImageLoader.setImage(userSettings.getProfilePhoto(), profilePhoto, null,"");
 
-        UniversalImageLoader.setImage(user.getProfile_photo(), profilePhoto, null,"");
-
-        mDisplayUsername.setText(user.getUsername());
-        mRatingBar.setRating(user.getUserRating());
-        mPersonalBio.setText(user.getBio());
-        mEducationTextview.setText(user.getEducation());
-        mWorkTextview.setText(user.getWork());
+        mDisplayUsername.setText(userSettings.getUsername());
+        mRatingBar.setRating(userSettings.getUserRating());
+        mPersonalBio.setText(userSettings.getBio());
+        mEducationTextview.setText(userSettings.getEducation());
+        mWorkTextview.setText(userSettings.getWork());
     }
 
-    /**
-     * Fetches the first 3 user reviews if there are any available
-     */
     private void fetchUserReviews(){
 
         final UserReview userReview = new UserReview();
@@ -135,17 +144,18 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        for (DataSnapshot dataSnapshot1 : ds.getChildren()){
-                            userReview.setComment(dataSnapshot1.getValue().toString());
-                            userReview.setRating(Float.parseFloat(dataSnapshot1.getKey()));
+                        for (DataSnapshot snapshot : ds.getChildren()){
+                            if (snapshot.getValue() != null && snapshot.getKey() != null) {
+                                userReview.setComment(snapshot.getValue().toString());
+                                userReview.setRating(Float.parseFloat(snapshot.getKey()));
 
-                            int textViewCount = 1;
+                                int textViewCount = 1;
 
+                                textViewHashMap.get(textViewCount).setText(userReview.getComment());
+                                Log.i(TAG, "onDataChange: " + userReview);
 
-                            textViewHashMap.get(textViewCount).setText(userReview.getComment());
-                            Log.i(TAG, "onDataChange: " + userReview.toString());
-
-                            textViewCount++;
+                                textViewCount++;
+                            }
 
                         }
                     }
@@ -166,7 +176,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getSpeficUserSettings(dataSnapshot, userID));
+                setProfileWidgets(mFirebaseMethods.getSpecificUserSettings(dataSnapshot, userID));
 
             }
 

@@ -7,15 +7,13 @@
         android:id="@+id/relLayout1">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/uploadCarPicture"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/uploadCarPicture"
-            android:src="@drawable/ic_upload_car"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_upload_car" />
 
 
-
-        <!-- Gender layout -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +26,7 @@
             android:id="@+id/questionHeading"/>
 
         <RadioGroup
-            android:checkedButton="@+id/yesCarButton"
+            android:checkedButton="@+id/driver"
             android:id="@+id/carToggle"
             android:layout_width="match_parent"
             android:layout_margin="15dp"
@@ -41,7 +39,7 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_marginStart="1dp"
-                android:id="@+id/noCarButton"
+                android:id="@+id/passenger"
                 android:background="@drawable/toggle_widget_green_background"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -49,22 +47,22 @@
                 android:focusedByDefault="true"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/no"
+                android:text="@string/passenger"
                 android:textColor="@color/dark_grey" />
 
             <RadioButton
                 android:layout_marginEnd="1dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="1dp"
-                android:id="@+id/yesCarButton"
+                android:id="@+id/driver"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/toggle_widget_green_background"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/yes"
-                android:textColor="@color/dark_grey" />
+                android:text="@string/driver"
+                android:textColor="@color/white" />
         </RadioGroup>
 
         <RelativeLayout
@@ -172,17 +170,19 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/snippetCarDetailsBtn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/seatsLayout"
-            android:text="@string/update_car_details"
-            android:textColor="@color/white"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:backgroundTint="@color/dark_grey"/>
+            <Button
+                android:id="@+id/snippetCarDetailsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/seatsLayout"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/background_btn_login"
+                android:text="@string/update"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
     </RelativeLayout>
     </RelativeLayout>

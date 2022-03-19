@@ -14,7 +14,7 @@
     <!-- Firebase database fields -->
     <string name="dbName_user">user</string>
     <string name="dbName_availableRide" translatable="false">availableRide</string>
-    <string name="field_username" translatable="false">username</string>
+    <string name="field_username" translatable="false">Username</string>
     <string name="field_email" translatable="false">email</string>
 
     <!-- Settings preference fragment -->
@@ -189,7 +189,7 @@
     <string name="update_email_address" translatable="false">Update email Address</string>
     <string name="change_password" translatable="false">Change password</string>
     <string name="update_my_details" translatable="false">Update my details</string>
-    <string name="update_car_details" translatable="false">Update car details</string>
+    <string name="update">Update</string>
     <string name="view_profile" translatable="false">View profile</string>
     <string name="profile" translatable="false">profile</string>
     <string name="no_rides_booked" translatable="false">No rides booked</string>
@@ -209,7 +209,7 @@
     <string name="no_rides_created" translatable="false">No rides created</string>
     <string name="no_results_found">No results found</string>
     <string name="max_luggage" translatable="false">Max luggage</string>
-    <string name="do_you_own_a_vehicle">Do you own a vehicle?</string>
+    <string name="do_you_own_a_vehicle">What role do you join?</string>
     <string name="no">No</string>
     <string name="licence_number">Licence number</string>
     <string name="car">Car</string>
@@ -272,4 +272,15 @@
     <string name="start_point">Start Point</string>
     <string name="your_car_information">Please enter your car information</string>
     <string name="your_route">Please enter the route you usually take</string>
+    <string name="intent_location">LOCATION</string>
+    <string name="intent_destination" translatable="false">DESTINATION</string>
+    <string name="intent_current_latitue" translatable="false">currentLatitue</string>
+    <string name="intent_current_long_titude">currentLongtitude</string>
+    <string name="latlng" translatable="false">LatLng</string>
+    <string name="google_map_api" translatable="false">AIzaSyALhuFi29R8SgFwDNkXtHc-oqe8BaoG94o</string>
+    <string name="intent_gender">sameGender</string>
+    <string name="intent_date">DATE</string>
+    <string name="all_fields">All fields must be filled in</string>
+    <string name="passenger">Passenger</string>
+    <string name="driver">Driver</string>
 </resources>

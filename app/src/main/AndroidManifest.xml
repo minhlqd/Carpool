@@ -68,6 +68,7 @@
         <activity android:name=".account.HelpFragment" />
         <activity android:name=".account.ProfileActivity" />
         <activity
+            android:configChanges="locale|orientation"
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".settings.SettingsActivity"

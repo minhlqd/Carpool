@@ -1,5 +1,6 @@
 package com.example.carpool.pickup;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,10 +34,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class PickupLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "PickupLocationActivity";
-    private Context mContext = PickupLocationActivity.this;
+    private final Context mContext = this;
 
     //Google map variables
     private GoogleMap mMap;
@@ -62,16 +65,13 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
         setupWidgets();
         initMap();
 
-        mConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    getAddress(currentLocation);
-                    Common.setClassName(streetName);
-                    finish();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        mConfirm.setOnClickListener(v -> {
+            try {
+                getAddress(currentLocation);
+                Common.setClassName(streetName);
+                finish();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
@@ -92,7 +92,6 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void helpDialog(){
-
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -100,22 +99,14 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
         dialog.setCanceledOnTouchOutside(true);
 
         View masterView = dialog.findViewById(R.id.coach_mark_master_view);
-        masterView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        masterView.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
 
 
-    /**
-     * sets up map from the view
-     */
     private void initMap() {
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.pickupLocationMap);
+        assert mapFragment != null;
         mapFragment.getMapAsync(PickupLocationActivity.this);
     }
 
@@ -126,34 +117,44 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
 
         int height = 120;
         int width = 120;
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.marker_pickup_location);
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
-        mMap.addMarker(new MarkerOptions().position(currentLocation).title("Pickup location").draggable(true).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 18));
+        Log.d("MinhMX", "onMapReady: "  + currentLocation);
+        if (currentLocation != null) {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            BitmapDrawable bitmapDraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_pickup_location);
 
-        builder = new LatLngBounds.Builder();
-        builder.include(currentLocation);
-        bounds = builder.build();
+            Bitmap b = bitmapDraw.getBitmap();
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+            mMap.addMarker(new MarkerOptions().position(currentLocation)
+                    .title("Pickup location")
+                    .draggable(true)
+                    .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 18));
+
+            builder = new LatLngBounds.Builder();
+            builder.include(currentLocation);
+            bounds = builder.build();
 
 
-        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
+            mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                @Override
+                public void onMarkerDragStart(@NonNull Marker marker) {
 
-            }
+                }
 
-            @Override
-            public void onMarkerDrag(Marker marker) {
-            }
+                @Override
+                public void onMarkerDrag(@NonNull Marker marker) {
+                }
 
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
+                @Override
+                public void onMarkerDragEnd(@NonNull Marker marker) {
                     currentLocation = marker.getPosition();
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 18));
-            }
-        });
+                }
+            });
+        }
     }
 
     private void getAddress(LatLng latLng) throws IOException {

@@ -28,8 +28,24 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private RatingBar mRatingBar;
     private Button mEditRideBtn;
     private SectionsStatePageAdapter pageAdapter;
-    private String rides, seats, from, to, date, cost, username, pickupTime, extraTime, rideID, duration, userID, profile_photo, completedRides, pickupLocation, dateOnly, licencePlate;
-    private Float rating;
+    private final String rides;
+    private final String seats;
+    private final String from;
+    private final String to;
+    private final String date;
+    private final String cost;
+    private final String username;
+    private final String pickupTime;
+    private final String extraTime;
+    private final String rideID;
+    private final String duration;
+    private final String userID;
+    private final String profile_photo;
+    private final String completedRides;
+    private final String pickupLocation;
+    private final String dateOnly;
+    private final String licencePlate;
+    private final Float rating;
     private FloatingActionButton mViewProfileBtn;
 
 

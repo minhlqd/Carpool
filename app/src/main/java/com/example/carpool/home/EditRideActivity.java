@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -261,15 +260,15 @@ public class EditRideActivity extends AppCompatActivity {
 
         mUserSettings = userSettings;
 
-        UniversalImageLoader.setImage(user.getCar_photo(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(user.getCarPhoto(), mCarPhoto, null,"");
 
         username = user.getUsername();
         userRating = user.getUserRating();
         completeRides = user.getCompletedRides();
-        profile_photo = user.getProfile_photo();
+        profile_photo = user.getProfilePhoto();
         carID = user.getCar();
         seatsID = user.getSeats() - 1;
-        licencePlateID = user.getRegistration_plate();
+        licencePlateID = user.getRegistrationPlate();
 
         mUsername.setText(username);
         mLicencePlateEditText.setText(licencePlateID);

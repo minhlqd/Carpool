@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="link_blue">#FF5722</color>
-    <color name="color_primary">#008577</color>
-    <color name="color_primary_dark">#00574B</color>
+    <color name="color_primary">#FF5722</color>
+    <color name="color_primary_dark">#FF6E41</color>
     <color name="color_accent">#D81B60</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#bfbfbf</color>
@@ -40,5 +40,5 @@
     <color name="red">#fc0000</color>
     <color name="background_register">#EAEAEA</color>
     <color name="background_icon">#838383</color>
-    <color name="backdground_float_action_button">#FF5722</color>
+    <color name="background_float_action_button">#FF5722</color>
 </resources>

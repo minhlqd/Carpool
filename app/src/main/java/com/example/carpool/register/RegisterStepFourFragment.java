@@ -28,7 +28,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.IOException;
 import java.util.UUID;
 
+@SuppressWarnings("ALL")
 public class RegisterStepFourFragment extends Fragment {
 
     //Firebase
@@ -53,12 +53,21 @@ public class RegisterStepFourFragment extends Fragment {
     //Widgets
     private View mView;
     private FloatingActionButton finish;
-    private ImageView mBackButtonFour, mCarPhoto, mRestartRegistration;
-    private EditText mLicence, mCar, mSeats, mRegistration;
+    private ImageView mBackButtonFour;
+    private ImageView mCarPhoto;
+    private ImageView mRestartRegistration;
+    private EditText mLicence;
+    private EditText mCar;
+    private EditText mSeats;
+    private EditText mRegistration;
     private EditText mStartPoint;
     private EditText mDestination;
-    private TextInputLayout mLicenceLayout, mCarLayout, mRegistrationLayout, mSeatsLayout;
-    private RadioButton mCarToggleTrue, mCarToggleFalse;
+    private TextInputLayout mLicenceLayout;
+    private TextInputLayout mCarLayout;
+    private TextInputLayout mRegistrationLayout;
+    private TextInputLayout mSeatsLayout;
+    private RadioButton mCarToggleDiver;
+    private RadioButton mCarTogglePassenger;
     private RadioGroup mCarToggle;
     private Boolean ownVehicle;
     private TextView mQuestionHeading;
@@ -101,8 +110,8 @@ public class RegisterStepFourFragment extends Fragment {
         mSeats = mView.findViewById(R.id.seatsStepFourEditText);
         mRegistration = mView.findViewById(R.id.registrationStepFourEditText);
         mCarToggle = mView.findViewById(R.id.carToggle);
-        mCarToggleFalse = mView.findViewById(R.id.noCarButton);
-        mCarToggleTrue = mView.findViewById(R.id.yesCarButton);
+        mCarTogglePassenger = mView.findViewById(R.id.passenger);
+        mCarToggleDiver = mView.findViewById(R.id.driver);
         mLicenceLayout = mView.findViewById(R.id.licenceLayout);
         mCarLayout = mView.findViewById(R.id.carLayout);
         mRegistrationLayout = mView.findViewById(R.id.registrationLayout);
@@ -116,17 +125,21 @@ public class RegisterStepFourFragment extends Fragment {
 
         mCarPhoto.setOnClickListener(v -> chooseImage());
 
-        mCarToggle.check(mCarToggleFalse.getId());
+        mCarToggle.check(mCarTogglePassenger.getId());
         mCarToggle.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId)
             {
-                case R.id.yesCarButton:
-                    mQuestionHeading.setText(R.string.your_car_information);
+                case R.id.driver:
+                    mCarToggleDiver.setTextColor(R.color.white);
+                    mCarTogglePassenger.setTextColor(R.color.dark_grey);
+                    mCarPhoto.setBackground(getContext().getDrawable(R.drawable.driver));
                     mVehicle.setVisibility(View.VISIBLE);
                     mDestinationLinearLayout.setVisibility(View.GONE);
                     break;
-                case R.id.noCarButton:
-                    mQuestionHeading.setText(R.string.your_route);
+                case R.id.passenger:
+                    mCarTogglePassenger.setTextColor(R.color.white);
+                    mCarToggleDiver.setTextColor(R.color.dark_grey);
+                    mCarPhoto.setBackground(getContext().getDrawable(R.drawable.car_sharing));
                     mVehicle.setVisibility(View.GONE);
                     mDestinationLinearLayout.setVisibility(View.VISIBLE);
                     break;
@@ -146,14 +159,14 @@ public class RegisterStepFourFragment extends Fragment {
         finish.setOnClickListener(v -> {
             switch (mCarToggle.getCheckedRadioButtonId())
             {
-                case R.id.yesCarButton:
+                case R.id.driver:
                     if (mLicence.getText().length() > 0 && mCar.getText().length() > 0
                             && mSeats.getText().length() > 0 && mRegistration.getText().length() > 0 ) {
                         mOnButtonClickListener.onButtonClicked(v);
                     }
                     break;
 
-                case R.id.noCarButton:
+                case R.id.passenger:
                     if (mDestination.getText().length() > 0 && mStartPoint.getText().length() > 0) {
                         mOnButtonClickListener.onButtonClicked(v);
                     }
@@ -198,19 +211,14 @@ public class RegisterStepFourFragment extends Fragment {
 
     private void uploadImage(){
         if (filePath != null){
-            final StorageReference ref = storageReference.child("carImages/"+UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("car/"+UUID.randomUUID().toString());
             ref.putFile(filePath)
                     .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        Log.i("STEP3", "onActivityResult: Image uploaded" + uri);
                         imgURL = uri.toString();
                     }))
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show();
-                            Log.i("STEP3", "onActivityResult: failed to upload" + e.getMessage());
-                        }
-                    });
+                    .addOnFailureListener(e ->
+                            Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show()
+                    );
         }
     }
 
@@ -254,12 +262,22 @@ public class RegisterStepFourFragment extends Fragment {
 
     public Boolean getCarToggle() {
         int whichIndex = mCarToggle.getCheckedRadioButtonId();
-        if (whichIndex == R.id.yesCarButton) {
+        if (whichIndex == R.id.driver) {
             return true;
-        } else if (whichIndex == R.id.noCarButton) {
+        } else if (whichIndex == R.id.passenger) {
             return false;
         }
         return false;
+    }
+
+    public String getRole() {
+        int whichIndex = mCarToggle.getCheckedRadioButtonId();
+        if (whichIndex == R.id.driver) {
+            return "driver";
+        } else if (whichIndex == R.id.passenger) {
+            return "passenger";
+        }
+        return "passenger";
     }
 
     public String getCarPhoto() {

@@ -1,8 +1,8 @@
 package com.example.carpool.account;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CarUpdateFragment extends Fragment {
@@ -39,10 +41,12 @@ public class CarUpdateFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
+
+    private FirebaseUser firebaseUser;
 
     //Fragment view
     private View view;
@@ -61,29 +65,25 @@ public class CarUpdateFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_update_car, container, false);
-        mCarPhoto = (CircleImageView) view.findViewById(R.id.uploadCarPicture);
-        mCar = (EditText) view.findViewById(R.id.carEditText);
-        mRegistration = (EditText) view.findViewById(R.id.registrationEditText);
-        mLicence = (EditText) view.findViewById(R.id.licenceEditText);
-        mSeats = (EditText) view.findViewById(R.id.seatsEditText);
-        mCarOwnerRadioGroup = (RadioGroup) view.findViewById(R.id.carToggle);
-        ownerYesButton = (RadioButton) view.findViewById(R.id.yesCarButton);
-        ownerNoButton = (RadioButton) view.findViewById(R.id.noCarButton);
-        mCarDetailsLayout = (RelativeLayout) view.findViewById(R.id.carDetailsLayout);
+        mCarPhoto = view.findViewById(R.id.uploadCarPicture);
+        mCar = view.findViewById(R.id.carEditText);
+        mRegistration = view.findViewById(R.id.registrationEditText);
+        mLicence = view.findViewById(R.id.licenceEditText);
+        mSeats = view.findViewById(R.id.seatsEditText);
+        mCarOwnerRadioGroup = view.findViewById(R.id.carToggle);
+        ownerYesButton = view.findViewById(R.id.driver);
+        ownerNoButton = view.findViewById(R.id.passenger);
+        mCarDetailsLayout = view.findViewById(R.id.carDetailsLayout);
 
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        firebaseUser = mAuth.getCurrentUser();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference("user").child(firebaseUser.getUid());
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
 
-        mSnippetCarBtn = (Button) view.findViewById(R.id.snippetCarDetailsBtn);
-        mSnippetCarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveProfileSettings();
-            }
-        });
+        mSnippetCarBtn = view.findViewById(R.id.snippetCarDetailsBtn);
+        mSnippetCarBtn.setOnClickListener(v -> saveProfileSettings());
 
         setupFirebaseAuth();
 
@@ -91,25 +91,23 @@ public class CarUpdateFragment extends Fragment {
 
 
         //Setup back arrow for navigating back to 'ProfileActivity'
-        ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), AccountActivity.class);
-                startActivity(intent);
-            }
+        ImageView backArrow = view.findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), AccountActivity.class);
+            startActivity(intent);
         });
 
         mCarOwnerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 switch (checkedId) {
-                    case R.id.yesCarButton:
+                    case R.id.driver:
                         ownerYesButton.setChecked(true);
                         mCarDetailsLayout.setVisibility(View.VISIBLE);
                         break;
-                    case R.id.noCarButton:
+                    case R.id.passenger:
                         ownerNoButton.setChecked(true);
                         mCarDetailsLayout.setVisibility(View.GONE);
                         break;
@@ -120,14 +118,29 @@ public class CarUpdateFragment extends Fragment {
         return view;
     }
 
-    /**
-     * Retrieves the data inside the widgets and saves it to the database.
-     */
     private void saveProfileSettings(){
         final String car = mCar.getText().toString();
         final String registration = mRegistration.getText().toString();
         final String licence = mLicence.getText().toString();
         final int seats = Integer.parseInt(mSeats.getText().toString());
+
+        if (car.length() > 0 && registration.length() > 0 && licence.length() > 0 && mSeats.getText().toString().length() > 0) {
+            /*mRef.child("car").setValue(car);
+            mRef.child("registration").setValue(registration);
+            mRef.child("licence").setValue(licence);
+            mRef.child("seats").setValue(seats);*/
+            HashMap<String, Object> hashMapCarInfo = new HashMap<>();
+            hashMapCarInfo.put("carOwner", true);
+            hashMapCarInfo.put("car", car);
+            hashMapCarInfo.put("registration", registration);
+            hashMapCarInfo.put("licence",licence);
+            hashMapCarInfo.put("seats", seats);
+            mRef.updateChildren(hashMapCarInfo);
+            requireActivity().onBackPressed();
+        } else {
+            Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show();
+        }
+
 
 //        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
@@ -191,38 +204,33 @@ public class CarUpdateFragment extends Fragment {
 
     private void setProfileWidgets(User userSettings){
 
-        User user = userSettings;
-
         mUserSettings = userSettings;
 
-        UniversalImageLoader.setImage(user.getCar_photo(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(userSettings.getCarPhoto(), mCarPhoto, null,"");
 
-        mCar.setText(user.getCar());
-        mRegistration.setText(user.getRegistration_plate());
-        mLicence.setText(user.getLicence_number());
-        mSeats.setText(String.valueOf(user.getSeats()));
+        mCar.setText(userSettings.getCar());
+        mRegistration.setText(userSettings.getRegistrationPlate());
+        mLicence.setText(userSettings.getLicenceNumber());
+        mSeats.setText(String.valueOf(userSettings.getSeats()));
 
-        mCarPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), ShareActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
-//                getActivity().startActivity(intent);
-//                getActivity().finish();
-            }
+        mCarPhoto.setOnClickListener(v -> {
+           /* Intent intent = new Intent(getActivity(), ShareActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
+            getActivity().startActivity(intent);
+            getActivity().finish();*/
         });
     }
 
 
     private void setupFirebaseAuth(){
 
-        userID = mAuth.getCurrentUser().getUid();
+        if (mAuth.getCurrentUser() != null) {
+            userID = mAuth.getCurrentUser().getUid();
+        }
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
 
             }
@@ -234,13 +242,9 @@ public class CarUpdateFragment extends Fragment {
         });
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
@@ -249,7 +253,7 @@ public class CarUpdateFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 carOwner = dataSnapshot.getValue(Boolean.class);
-                if (carOwner == false) {
+                /*if (!carOwner) {
                     ownerNoButton.setChecked(true);
                     mCarDetailsLayout.setVisibility(View.GONE);
                     mCar.setText("");
@@ -257,7 +261,7 @@ public class CarUpdateFragment extends Fragment {
                     mLicence.setText("");
                     mSeats.setText("");
                     mCarPhoto.setImageDrawable(null);
-                }
+                }*/
             }
 
             @Override

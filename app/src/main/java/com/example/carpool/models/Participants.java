@@ -5,7 +5,6 @@ public class Participants {
     private String userProfilePhoto;
     private Boolean accepted;
 
-
     public Participants() {
     }
 

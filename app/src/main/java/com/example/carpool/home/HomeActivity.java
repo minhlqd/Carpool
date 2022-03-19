@@ -86,13 +86,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 @SuppressWarnings("ALL")
-public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, TaskLoadedCallback {
-    private static final String TAG = "HomeActivity";
+public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleApiClient.OnConnectionFailedListener, TaskLoadedCallback {
+    private static final String TAG = "MinhMX";
     private static final int ACTIVITY_NUMBER = 0;
 
-    private final Context mContext = HomeActivity.this;
+    private final Context mContext = this;
 
     //Google map permissions
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String userID;
 
     //Widgets
-    private AutoCompleteTextView destinationTextview, locationTextView;
+    private AutoCompleteTextView destination, location;
     private Button mSearchBtn, mDirectionsBtn, mSwitchTextBtn;
     private RadioButton findButton, offerButton;
     private RadioGroup mRideSelectionRadioGroup;
@@ -146,30 +146,24 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mFirebaseDatabse = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabse.getReference();
         if (mAuth.getCurrentUser() != null) {
-            //Gets userID of current user signed in
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             }
 
-            //Disables offer button when the user is logged in and they have no car
             findButton = findViewById(R.id.findButton);
             offerButton = findViewById(R.id.offerButton);
 
             getUserInformation(userID);
 
-            //Creates token with that new user ID
             updateFirebaseToken();
 
             checkNotifications();
 
-            //Subscribes to a topic with that user ID so only that user can see messages with that user ID
             FirebaseMessaging.getInstance().subscribeToTopic(userID);
         }
 
-
-        //Intitate widgets
-        destinationTextview = findViewById(R.id.destinationTextview);
-        locationTextView = findViewById(R.id.locationTextview);
+        destination = findViewById(R.id.destination);
+        location = findViewById(R.id.location);
 
         mSearchBtn = findViewById(R.id.searchBtn);
         mSwitchTextBtn = findViewById(R.id.switchTextBtn);
@@ -187,15 +181,15 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mSwitchTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
-                    String tempDestination1 = destinationTextview.getText().toString();
-                    String tempDestination12 = locationTextView.getText().toString();
+                if (destination.getText().toString().trim().length() > 0 && location.getText().toString().trim().length() > 0) {
+                    String tempDestination1 = destination.getText().toString();
+                    String tempDestination12 = location.getText().toString();
 
-                    locationTextView.setText(tempDestination1);
-                    destinationTextview.setText(tempDestination12);
+                    location.setText(tempDestination1);
+                    destination.setText(tempDestination12);
 
-                    locationTextView.dismissDropDown();
-                    destinationTextview.dismissDropDown();
+                    location.dismissDropDown();
+                    destination.dismissDropDown();
                 } else {
                     Toast.makeText(mContext, "Please enter location and destination", Toast.LENGTH_SHORT).show();
                 }
@@ -206,22 +200,29 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 int whichIndex = mRideSelectionRadioGroup.getCheckedRadioButtonId();
-                if (whichIndex == R.id.offerButton && destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
+                if (whichIndex == R.id.offerButton && destination.getText().toString().trim().length() > 0 && location.getText().toString().trim().length() > 0) {
+
                     Intent offerRideActivity = new Intent(mContext, OfferRideFragment.class);
-                    offerRideActivity.putExtra("LOCATION", destinationTextview.getText().toString());
-                    offerRideActivity.putExtra("DESTINATION", locationTextView.getText().toString());
-                    offerRideActivity.putExtra("currentLatitue", currentLatitude);
-                    offerRideActivity.putExtra("currentLongtitude", currentLongtitude);
+                    offerRideActivity.putExtra(getString(R.string.intent_location), destination.getText().toString());
+                    offerRideActivity.putExtra(getString(R.string.intent_destination), location.getText().toString());
+                    offerRideActivity.putExtra(getString(R.string.intent_current_latitue), currentLatitude);
+                    offerRideActivity.putExtra(getString(R.string.intent_current_long_titude), currentLongtitude);
+
                     Bundle b = new Bundle();
-                    b.putParcelable("LatLng", currentLocation);
+                    Log.d(TAG, "onClick: " + currentLocation);
+                    b.putParcelable(getString(R.string.latlng), currentLocation);
                     offerRideActivity.putExtras(b);
+
                     startActivity(offerRideActivity);
-                } else if (whichIndex == R.id.findButton && destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
+
+                } else if (whichIndex == R.id.findButton && destination.getText().toString().trim().length() > 0 && location.getText().toString().trim().length() > 0) {
+
                     Intent findRideActivity = new Intent(mContext, SearchRideActivity.class);
-                    findRideActivity.putExtra("LOCATION", locationTextView.getText().toString());
-                    findRideActivity.putExtra("DESTINATION", destinationTextview.getText().toString());
-                    findRideActivity.putExtra("currentLatitue", currentLatitude);
-                    findRideActivity.putExtra("currentLongtitude", currentLongtitude);
+                    findRideActivity.putExtra(getString(R.string.intent_location), location.getText().toString());
+                    findRideActivity.putExtra(getString(R.string.intent_destination), destination.getText().toString());
+                    findRideActivity.putExtra(getString(R.string.intent_current_latitue), currentLatitude);
+                    findRideActivity.putExtra(getString(R.string.intent_current_long_titude), currentLongtitude);
+
                     startActivity(findRideActivity);
                 } else {
                     Toast.makeText(mContext, "Please enter location and destination", Toast.LENGTH_SHORT).show();
@@ -232,19 +233,17 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         initImageLoader();
         setupBottomNavigationView();
 
-        // For display the welcome dialog on first app launch
         boolean firstrun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstrun", true);
         if (firstrun) {
-            //... Display the dialog message here ...
+
             setupDialog();
-            // Save the state
+
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .edit()
                     .putBoolean("firstrun", false)
                     .commit();
         }
 
-        //If play services is true = ok, then check for permissions and setup google maps
         if (isServicesOk()) {
             getLocationPermission();
         }
@@ -263,18 +262,18 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
+
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
+
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
+
         String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
+
         String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
+
         String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + "AIzaSyAdxoG2-SYygmV5r_xtwOGfUK1t8md6DBM";
+
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_map_api);
         return url;
     }
 
@@ -290,9 +289,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
-    /**
-     * Hides phone keyboard if clicked
-     */
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
 
@@ -345,7 +341,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void initMap() {
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(HomeActivity.this);
     }
@@ -463,7 +458,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         "Website: " + placeInfo.getWebsiteUri() + "\n" +
                         "Price Rating: " + placeInfo.getRating() + "\n";
 
-                if (destinationTextview.hasFocus() == true) {
+                if (destination.hasFocus() == true) {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
                     place1 = new MarkerOptions()
@@ -509,12 +504,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         String address = addresses.get(0).getAddressLine(0);
-        destinationTextview.setText(address);
-        destinationTextview.dismissDropDown();
+        destination.setText(address);
+        destination.dismissDropDown();
     }
 
     private void init() {
-
 
         mGeoDataClient = Places.getGeoDataClient(this, null);
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
@@ -526,13 +520,27 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .enableAutoManage(this, this)
                 .build();
 
-        destinationTextview.setOnItemClickListener(mAuotcompleteClickListener);
+        destination.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                hideKeyboard(HomeActivity.this);
+
+                final AutocompletePrediction item = mPlaceAutocompleteAdapter.getItem(i);
+                final String placeId = item.getPlaceId();
+
+                PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                        .getPlaceById(mGoogleApiClient, placeId);
+                placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+
+                Log.d(TAG, "onItemClick: " + mUpdatePlaceDetailsCallback);
+            }
+        });
 
         mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGeoDataClient, LAT_LNG_BOUNDS, null);
 
-        destinationTextview.setAdapter(mPlaceAutocompleteAdapter);
+        destination.setAdapter(mPlaceAutocompleteAdapter);
 
-        destinationTextview.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        destination.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
@@ -541,18 +549,18 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute our method for searching
-                    goeLocate();
+                    goeLocate(destination.getText().toString());
                 }
 
                 return false;
             }
         });
 
-        locationTextView.setOnItemClickListener(mAuotcompleteClickListener);
+        location.setOnItemClickListener(mAuotcompleteClickListener);
 
-        locationTextView.setAdapter(mPlaceAutocompleteAdapter);
+        location.setAdapter(mPlaceAutocompleteAdapter);
 
-        locationTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        location.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
@@ -561,7 +569,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     //execute our method for searching
-                    goeLocate();
+                    goeLocate(location.getText().toString());
                 }
 
                 return false;
@@ -583,23 +591,17 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void goeLocate() {
-
-        String searchString = destinationTextview.getText().toString();
-
+    private void goeLocate(String search) {
 
         Geocoder geocoder = new Geocoder(HomeActivity.this);
         List<Address> list = new ArrayList<>();
         try {
-            list = geocoder.getFromLocationName(searchString, 1);
+            list = geocoder.getFromLocationName(search, 1);
         } catch (IOException e) {
             Log.e(TAG, "goeLocate: IOException: " + e.getMessage());
         }
         if (list.size() > 0) {
             Address address = list.get(0);
-
-            Log.e(TAG, "goeLocate: found a location: " + address.toString());
-
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
@@ -608,9 +610,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
-     /*
-        ---------------------------- google places API autocomplete suggestions -------------------------------
-     */
+
 
     private final AdapterView.OnItemClickListener mAuotcompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -623,6 +623,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+
+            Log.d(TAG, "onItemClick: " + mUpdatePlaceDetailsCallback);
         }
     };
 
@@ -646,8 +648,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mPlace.setRating(place.getRating());
                 mPlace.setPhoneNumber(place.getPhoneNumber().toString());
                 mPlace.setWebsiteUri(place.getWebsiteUri());
-                if (destinationTextview.isFocused()) {
+                Log.d(TAG, "onResult: " + mPlace.getLatLng());
+                if (destination.isFocused()) {
                     currentLocation = mPlace.getLatLng();
+                    Log.d(TAG, "onResult: " + currentLocation);
                 }
 
             } catch (NullPointerException e) {
@@ -661,10 +665,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
     };
-
-    /*
-     * Permission locations
-     * */
 
     private void getLocationPermission() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
@@ -689,7 +689,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
         //BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView);
 
-
         //Change current highlighted icon
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
@@ -703,11 +702,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /**
-     * Checks if there are notifications available for the current logged in user.
-     */
     private void checkNotifications() {
-        mRef.child("Reminder").child(userID).addValueEventListener(new ValueEventListener() {
+        mRef.child("reminder").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;
@@ -716,7 +712,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         reminderLength++;
                     }
                 }
-                //Passes the number of notifications onto the setup badge method
                 setupBadge(reminderLength);
             }
 
@@ -727,22 +722,14 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    /** --------------------------- Firebase ---------------------------- **/
-
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // userID = currentUser.getUid();
         checkCurrentUser(currentUser);
     }
 
     private void checkCurrentUser(FirebaseUser user) {
-
         if (user == null) {
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);

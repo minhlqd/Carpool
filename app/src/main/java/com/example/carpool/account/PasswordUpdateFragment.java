@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 
 public class PasswordUpdateFragment extends Fragment {
 
@@ -87,9 +89,6 @@ public class PasswordUpdateFragment extends Fragment {
         return view;
     }
 
-    /**
-     * Retrieves the data inside the widgets and saves it to the database.
-     */
     private void savePasswordSettings(){
         final String password = mPassword.getText().toString();
 
@@ -111,12 +110,9 @@ public class PasswordUpdateFragment extends Fragment {
 
 
     private void setupFirebaseAuth(){
-        userID = mAuth.getCurrentUser().getUid();
+        userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

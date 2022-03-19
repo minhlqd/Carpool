@@ -26,7 +26,7 @@ public class FindRideActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -39,8 +39,6 @@ public class FindRideActivity extends AppCompatActivity {
     private User mUserSettings;
     private String destinationId, locationId;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,6 @@ public class FindRideActivity extends AppCompatActivity {
         setupWidgets();
         getActivityData();
         populateActivityWidgets();
-
 
         ImageView backArrow = (ImageView) findViewById(R.id.backArrow);
         backArrow.setOnClickListener(new View.OnClickListener() {

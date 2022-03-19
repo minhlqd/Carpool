@@ -16,11 +16,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
-
-/**
- * Created by Vishal on 10/20/2018.
- */
 
 public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
     TaskLoadedCallback taskCallback;
@@ -42,14 +39,14 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
         try {
             jObject = new JSONObject(jsonData[0]);
-            Log.d("mylog", jsonData[0].toString());
+            Log.d("MinhMX", jsonData[0].toString());
 
             //All these
-            JSONArray routesnew = jObject.getJSONArray("routes");
+            JSONArray routesNew = jObject.getJSONArray("routes");
 
-            JSONObject newobject = routesnew.getJSONObject(0);
+            JSONObject newObject = routesNew.getJSONObject(0);
 
-            JSONArray legs = newobject.getJSONArray("legs");
+            JSONArray legs = newObject.getJSONArray("legs");
 
             JSONObject legsObject = legs.getJSONObject(0);
 
@@ -60,15 +57,15 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             ApplicationContext.setDuration(duration);
 
             DataParser parser = new DataParser();
-            Log.d("mylog", parser.toString());
+            Log.d("MinhMX", parser.toString());
 
             // Starts parsing data
             routes = parser.parse(jObject);
-            Log.d("mylog", "Executing routes");
-            Log.d("mylog", routes.toString());
+            Log.d("MinhMX", "Executing routes");
+            Log.d("MinhMX", routes.toString());
 
         } catch (Exception e) {
-            Log.d("mylog", e.toString());
+            Log.d("MinhMX", e.toString());
             e.printStackTrace();
         }
         return routes;
@@ -88,8 +85,8 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             // Fetching all the points in i-th route
             for (int j = 0; j < path.size(); j++) {
                 HashMap<String, String> point = path.get(j);
-                double lat = Double.parseDouble(point.get("lat"));
-                double lng = Double.parseDouble(point.get("lng"));
+                double lat = Double.parseDouble(Objects.requireNonNull(point.get("lat")));
+                double lng = Double.parseDouble(Objects.requireNonNull(point.get("lng")));
                 LatLng position = new LatLng(lat, lng);
                 points.add(position);
             }
@@ -102,7 +99,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
                 lineOptions.width(10);
                 lineOptions.color(Color.rgb(0, 197, 154));
             }
-            Log.d("mylog", "onPostExecute lineoptions decoded");
+            Log.d("MinhMX", "onPostExecute lineoptions decoded");
         }
 
         // Drawing polyline in the Google Map for the i-th route
@@ -111,7 +108,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             taskCallback.onTaskDone(lineOptions);
 
         } else {
-            Log.d("mylog", "without Polylines drawn");
+            Log.d("MinhMX", "without Polylines drawn");
         }
     }
 }

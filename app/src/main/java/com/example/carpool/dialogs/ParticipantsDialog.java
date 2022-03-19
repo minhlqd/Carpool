@@ -3,7 +3,6 @@ package com.example.carpool.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -120,7 +119,7 @@ public class ParticipantsDialog extends Dialog implements
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setDriverWidgets(mFirebaseMethods.getSpeficUserSettings(dataSnapshot, userID));
+                setDriverWidgets(mFirebaseMethods.getSpecificUserSettings(dataSnapshot, userID));
             }
 
             @Override
@@ -134,7 +133,7 @@ public class ParticipantsDialog extends Dialog implements
 
         User user = userSettings;
 
-        UniversalImageLoader.setImage(user.getProfile_photo(), user_id_1, null,"");
+        UniversalImageLoader.setImage(user.getProfilePhoto(), user_id_1, null,"");
 
         username1.setText(user.getUsername());
     }

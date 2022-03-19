@@ -11,10 +11,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.lang.reflect.Field;
 
-/**
- * Created by P16174003 on 28/01/2019.
- */
-
 public class NonSwipeableViewPager extends ViewPager {
 
     public NonSwipeableViewPager(Context context) {

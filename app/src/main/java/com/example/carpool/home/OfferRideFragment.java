@@ -274,7 +274,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
                 destinationId = getIntent().getStringExtra("LOCATION");
                 Bundle b = getIntent().getExtras();
                 currentLocation = b.getParcelable("LatLng");
-                Log.i(TAG, "getActivityData: " + currentLocation.toString());
+                /*Log.i(TAG, "getActivityData: " + currentLocation.toString());*/
 //            } else {
 //
 //                //from ViewRideCreatedDialog passed to this class
@@ -302,15 +302,15 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
         mUserSettings = userSettings;
 
-        UniversalImageLoader.setImage(user.getCar_photo(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(user.getCarPhoto(), mCarPhoto, null,"");
 
         username = user.getUsername();
         userRating = user.getUserRating();
         completeRides = user.getCompletedRides();
-        profile_photo = user.getProfile_photo();
+        profile_photo = user.getProfilePhoto();
         carID = user.getCar();
         seatsID = user.getSeats() - 1;
-        licencePlateID = user.getRegistration_plate();
+        licencePlateID = user.getRegistrationPlate();
 
         mUsername.setText(username);
         mLicencePlateEditText.setText(licencePlateID);

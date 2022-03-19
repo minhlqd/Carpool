@@ -1,11 +1,11 @@
 package com.example.carpool.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,10 +32,11 @@ public class LeaveRideDialog extends Dialog implements
     public Dialog d;
     private TextView cancelDialog;
     private Button confirmDialog;
-    private String currentUserID, rideID;
+    private final String currentUserID;
+    private final String rideID;
 
     //Firebase
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
 
@@ -51,20 +52,20 @@ public class LeaveRideDialog extends Dialog implements
         cancelDialog.setOnClickListener(this);
         confirmDialog.setOnClickListener(this);
 
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
 
         getsSeatsRemaining();
     }
 
     public LeaveRideDialog(Context a, String currentUserID, String rideID) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
         this.currentUserID = currentUserID;
         this.rideID = rideID;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

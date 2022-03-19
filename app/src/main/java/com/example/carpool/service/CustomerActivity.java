@@ -33,7 +33,10 @@ public class CustomerActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseMethods mFirebaseMethods;
 
-    private Context mContext = CustomerActivity.this;
+    private final Context mContext = CustomerActivity.this;
+
+    public CustomerActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +51,12 @@ public class CustomerActivity extends AppCompatActivity {
         mFirebaseMethods = new FirebaseMethods(mContext);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        acceptBtn = (FloatingActionButton) findViewById(R.id.confirmRideBtn);
-        declineBtn = (FloatingActionButton) findViewById(R.id.declineRideBtn);
-        mRequestProfilePhoto = (CircleImageView)findViewById(R.id.requestProfilePhoto);
-        txtTo = (TextView) findViewById(R.id.to);
-        txtFrom = (TextView) findViewById(R.id.from);
-        txtUsername = (TextView) findViewById(R.id.message);
+        acceptBtn = findViewById(R.id.confirmRideBtn);
+        declineBtn = findViewById(R.id.declineRideBtn);
+        mRequestProfilePhoto = findViewById(R.id.requestProfilePhoto);
+        txtTo = findViewById(R.id.to);
+        txtFrom = findViewById(R.id.from);
+        txtUsername = findViewById(R.id.message);
         txtUsername.setText("Hi, i'm " + username + " and would like to request a seat on your journey!");
 
 

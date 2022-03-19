@@ -23,8 +23,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     private FirebaseAuth mAuth;
     private String userID;
 
-
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         mAuth = FirebaseAuth.getInstance();
@@ -32,7 +30,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             //Gets userID of current user signed in
             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
-
 
        if (remoteMessage.getData().isEmpty()){
 

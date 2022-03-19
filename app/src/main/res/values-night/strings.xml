@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="start_point">Start Point</string>
+    <string name="intent_location">LOCATION</string>
+    <string name="intent_current_long_titude">currentLongtitude</string>
+    <string name="intent_gender">sameGender</string>
+    <string name="intent_date">DATE</string>
+    <string name="all_fields">All fields must be filled in</string>
+    <string name="passenger">Passenger</string>
+    <string name="driver">Driver</string>
 </resources>

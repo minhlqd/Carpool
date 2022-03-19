@@ -8,7 +8,6 @@ public class Notification {
     public String to;
     public String from;
 
-
     public Notification() {
     }
 

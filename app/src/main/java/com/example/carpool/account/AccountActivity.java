@@ -1,9 +1,9 @@
 package com.example.carpool.account;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.example.carpool.R;
 import com.example.carpool.settings.SettingsActivity;
 import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
-import com.example.carpool.utils.NonSwipeableViewPager;
 import com.example.carpool.utils.SectionsStatePageAdapter;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.User;
@@ -53,14 +52,15 @@ public class AccountActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     //activity widgets
-    private Button mEmailUpdateButton, mPasswordUpdateButton, mDetailsUpdateButton, mCarUpdateButton, mSignoutButton, mSettingsBtn, mHelpBtn, mAddPaymentInformationBtn;
+    private Button mEmailUpdateButton, mPasswordUpdateButton, mDetailsUpdateButton, mCarUpdateButton, mSignOutButton, mSettingsBtn, mHelpBtn, mAddPaymentInformationBtn;
     private ImageView profilePhoto, leaderboards;
     private TextView mDisplayUsername, mCompleteRides, mEmail;
     private RatingBar mRatingBar;
 
+
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -71,8 +71,8 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(mContext);
 
         if (mAuth.getCurrentUser() != null){
@@ -84,7 +84,7 @@ public class AccountActivity extends AppCompatActivity {
         setupFirebaseAuth();
         setupFragments();
         setupBottomNavigationView();
-        setupAtivityWidgets();
+        setupActivityWidgets();
 
         // OnClick Listener to navigate to the fragments
         mEmailUpdateButton.setOnClickListener(new View.OnClickListener() {
@@ -103,16 +103,14 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        mSignoutButton.setOnClickListener(v -> {
-
+       /* mSignOutButton.setOnClickListener(v -> {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
-
             mAuth.signOut();
             Intent intent = new Intent(AccountActivity.this,
                     LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-        });
+        });*/
 
         mHelpBtn.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, HelpFragment.class);
@@ -153,6 +151,8 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /*setViewPager(3);*/
+                mRelativeLayout.setVisibility(View.GONE);
+                bottomNavigationView.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
             }
         });
@@ -173,42 +173,39 @@ public class AccountActivity extends AppCompatActivity {
         mViewPager.setCurrentItem(fragmentNumber);
     }
 
-    private void setupAtivityWidgets(){
-        //instantiate objects
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayout1);
-        mEmailUpdateButton = (Button) findViewById(R.id.updateEmailButton);
-        mPasswordUpdateButton = (Button) findViewById(R.id.updatePasswordButton);
-        mDetailsUpdateButton = (Button) findViewById(R.id.updateDetailsButton);
-        mAddPaymentInformationBtn = (Button) findViewById(R.id.addPaymentInformationBtn);
-        mCarUpdateButton = (Button) findViewById(R.id.updateCarDetailsButton);
-        profilePhoto = (ImageView) findViewById(R.id.profile_image);
-        mSignoutButton = (Button) findViewById(R.id.signoutButton);
-        mDisplayUsername = (TextView) findViewById(R.id.displayUsername);
-        mEmail = (TextView) findViewById(R.id.email_textview);
-        mCompleteRides = (TextView) findViewById(R.id.rides_textview);
-        mSettingsBtn = (Button) findViewById(R.id.settingsBtn);
-        mHelpBtn = (Button) findViewById(R.id.helpBtn);
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-        leaderboards = (ImageView) findViewById(R.id.leaderboards);
+    private void setupActivityWidgets(){
+        mViewPager = findViewById(R.id.container);
+        mRelativeLayout = findViewById(R.id.relLayout1);
+        mEmailUpdateButton = findViewById(R.id.updateEmailButton);
+        mPasswordUpdateButton = findViewById(R.id.updatePasswordButton);
+        mDetailsUpdateButton = findViewById(R.id.updateDetailsButton);
+        mAddPaymentInformationBtn = findViewById(R.id.addPaymentInformationBtn);
+        mCarUpdateButton = findViewById(R.id.updateCarDetailsButton);
+        profilePhoto = findViewById(R.id.profile_image);
+        //mSignOutButton = findViewById(R.id.signoutButton);
+        mDisplayUsername = findViewById(R.id.displayUsername);
+        mEmail = findViewById(R.id.email_textview);
+        mCompleteRides = findViewById(R.id.rides_textview);
+        mSettingsBtn = findViewById(R.id.settingsBtn);
+        mHelpBtn = findViewById(R.id.helpBtn);
+        mRatingBar = findViewById(R.id.ratingBar);
+        leaderboards = findViewById(R.id.leaderboards);
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void setProfileWidgets(User userSettings){
 
-        User user = userSettings;
+        UniversalImageLoader.setImage(userSettings.getProfilePhoto(), profilePhoto, null,"");
 
-        UniversalImageLoader.setImage(user.getProfile_photo(), profilePhoto, null,"");
-
-        mDisplayUsername.setText(user.getUsername());
-        mCompleteRides.setText(user.getCompletedRides() + " rides");
-        mEmail.setText(user.getEmail());
-        mRatingBar.setRating(user.getUserRating());
+        mDisplayUsername.setText(userSettings.getUsername());
+        mCompleteRides.setText(userSettings.getCompletedRides() + " rides");
+        mEmail.setText(userSettings.getEmail());
+        mRatingBar.setRating(userSettings.getUserRating());
     }
 
     private void setupBadge(int reminderLength){
         if (reminderLength > 0){
-            //Adds badge and notification number to the BottomViewNavigation
             BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView, reminderLength);
         }
     }
@@ -217,10 +214,9 @@ public class AccountActivity extends AppCompatActivity {
      * BottomNavigationView setup
      */
     private void setupBottomNavigationView(){
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
 
-        //Change current highlighted icon
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
         menuItem.setChecked(true);
@@ -232,7 +228,6 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
 
             }
@@ -254,7 +249,6 @@ public class AccountActivity extends AppCompatActivity {
                         reminderLength++;
                     }
                 }
-                //Passes the number of notifications onto the setup badge method
                 setupBadge(reminderLength);
             }
 
@@ -265,14 +259,16 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mRelativeLayout.setVisibility(View.VISIBLE);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
 }

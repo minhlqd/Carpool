@@ -1,5 +1,6 @@
 package com.example.carpool.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,10 +31,21 @@ public class ViewRideCreatedDialog extends Dialog implements
     private RatingBar mRatingBar;
     private Button mEditRideBtn;
     private FloatingActionButton mDeleteRideBtn, mPaticipantsRideBtn, mViewProfileBtn;
-    private String userID, rides, seats, from, to, date, cost, username, dateOnly, extraTime, rideID, duration, ridesCompleted, pickupLocation;
-    private Float rating;
-
-
+    private final String userID;
+    private final String rides;
+    private final String seats;
+    private final String from;
+    private final String to;
+    private final String date;
+    private final String cost;
+    private final String username;
+    private final String dateOnly;
+    private final String extraTime;
+    private final String rideID;
+    private final String duration;
+    private final String ridesCompleted;
+    private final String pickupLocation;
+    private final Float rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +65,6 @@ public class ViewRideCreatedDialog extends Dialog implements
     public ViewRideCreatedDialog(Context a, String rideID, String username, String rides, String seats, String from, String to, String date, String cost, Float rating, String dateOnly, String extraTime,
                                  String duration, String ridesCompleted, String pickupLocation, String userID) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
         this.rideID = rideID;
         this.username = username;
@@ -72,6 +83,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         this.userID = userID;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -125,8 +137,6 @@ public class ViewRideCreatedDialog extends Dialog implements
         Intent intent = new Intent(c, ProfileActivity.class);
         c.startActivity(intent);
     }
-
-
 
     private void setupWidgets(){
         //Setup widgets

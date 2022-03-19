@@ -206,7 +206,7 @@ public class RegisterStepThreeFragment extends Fragment {
 
     private void uploadImage(){
         if (filePath != null){
-            final StorageReference ref = storageReference.child("profileImages/"+UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("profile/"+UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         imgURL = uri.toString();

@@ -2,7 +2,6 @@ package com.example.carpool.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,12 +165,12 @@ public class DetailsUpdateFragment extends Fragment {
 
         mUserSettings = userSettings;
 
-        UniversalImageLoader.setImage(user.getProfile_photo(), mProfilePhoto, null,"");
+        UniversalImageLoader.setImage(user.getProfilePhoto(), mProfilePhoto, null,"");
 
         mUsername.setText(user.getUsername());
-        mFullName.setText(user.getFull_name());
-        mMobileNumber.setText(String.valueOf(user.getMobile_number()));
-        mDob.setText(String.valueOf(user.getDob()));
+        mFullName.setText(user.getFullName());
+        mMobileNumber.setText(String.valueOf(user.getMobileNumber()));
+        mDob.setText(String.valueOf(user.getDateOfBird()));
 
         mProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override

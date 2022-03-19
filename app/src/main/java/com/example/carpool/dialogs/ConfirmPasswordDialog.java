@@ -17,7 +17,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.carpool.R;
 
-
 public class ConfirmPasswordDialog extends DialogFragment {
 
     private static final String TAG = "ConfirmPasswordDialog";
@@ -39,12 +38,7 @@ public class ConfirmPasswordDialog extends DialogFragment {
         mPassword = (EditText) view.findViewById(R.id.confirmPassword);
 
         TextView cancelDialog = (TextView) view.findViewById(R.id.dialogCancel);
-        cancelDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialog().dismiss();
-            }
-        });
+        cancelDialog.setOnClickListener(v -> getDialog().dismiss());
 
         Button confirmDialog = (Button) view.findViewById(R.id.dialogConfirm);
         confirmDialog.setOnClickListener(new View.OnClickListener() {

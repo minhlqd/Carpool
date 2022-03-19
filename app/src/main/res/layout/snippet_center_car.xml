@@ -140,7 +140,7 @@
                 android:layout_below="@id/relLayout4"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/dark_grey"
-                android:text="@string/update_car_details"
+                android:text="@string/update"
                 android:textColor="@color/white" />
         </RelativeLayout>
     </ScrollView>

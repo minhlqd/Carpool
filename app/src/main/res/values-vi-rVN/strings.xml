@@ -58,11 +58,19 @@
     <string name="car">Ô tô</string>
     <string name="licence_number">Số giấy phép</string>
     <string name="no">Không</string>
-    <string name="do_you_own_a_vehicle">Bạn có sở hữu ô tô nào không?</string>
+    <string name="do_you_own_a_vehicle">Bạn tham gia với vai trò gì?</string>
     <string name="no_results_found">Không tìm thấy kết quả</string>
     <string name="check_your_email">Xin vui lòng kiểm tra email của bạn</string>
     <string name="start_point">Điểm đi</string>
     <string name="your_car_information">Vui lòng nhập thông tin xe của bạn</string>
     <string name="your_route">Vui lòng nhập tuyến đường bạn thường đi</string>
     <string name="yes">Có</string>
+    <string name="intent_location">LOCATION</string>
+    <string name="intent_current_long_titude">currentLongtitude</string>
+    <string name="intent_gender">sameGender</string>
+    <string name="intent_date">DATE</string>
+    <string name="all_fields">All fields must be filled in</string>
+    <string name="passenger">Passenger</string>
+    <string name="driver">Driver</string>
+    <string name="update">Cập nhật</string>
 </resources>

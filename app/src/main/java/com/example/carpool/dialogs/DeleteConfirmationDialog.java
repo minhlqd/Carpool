@@ -1,5 +1,6 @@
 package com.example.carpool.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class DeleteConfirmationDialog extends Dialog implements
         public void onConfirmPassword(String password);
     }
 
-    onConfirmPasswordListener mOnConfirmPassowrdListener;
+    onConfirmPasswordListener mOnConfirmPasswordListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +53,11 @@ public class DeleteConfirmationDialog extends Dialog implements
 
     public DeleteConfirmationDialog(Context a, String rideID) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
         this.rideID = rideID;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

@@ -23,7 +23,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView1"
+                    android:id="@+id/update_view_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">

@@ -1,5 +1,6 @@
 package com.example.carpool.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.carpool.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 
 public class BookingReceivedDialog extends Dialog implements
         View.OnClickListener  {
@@ -37,10 +37,10 @@ public class BookingReceivedDialog extends Dialog implements
 
     public BookingReceivedDialog(Context a) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -57,8 +57,4 @@ public class BookingReceivedDialog extends Dialog implements
         }
         dismiss();
     }
-
-
-
-
 }

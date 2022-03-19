@@ -17,61 +17,55 @@
             android:layout_height="wrap_content"
             android:id="@+id/mainRelativeLayout"
             android:layout_marginBottom="50dp">
+
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".MapsActivity">
-            </fragment>
+                tools:context=".MapsActivity" />
 
             <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="15dp"
-                        tools:ignore="UselessParent">
 
-                        <RadioGroup
-                            android:checkedButton="@+id/findButton"
-                            android:id="@+id/toggle"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:background="@drawable/pink_out_line"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                android:layout_marginTop="1dp"
-                                android:layout_marginBottom="1dp"
-                                android:layout_marginStart="1dp"
-                                android:id="@+id/findButton"
-                                android:background="@drawable/toggle_widget_background"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="@string/find_a_ride"
-                                android:textColor="@color/white" />
+                <RadioGroup
+                    android:id="@+id/toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/pink_out_line"
+                    android:checkedButton="@+id/findButton"
+                    android:orientation="horizontal">
 
-                            <RadioButton
-                                android:layout_marginEnd="1dp"
-                                android:layout_marginTop="1dp"
-                                android:layout_marginBottom="1dp"
-                                android:id="@+id/offerButton"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@drawable/toggle_widget_background"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="@string/offer_ride"
-                                android:textColor="@color/white" />
-                        </RadioGroup>
-                </RelativeLayout>
+                    <RadioButton
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="16sp"
+                        android:id="@+id/findButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/find_a_ride"
+                        android:textColor="@color/white" />
+
+                    <RadioButton
+                        android:id="@+id/offerButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="16sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/toggle_widget_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/offer_ride"
+                        android:textColor="@color/background_icon" />
+                </RadioGroup>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,29 +85,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:id="@+id/locationLayout">
+
                         <ImageView
-                            android:layout_width="wrap_content"
                             android:id="@+id/locationImage"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_gps"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"/>
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/ic_gps" />
 
                         <AutoCompleteTextView
-                            android:id="@+id/destinationTextview"
+                            android:id="@+id/location"
                             android:layout_width="220dp"
-                            android:maxWidth="250dp"
                             android:layout_height="wrap_content"
                             android:layout_alignStart="@id/locationImage"
-                            android:hint="@string/location"
-                            android:layout_marginTop="14dp"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginStart="35dp"
-                            android:textSize="18sp"
-                            android:singleLine="true"
-                            android:imeOptions="actionSearch"
+                            android:layout_marginTop="14dp"
                             android:background="@android:color/transparent"
-                            android:layout_centerHorizontal="true"/>
+                            android:fontFamily="@font/roboto_light"
+                            android:hint="@string/location"
+                            android:imeOptions="actionSearch"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:textSize="20sp"
+                            tools:ignore="RtlSymmetry" />
 
                         <Button
                             android:layout_width="20dp"
@@ -142,19 +139,20 @@
                             android:layout_marginRight="15dp"/>
 
                         <AutoCompleteTextView
-                            android:id="@+id/locationTextview"
+                            android:id="@+id/destination"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/destination"
-                            android:maxWidth="250dp"
-                            android:layout_marginTop="14dp"
                             android:layout_alignStart="@id/destinationImageView"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginStart="35dp"
-                            android:textSize="18sp"
-                            android:singleLine="true"
-                            android:imeOptions="actionSearch"
+                            android:layout_marginTop="14dp"
                             android:background="@android:color/transparent"
-                            android:layout_centerHorizontal="true"/>
+                            android:fontFamily="@font/roboto_light"
+                            android:hint="@string/destination"
+                            android:imeOptions="actionSearch"
+                            android:paddingStart="10dp"
+                            android:singleLine="true"
+                            android:textSize="20sp" />
 
                         <Button
                         android:background="@drawable/ic_chevron_right_black_24dp"

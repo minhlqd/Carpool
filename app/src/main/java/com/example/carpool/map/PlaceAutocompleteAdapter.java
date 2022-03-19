@@ -1,22 +1,5 @@
 package com.example.carpool.map;
 
-/*
- * Copyright (C) 2015 Google Inc. All Rights Reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.style.CharacterStyle;
@@ -45,11 +28,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/**
- * Adapter that handles Autocomplete requests from the Places Geo Data Client.
- * {@link AutocompletePrediction} results from the API are frozen and stored directly in this
- * adapter. (See {@link AutocompletePrediction#freeze()}.)
- */
 public class PlaceAutocompleteAdapter
         extends ArrayAdapter<AutocompletePrediction> implements Filterable {
 
@@ -219,15 +197,13 @@ public class PlaceAutocompleteAdapter
         try {
             AutocompletePredictionBufferResponse autocompletePredictions = results.getResult();
 
-            Log.i(TAG, "Query completed. Received " + autocompletePredictions.getCount()
-                    + " predictions.");
 
             // Freeze the results immutable representation that can be stored safely.
             return DataBufferUtils.freezeAndClose(autocompletePredictions);
         } catch (RuntimeExecutionException e) {
             // If the query did not complete successfully return null
-            Toast.makeText(getContext(), "Error contacting API: " + e.toString(),
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getContext(), "Error contacting API: " + e.toString(),
+                    Toast.LENGTH_SHORT).show();*/
             Log.e(TAG, "Error getting autocomplete prediction API call", e);
             return null;
         }

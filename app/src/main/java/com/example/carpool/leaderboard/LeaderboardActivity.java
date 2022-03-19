@@ -32,8 +32,8 @@ import java.util.List;
 
 
 public class LeaderboardActivity extends AppCompatActivity {
-    private static final String TAG = "LeaderboardActivity";
-    private Context mContext = LeaderboardActivity.this;
+    private static final String TAG = "MinhMX";
+    private final Context mContext = this;
 
     //Widgets
     private ImageView backBtn;
@@ -48,7 +48,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     //Firebase variables
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private String user_id;
 
@@ -81,13 +81,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                                 Leaderboards l = dataSnapshot1.getValue(Leaderboards.class);
                                 leaderboards.add(l);
                             }
-                            Collections.sort(leaderboards, new Comparator<Leaderboards>() {
-                                @Override
-                                public int compare(Leaderboards o1, Leaderboards o2) {
-                                    return o1.getPoints() > o2.getPoints() ? -1 : (o1.points < o2.points ) ? 1 : 0;
-                                }
-
-                            });
+                            Collections.sort(leaderboards, (o1, o2) ->
+                                    o1.getPoints() > o2.getPoints() ? -1 : (o1.points < o2.points ) ? 1 : 0
+                            );
 
                             myAdapter = new LeaderboardsAdapter(mContext, leaderboards);
                             mRecyclerView.setAdapter(myAdapter);
@@ -102,8 +98,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     private void setupWidgets(){
         backBtn = (ImageView) findViewById(R.id.leaderboardsBackBtn);
-
-        //Setup recycler view
+        
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);

@@ -1,9 +1,5 @@
 package com.example.carpool.models;
 
-/**
- * Created by P16174003 on 06/02/2019.
- */
-
 public class data {
 
     public String rideID;

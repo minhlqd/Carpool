@@ -7,19 +7,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.models.OfferRide;
 import com.example.carpool.models.Reminder;
 import com.example.carpool.models.User;
 import com.example.carpool.models.UserReview;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class FirebaseMethods {
 
@@ -41,7 +41,7 @@ public class FirebaseMethods {
         myRef = mFirebaseDatabase.getReference();
 
         if(mAuth.getCurrentUser() != null){
-            userID = mAuth.getCurrentUser().getUid().toString();
+            userID = mAuth.getCurrentUser().getUid();
         }
     }
 
@@ -118,31 +118,35 @@ public class FirebaseMethods {
 
         String reviewNumber = checkAmountOfReviews(userID);
 
-        myRef.child("userReview")
+        myRef.child("user_review")
                 .child(userID)
                 .child(reviewNumber)
                 .setValue(userReview);
     }
 
     public void addNewUser(String email, String full_name, String username, String profile_photo, long mobile_number, String dob, String licence_number,
-                           String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo, String startPoint, String destination){
+                           String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo, String startPoint, String destination, String role){
 
-        User user = new User(userID ,email, full_name, username, profile_photo, mobile_number, dob, licence_number, 0, 0,  car, registration_plate, seats,education, work, bio, carOwner, gender, 50 ,car_photo, startPoint, destination);
-
+        User user = new User(userID ,email, full_name, username);
+        Info info = new Info(profile_photo, dob, licence_number, gender, registration_plate, car, car_photo, education, work, bio, mobile_number, 0 , seats, 0, 50, carOwner, startPoint, destination, role);
         myRef.child("user")
                 .child(userID)
                 .setValue(user);
+
+        myRef.child("user")
+                .child(userID)
+                .setValue(info);
     }
 
     public void addReminder(String date, String reminder,  long reminderLength){
         Reminder reminder1 = new Reminder(date, reminder);
 
-        myRef.child("Reminder").child(userID).child(String.valueOf(reminderLength + 1)).setValue(reminder1);
+        myRef.child("reminder").child(userID).child(String.valueOf(reminderLength + 1)).setValue(reminder1);
 
     }
 
     public String checkAmountOfReviews(final String notificationComment){
-        myRef.child("Reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                if (dataSnapshot.exists()){
@@ -165,7 +169,7 @@ public class FirebaseMethods {
     }
 
     public void checkForReminder(final String notificationComment){
-        myRef.child("Reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
@@ -187,11 +191,11 @@ public class FirebaseMethods {
     }
 
     public void deleteReminder(String notificationNumber){
-        myRef.child("Reminder").child(userID).child(notificationNumber).removeValue();
+        myRef.child("reminder").child(userID).child(notificationNumber).removeValue();
     }
 
     public void checkNotifications(final String date, final String reminder){
-        myRef.child("Reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long reminderLength = 0;
@@ -213,7 +217,7 @@ public class FirebaseMethods {
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
-            if(ds.getKey().equals("user")){
+            if(Objects.equals(ds.getKey(), "user")){
 
                 try {
                     user.setUsername(ds.child(userID)
@@ -224,25 +228,25 @@ public class FirebaseMethods {
                             .getValue(User.class)
                             .getEmail());
 
-                    user.setProfile_photo(ds.child(userID)
+                    user.setProfilePhoto(ds.child(userID)
                             .getValue(User.class)
-                            .getProfile_photo());
+                            .getProfilePhoto());
 
-                    user.setFull_name(ds.child(userID)
+                    user.setFullName(ds.child(userID)
                             .getValue(User.class)
-                            .getFull_name());
+                            .getFullName());
 
-                    user.setDob(ds.child(userID)
+                    user.setDateOfBird(ds.child(userID)
                             .getValue(User.class)
-                            .getDob());
+                            .getDateOfBird());
 
-                    user.setMobile_number(ds.child(userID)
+                    user.setMobileNumber(ds.child(userID)
                             .getValue(User.class)
-                            .getMobile_number());
+                            .getMobileNumber());
 
-                    user.setLicence_number(ds.child(userID)
+                    user.setLicenceNumber(ds.child(userID)
                             .getValue(User.class)
-                            .getLicence_number());
+                            .getLicenceNumber());
 
                     user.setCompletedRides(ds.child(userID)
                             .getValue(User.class)
@@ -252,33 +256,33 @@ public class FirebaseMethods {
                             .getValue(User.class)
                             .getUserRating());
 
-                    user.setLicence_number(ds.child(userID)
+                    user.setLicenceNumber(ds.child(userID)
                             .getValue(User.class)
-                            .getLicence_number());
+                            .getLicenceNumber());
 
                     user.setCar(ds.child(userID)
                             .getValue(User.class)
                             .getCar());
 
-                    user.setRegistration_plate(ds.child(userID)
+                    user.setRegistrationPlate(ds.child(userID)
                             .getValue(User.class)
-                            .getRegistration_plate());
+                            .getRegistrationPlate());
 
                     user.setSeats(ds.child(userID)
                             .getValue(User.class)
                             .getSeats());
 
-                    user.setCarOwner(ds.child(userID)
+                    user.setIsCarOwner(ds.child(userID)
                             .getValue(User.class)
-                            .getCarOwner());
+                            .getIsCarOwner());
 
                     user.setGender(ds.child(userID)
                             .getValue(User.class)
                             .getGender());
 
-                    user.setCar_photo(ds.child(userID)
+                    user.setCarPhoto(ds.child(userID)
                             .getValue(User.class)
-                            .getCar_photo());
+                            .getCarPhoto());
 
                     user.setEducation(ds.child(userID)
                             .getValue(User.class)
@@ -301,7 +305,7 @@ public class FirebaseMethods {
         return user;
     }
 
-    public User getSpeficUserSettings(DataSnapshot dataSnapshot, String user_id){
+    public User getSpecificUserSettings(DataSnapshot dataSnapshot, String user_id){
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
@@ -315,25 +319,25 @@ public class FirebaseMethods {
                                 .getValue(User.class)
                                 .getEmail());
 
-                        user.setProfile_photo(ds.child(user_id)
+                        user.setProfilePhoto(ds.child(user_id)
                                 .getValue(User.class)
-                                .getProfile_photo());
+                                .getProfilePhoto());
 
-                        user.setFull_name(ds.child(user_id)
+                        user.setFullName(ds.child(user_id)
                                 .getValue(User.class)
-                                .getFull_name());
+                                .getFullName());
 
-                        user.setDob(ds.child(user_id)
+                        user.setDateOfBird(ds.child(user_id)
                                 .getValue(User.class)
-                                .getDob());
+                                .getDateOfBird());
 
-                        user.setMobile_number(ds.child(user_id)
+                        user.setMobileNumber(ds.child(user_id)
                                 .getValue(User.class)
-                                .getMobile_number());
+                                .getMobileNumber());
 
-                        user.setLicence_number(ds.child(user_id)
+                        user.setLicenceNumber(ds.child(user_id)
                                 .getValue(User.class)
-                                .getLicence_number());
+                                .getLicenceNumber());
 
                         user.setCompletedRides(ds.child(user_id)
                                 .getValue(User.class)
@@ -343,33 +347,33 @@ public class FirebaseMethods {
                                 .getValue(User.class)
                                 .getUserRating());
 
-                        user.setLicence_number(ds.child(user_id)
+                        user.setLicenceNumber(ds.child(user_id)
                                 .getValue(User.class)
-                                .getLicence_number());
+                                .getLicenceNumber());
 
                         user.setCar(ds.child(user_id)
                                 .getValue(User.class)
                                 .getCar());
 
-                        user.setRegistration_plate(ds.child(user_id)
+                        user.setRegistrationPlate(ds.child(user_id)
                                 .getValue(User.class)
-                                .getRegistration_plate());
+                                .getRegistrationPlate());
 
                         user.setSeats(ds.child(user_id)
                                 .getValue(User.class)
                                 .getSeats());
 
-                        user.setCarOwner(ds.child(user_id)
+                        user.setIsCarOwner(ds.child(user_id)
                                 .getValue(User.class)
-                                .getCarOwner());
+                                .getIsCarOwner());
 
                         user.setGender(ds.child(user_id)
                                 .getValue(User.class)
                                 .getGender());
 
-                        user.setCar_photo(ds.child(user_id)
+                        user.setCarPhoto(ds.child(user_id)
                                 .getValue(User.class)
-                                .getCar_photo());
+                                .getCarPhoto());
 
                         user.setEducation(ds.child(user_id)
                                 .getValue(User.class)

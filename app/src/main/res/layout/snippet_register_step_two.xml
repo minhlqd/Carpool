@@ -44,5 +44,5 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="23.5dp"
         android:src="@drawable/right_arrow"
-        android:backgroundTint="@color/backdground_float_action_button"/>
+        android:backgroundTint="@color/background_float_action_button"/>
 </RelativeLayout>

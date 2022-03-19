@@ -39,11 +39,6 @@ public class SectionsStatePageAdapter extends FragmentStatePagerAdapter {
         mFragmentNames.put(mFragmentList.size()-1, fragmentName);
     }
 
-    /**
-     * returns the fragment with the name @param
-     * @param fragmentName
-     * @return
-     */
     public Integer getFragmentNumber(String fragmentName){
         if (mFragmentNumbers.containsKey(fragmentName)){
             return mFragmentNumbers.get(fragmentName);

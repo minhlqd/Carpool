@@ -31,12 +31,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("ALL")
 public class SearchResultsActivity extends AppCompatActivity {
 
-    private static final String TAG = "SearchResultsActivity";
+    private static final String TAG = "MinhMX";
 
     //Recycle View variables
-    private Context mContext = SearchResultsActivity.this;
+    private final Context mContext = this;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
@@ -50,9 +51,18 @@ public class SearchResultsActivity extends AppCompatActivity {
     private DatabaseReference mRef;
 
     //Variables
-    private String user_id, location, destination, date, genderCurrentUser, genderDriverUser, user_id_driver;
+    private String user_id;
+    private String location;
+    private String destination;
+    private String date;
+    private String genderCurrentUser;
+    private String genderDriverUser;
+    private String user_id_driver;
     private RelativeLayout mNoResultsFoundLayout;
     private Boolean sameGender;
+
+    public SearchResultsActivity() {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +70,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_search_results);
         getActivityData();
 
-        //Setup firebase object
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabse = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabse.getReference();
@@ -68,18 +77,15 @@ public class SearchResultsActivity extends AppCompatActivity {
             user_id = mAuth.getCurrentUser().getUid();
         }
 
-        //setup widgets
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
 
 
-        //Setup recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<Ride>();
-
 
         mRef.child("availableRide").orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,7 +123,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                     }
                 });
 
-        //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) findViewById(R.id.backArrowSearchRide);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +146,8 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            location = getIntent().getStringExtra("DESTINATION");
-            destination = getIntent().getStringExtra("LOCATION");
+            location = getIntent().getStringExtra(getString(R.string.intent_location));
+            destination = getIntent().getStringExtra(getString(R.string.intent_destination));
             sameGender = getIntent().getExtras().getBoolean("sameGender");
             date = getIntent().getStringExtra("DATE");
         }
@@ -158,16 +163,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         return formatter.parse(date);
     }
 
-
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
     }
-
-
-
-
 }

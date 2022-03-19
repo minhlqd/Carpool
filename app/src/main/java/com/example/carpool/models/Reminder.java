@@ -4,7 +4,6 @@ public class Reminder {
     public String date;
     public String notificationComment;
 
-
     public Reminder() {
     }
 

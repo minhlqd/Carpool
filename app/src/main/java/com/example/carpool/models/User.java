@@ -2,55 +2,81 @@ package com.example.carpool.models;
 
 public class User {
 
-    private String user_id;
+    private String userId;
     private String email;
-    private String full_name;
+    private String fullName;
     private String username;
-    private String profile_photo;
-    private String dob;
-    private String licence_number;
+    private String profilePhoto;
+    private String dateOfBird;
+    private String licenceNumber;
     private String gender;
-    private String registration_plate;
+    private String registrationPlate;
     private String car;
-    private String car_photo;
+    private String carPhoto;
     private String education;
     private String work;
     private String bio;
-    private Long mobile_number;
+    private Long mobileNumber;
+    private String role;
     private int completedRides;
     private int seats;
     private int userRating;
     private int points;
-    private Boolean carOwner;
+    private Boolean isCarOwner;
     private String startPoint;
     private String destination;
 
     public User() { }
 
-    public User(String user_id, String email, String full_name, String username, String profile_photo, Long mobile_number, String dob, String licence_number, int completedRides, int userRating,
-                String car, String registration_plate, int seats, String education, String work, String bio, Boolean carOwner, String gender, int points, String car_photo, String startPoint, String destination) {
-        this.user_id = user_id;
+    public User(String userId, String email, String fullName, String username, String profilePhoto, Long mobileNumber, String dateOfBird, String licenceNumber, int completedRides, int userRating,
+                String car, String registrationPlate, int seats, String education, String work, String bio, Boolean isCarOwner, String gender, int points, String carPhoto, String startPoint, String destination, String role
+    ) {
+        this.userId = userId;
         this.email = email;
-        this.full_name = full_name;
+        this.fullName = fullName;
         this.username = username;
-        this.profile_photo = profile_photo;
-        this.mobile_number = mobile_number;
+        this.profilePhoto = profilePhoto;
+        this.mobileNumber = mobileNumber;
         this.completedRides = completedRides;
-        this.dob = dob;
-        this.licence_number = licence_number;
+        this.dateOfBird = dateOfBird;
+        this.licenceNumber = licenceNumber;
         this.userRating = userRating;
-        this.carOwner = carOwner;
+        this.isCarOwner = isCarOwner;
         this.seats = seats;
-        this.registration_plate = registration_plate;
+        this.registrationPlate = registrationPlate;
         this.gender = gender;
         this.car = car;
-        this.car_photo = car_photo;
+        this.carPhoto = carPhoto;
         this.education = education;
         this.work = work;
         this.points = points;
         this.bio = bio;
         this.startPoint = startPoint;
         this.destination = destination;
+        this.role = role;
+    }
+
+    public User(String userId, String email, String fullName, String username) {
+        this.userId = userId;
+        this.email = email;
+        this.fullName = fullName;
+        this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Boolean getCarOwner() {
+        return isCarOwner;
+    }
+
+    public void setCarOwner(Boolean carOwner) {
+        isCarOwner = carOwner;
     }
 
     public String getStartPoint() {
@@ -69,8 +95,8 @@ public class User {
         this.destination = destination;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
 
@@ -86,12 +112,12 @@ public class User {
         this.userRating = userRating;
     }
 
-    public String getProfile_photo() {
-        return profile_photo;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setProfile_photo(String profile_photo) {
-        this.profile_photo = profile_photo;
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     public String getUsername() {
@@ -106,8 +132,8 @@ public class User {
         this.points = points;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setEmail(String email) {
@@ -118,36 +144,36 @@ public class User {
         this.username = username;
     }
 
-    public Long getMobile_number() {
-        return mobile_number;
+    public Long getMobileNumber() {
+        return mobileNumber;
     }
 
-    public String getDob() {
-        return dob;
+    public String getDateOfBird() {
+        return dateOfBird;
     }
 
-    public void setMobile_number(Long mobile_number) {
-        this.mobile_number = mobile_number;
+    public void setMobileNumber(Long mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDateOfBird(String dateOfBird) {
+        this.dateOfBird = dateOfBird;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLicence_number() {
-        return licence_number;
+    public String getLicenceNumber() {
+        return licenceNumber;
     }
 
-    public void setLicence_number(String licence_number) {
-        this.licence_number = licence_number;
+    public void setLicenceNumber(String licenceNumber) {
+        this.licenceNumber = licenceNumber;
     }
 
     public int getCompletedRides() {
@@ -162,8 +188,8 @@ public class User {
         return gender;
     }
 
-    public String getRegistration_plate() {
-        return registration_plate;
+    public String getRegistrationPlate() {
+        return registrationPlate;
     }
 
     public String getCar() {
@@ -174,36 +200,36 @@ public class User {
         return seats;
     }
 
-    public Boolean getCarOwner() {
-        return carOwner;
+    public Boolean getIsCarOwner() {
+        return isCarOwner;
     }
 
-    public String getCar_photo() {
-        return car_photo;
+    public String getCarPhoto() {
+        return carPhoto;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public void setRegistration_plate(String registration_plate) {
-        this.registration_plate = registration_plate;
+    public void setRegistrationPlate(String registrationPlate) {
+        this.registrationPlate = registrationPlate;
     }
 
     public void setCar(String car) {
         this.car = car;
     }
 
-    public void setCar_photo(String car_photo) {
-        this.car_photo = car_photo;
+    public void setCarPhoto(String carPhoto) {
+        this.carPhoto = carPhoto;
     }
 
     public void setSeats(int seats) {
         this.seats = seats;
     }
 
-    public void setCarOwner(Boolean carOwner) {
-        this.carOwner = carOwner;
+    public void setIsCarOwner(Boolean isCarOwner) {
+        this.isCarOwner = isCarOwner;
     }
 
     public String getEducation() {
@@ -230,31 +256,41 @@ public class User {
         this.bio = bio;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
+                "user_id='" + userId + '\'' +
                 ", email='" + email + '\'' +
-                ", full_name='" + full_name + '\'' +
+                ", full_name='" + fullName + '\'' +
                 ", username='" + username + '\'' +
-                ", profile_photo='" + profile_photo + '\'' +
-                ", dob='" + dob + '\'' +
-                ", licence_number='" + licence_number + '\'' +
+                ", profile_photo='" + profilePhoto + '\'' +
+                ", date_of_birth='" + dateOfBird + '\'' +
+                ", licence_number='" + licenceNumber + '\'' +
                 ", gender='" + gender + '\'' +
-                ", registration_plate='" + registration_plate + '\'' +
+                ", registration_plate='" + registrationPlate + '\'' +
                 ", car='" + car + '\'' +
-                ", car_photo='" + car_photo + '\'' +
+                ", car_photo='" + carPhoto + '\'' +
                 ", education='" + education + '\'' +
                 ", work='" + work + '\'' +
                 ", bio='" + bio + '\'' +
                 ", startPoint='" + startPoint + '\'' +
                 ", destination='" + destination + '\'' +
-                ", mobile_number=" + mobile_number +
-                ", completedRides=" + completedRides +
+                ", mobile_number=" + mobileNumber +
+                ", isCompletedRides=" + completedRides +
                 ", seats=" + seats +
-                ", userRating=" + userRating +
+                ", user_rating=" + userRating +
                 ", points=" + points +
-                ", carOwner=" + carOwner +
+                ", carOwner=" + isCarOwner +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

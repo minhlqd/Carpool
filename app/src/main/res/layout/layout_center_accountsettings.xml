@@ -1,299 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_register">
 
     <RelativeLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/detailsView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relLayout1">
-
-        <include layout="@layout/layout_center_viewpager"/>
-
-        <RelativeLayout
-            android:id="@+id/detailsView"
-            android:layout_width="match_parent"
-            android:layout_height="205dp"
-            android:background="@color/background_register">
+        android:layout_height="205dp">
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:src="@drawable/blank_profile_picture" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/blank_profile_picture" />
 
 
-            <TextView
-                android:id="@+id/displayUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/profile_image"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="@string/field_username"
-                android:textColor="@color/name_heading"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/displayUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/field_username"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/name_heading"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/email_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/displayUsername"
-                android:layout_centerHorizontal="true"
-                android:text=""
-                android:textColor="@color/email_heading"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/displayUsername"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textColor="@color/email_heading"
+            android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/signoutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="23dp"
-                android:layout_toEndOf="@id/profile_image"
-                android:background="@android:color/transparent"
-                android:text="@string/log_out"
-                android:textAllCaps="false"
-                android:textColor="@color/theme"
-                android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/leaderboards"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/ic_leaderboard" />
 
-            <ImageView
-                android:id="@+id/leaderboards"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/ic_leaderboard" />
+        <TextView
+            android:id="@+id/rides_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:text=""
+            android:textColor="@color/email_heading"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/rides_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="20dp"
-                android:text=""
-                android:textColor="@color/email_heading"
-                android:textSize="15sp" />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/customRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="0dp"
+            android:numStars="5"
+            android:progressTint="@color/rating_scale"
+            android:rating="4.0"
+            android:stepSize="0.1" />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                style="@style/customRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="5dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="0dp"
-                android:numStars="5"
-                android:progressTint="@color/rating_scale"
-                android:rating="4.0"
-                android:stepSize="0.1" />
+        <Button
+            android:id="@+id/settingsBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/ic_settings"
+            android:backgroundTint="@color/color_primary" />
 
-            <Button
-                android:id="@+id/settingsBtn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="3dp"
-                android:background="@drawable/ic_settings"
-                android:backgroundTint="@color/color_primary" />
+        <Button
+            android:id="@+id/helpBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="38dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/ic_help"
+            android:backgroundTint="@color/color_primary" />
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/helpBtn"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="38dp"
-                android:layout_marginBottom="3dp"
-                android:background="@drawable/ic_help"
-                android:backgroundTint="@color/color_primary" />
-        </RelativeLayout>
 
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@id/detailsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailsView"
+        android:background="@color/background_register"
+        android:paddingBottom="100dp">
 
         <RelativeLayout
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/detailsView"
-            android:background="@color/background_register"
-            android:paddingLeft="30dp"
-            android:paddingTop="10dp"
-            android:paddingRight="30dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/accountSettingsHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/madeleina"
                 android:text="@string/account_settings"
                 android:textColor="@color/account_settings"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/roboto_bold"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView1"
+            <RelativeLayout
+                android:id="@+id/update_view_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/accountSettingsHeader"
                 android:layout_marginTop="10dp">
-
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/emailUpdateView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/background_register">
+                    android:layout_height="50dp"
+                    android:background="@drawable/background_linear">
 
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/icon_account_mail" />
 
-                    <LinearLayout
-                        android:id="@+id/emailUpdateView"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/updateEmailButton"
+                        android:layout_width="240dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/background_linear">
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:text="@string/update_email_address"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/icon_account_mail" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
 
-                        <Button
-                            android:id="@+id/updateEmailButton"
-                            android:layout_width="240dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:background="@android:color/transparent"
-                            android:text="@string/update_email_address"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/dark_grey"
-                            android:textSize="12sp" />
+                <LinearLayout
+                    android:id="@+id/changePasswordUpdateView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/emailUpdateView"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/background_linear">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="14dp"
-                            android:background="@drawable/ic_chevron_right_black_24dp" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/icon_account_password" />
 
-                    <LinearLayout
-                        android:background="@drawable/background_linear"
-                        android:id="@+id/changePasswordUpdateView"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/updatePasswordButton"
+                        android:layout_width="240dp"
                         android:layout_height="50dp"
-                        android:layout_below="@id/emailUpdateView"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:text="@string/change_password"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/icon_account_password" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
 
-                        <Button
-                            android:id="@+id/updatePasswordButton"
-                            android:layout_width="240dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:background="@android:color/transparent"
-                            android:text="@string/change_password"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/dark_grey"
-                            android:textSize="12sp" />
+                <LinearLayout
+                    android:id="@+id/detailsUpdateView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/changePasswordUpdateView"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/background_linear">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="14dp"
-                            android:background="@drawable/ic_chevron_right_black_24dp" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/icon_account_details" />
 
-                    <LinearLayout
-                        android:background="@drawable/background_linear"
-                        android:id="@+id/detailsUpdateView"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/updateDetailsButton"
+                        android:layout_width="240dp"
                         android:layout_height="50dp"
-                        android:layout_below="@id/changePasswordUpdateView"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:text="@string/update_my_details"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/icon_account_details" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
 
-                        <Button
-                            android:id="@+id/updateDetailsButton"
-                            android:layout_width="240dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:background="@android:color/transparent"
-                            android:text="@string/update_my_details"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/dark_grey"
-                            android:textSize="12sp" />
+                <LinearLayout
+                    android:id="@+id/carsUpdateView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/detailsUpdateView"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/background_linear">
 
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="14dp"
-                            android:background="@drawable/ic_chevron_right_black_24dp" />
-                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/icon_account_car" />
 
-                    <LinearLayout
-                        android:background="@drawable/background_linear"
-                        android:id="@+id/carsUpdateView"
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/updateCarDetailsButton"
+                        android:layout_width="240dp"
                         android:layout_height="50dp"
-                        android:layout_below="@id/detailsUpdateView"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:text="@string/update"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/icon_account_car" />
-
-                        <Button
-                            android:id="@+id/updateCarDetailsButton"
-                            android:layout_width="240dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:background="@android:color/transparent"
-                            android:text="@string/update_car_details"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/dark_grey"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="14dp"
-                            android:background="@drawable/ic_chevron_right_black_24dp" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/ic_chevron_right_black_24dp" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/paymentMethodsHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cardView1"
+                android:layout_below="@id/update_view_detail"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/madeleina"
                 android:text="@string/view_profile"
@@ -343,6 +325,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
-    </RelativeLayout>
 
-</merge>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

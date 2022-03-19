@@ -56,13 +56,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mProgressBar = (ProgressBar) findViewById(R.id.loginRequestProgressBar);
-        mPleaseWait = (TextView) findViewById(R.id.loadingPleaseWait);
-        mLoadingCardView = (CardView) findViewById(R.id.card_view_loading);
-        mEmail = (EditText) findViewById(R.id.emailEditText);
-        mPassword = (EditText) findViewById(R.id.passwordEditText);
-        mBtn_signup = (TextView) findViewById(R.id.btn_signup);
-        mForgotPassword = (TextView) findViewById(R.id.forgot_password) ;
+        mProgressBar = findViewById(R.id.loginRequestProgressBar);
+        mPleaseWait = findViewById(R.id.loadingPleaseWait);
+        mLoadingCardView = findViewById(R.id.card_view_loading);
+        mEmail = findViewById(R.id.emailEditText);
+        mPassword = findViewById(R.id.passwordEditText);
+        mBtn_signup = findViewById(R.id.btn_signup);
+        mForgotPassword = findViewById(R.id.forgot_password);
 
 
         mProgressBar.setVisibility(GONE);
@@ -73,16 +73,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isStringNull(String string) {
-        if (string.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return string.equals("");
     }
 
     private void init() {
         //Initialize the button for logging in
-        Button mBtn_login = (Button) findViewById(R.id.btn_login);
+        Button mBtn_login = findViewById(R.id.btn_login);
         mBtn_login.setOnClickListener(v -> {
             Log.d(TAG, "onClick: attempting to login in.");
 

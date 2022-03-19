@@ -25,15 +25,11 @@ public class OfferRideCreatedDialog extends Dialog implements
     private Button confirmDialog;
     private SectionsStatePageAdapter pageAdapter;
 
-
-
-
-
     public interface onConfirmPasswordListener{
         public void onConfirmPassword(String password);
     }
 
-    onConfirmPasswordListener mOnConfirmPassowrdListener;
+    onConfirmPasswordListener mOnConfirmPasswordListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +39,20 @@ public class OfferRideCreatedDialog extends Dialog implements
         cancelDialog = (TextView) findViewById(R.id.dialogCancel);
         confirmDialog = (Button) findViewById(R.id.dialogConfirm);
         cancelDialog.setOnClickListener(this);
-        confirmDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Shows the ride has been created successfully
-                dismiss();
+        confirmDialog.setOnClickListener(v -> {
+            //Shows the ride has been created successfully
+            dismiss();
 
-                Intent intent = new Intent(c, RidesActivity.class);
-                c.startActivity(intent);
+            Intent intent = new Intent(c, RidesActivity.class);
+            c.startActivity(intent);
 //                ViewRideCreatedDialog dialog = new ViewRideCreatedDialog(c);
 //                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //                dialog.show();
-            }
         });
     }
 
     public OfferRideCreatedDialog(Context a) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
     }
 

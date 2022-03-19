@@ -4,10 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,23 +27,25 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+@SuppressWarnings("ALL")
 public class SearchRideActivity extends AppCompatActivity {
 
-    private static final String TAG = "SearchRideActivity";
+    private static final String TAG = "MinhMX";
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
 
     private Context mContext;
 
-    //Fragment view
     private View view;
 
-    private EditText mDestinationEditText, mFromEditText, mDateOfJourneyEditText;
+    private EditText mDestinationEditText;
+    private EditText mFromEditText;
+    private EditText mDateOfJourneyEditText;
     private Button mSnippetSeachARideBtn;
     private Switch mSameGenderSearchSwitch;
     private Boolean sameGender;
@@ -66,53 +66,39 @@ public class SearchRideActivity extends AppCompatActivity {
         setupFirebaseAuth();
         getActivityData();
 
-        //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) findViewById(R.id.backArrowFindRide);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        backArrow.setOnClickListener(v -> finish());
+
+        mSameGenderSearchSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                sameGender = true;
+            } else {
+                sameGender = false;
             }
         });
 
-        mSameGenderSearchSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    sameGender = true;
-                } else {
-                    sameGender = false;
-                }
-            }
-        });
+        mDateOfJourneyEditText.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 0);
 
-        mDateOfJourneyEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(SearchRideActivity.this, date, mCalendar
-                        .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
-                        mCalendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                datePickerDialog.show();
-            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(SearchRideActivity.this, date, mCalendar
+                    .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
         });
 
 
-        mSnippetSeachARideBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDateOfJourneyEditText.getText().length() > 0 &&  mFromEditText.getText().length() > 0 && mDestinationEditText.getText().length() > 0) {
-                    Intent intent = new Intent(mContext, SearchResultsActivity.class);
-                    intent.putExtra("LOCATION", mDestinationEditText.getText().toString());
-                    intent.putExtra("DESTINATION", mFromEditText.getText().toString());
-                    intent.putExtra("sameGender", sameGender);
-                    intent.putExtra("DATE", mDateOfJourneyEditText.getText().toString());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(mContext, "All fields must be filled in", Toast.LENGTH_SHORT).show();
-                }
+        mSnippetSeachARideBtn.setOnClickListener(v -> {
+            if (mDateOfJourneyEditText.getText().length() > 0 &&  mFromEditText.getText().length() > 0 && mDestinationEditText.getText().length() > 0) {
+                Intent intent = new Intent(mContext, SearchResultsActivity.class);
+                intent.putExtra(getString(R.string.intent_location), mDestinationEditText.getText().toString());
+                intent.putExtra(getString(R.string.intent_destination), mFromEditText.getText().toString());
+                intent.putExtra(getString(R.string.intent_gender), sameGender);
+                intent.putExtra(getString(R.string.intent_date), mDateOfJourneyEditText.getText().toString());
+                startActivity(intent);
+            } else {
+                Toast.makeText(mContext, getString(R.string.all_fields), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,26 +106,23 @@ public class SearchRideActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mFromEditText.setText(getIntent().getStringExtra("DESTINATION"));
-            mDestinationEditText.setText(getIntent().getStringExtra("LOCATION"));
+            mFromEditText.setText(getIntent().getStringExtra(getString(R.string.intent_location)));
+            mDestinationEditText.setText(getIntent().getStringExtra(getString(R.string.intent_destination)));
         }
     }
 
     private void setupWidgets(){
-        //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(this);
 
-        //Widget setup
         mDestinationEditText = (EditText) findViewById(R.id.destinationEditText);
         mFromEditText = (EditText) findViewById(R.id.locationEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.dateEditText);
         mSameGenderSearchSwitch = (Switch) findViewById(R.id.sameGenderSearchSwitch);
         mSnippetSeachARideBtn = (Button) findViewById(R.id.snippetSearchARideBtn);
 
-        //Calander setup
         mCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -150,35 +133,22 @@ public class SearchRideActivity extends AppCompatActivity {
                 updateLabel();
             }
         };
-
-
-
-
     }
 
     private void updateLabel() {
-        String dateFormat = "dd/MM/yy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
+        String dateFormat = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.getDefault());
 
         mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalendar.getTime()));
     }
-
-
-
-
-
 
     private void setupFirebaseAuth(){
         userID = mAuth.getCurrentUser().getUid();
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 }
