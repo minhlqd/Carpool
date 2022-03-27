@@ -62,7 +62,7 @@ public class FirebaseMethods {
                                 Toast.LENGTH_SHORT).show();
                     }
                     else if(task.isSuccessful()){
-                        userID = mAuth.getCurrentUser().getUid();
+                        userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     }
                 });
     }
@@ -95,7 +95,7 @@ public class FirebaseMethods {
     int totalPoints = 0;
 
     public void addPoints(String userID, int points) {
-        myRef.child("user").child(userID).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("info").child(userID).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -108,7 +108,7 @@ public class FirebaseMethods {
             }
         });
 
-        myRef.child("user").child(userID).child("points").setValue(totalPoints + points);
+        myRef.child("info").child(userID).child("points").setValue(totalPoints + points);
     }
 
 
@@ -133,7 +133,7 @@ public class FirebaseMethods {
                 .child(userID)
                 .setValue(user);
 
-        myRef.child("user")
+        myRef.child("info")
                 .child(userID)
                 .setValue(info);
     }
@@ -213,7 +213,7 @@ public class FirebaseMethods {
         });
     }
 
-    public User getUserSettings(DataSnapshot dataSnapshot){
+    public User getUser(DataSnapshot dataSnapshot){
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
@@ -227,75 +227,6 @@ public class FirebaseMethods {
                     user.setEmail(ds.child(userID)
                             .getValue(User.class)
                             .getEmail());
-
-                    user.setProfilePhoto(ds.child(userID)
-                            .getValue(User.class)
-                            .getProfilePhoto());
-
-                    user.setFullName(ds.child(userID)
-                            .getValue(User.class)
-                            .getFullName());
-
-                    user.setDateOfBird(ds.child(userID)
-                            .getValue(User.class)
-                            .getDateOfBird());
-
-                    user.setMobileNumber(ds.child(userID)
-                            .getValue(User.class)
-                            .getMobileNumber());
-
-                    user.setLicenceNumber(ds.child(userID)
-                            .getValue(User.class)
-                            .getLicenceNumber());
-
-                    user.setCompletedRides(ds.child(userID)
-                            .getValue(User.class)
-                            .getCompletedRides());
-
-                    user.setUserRating(ds.child(userID)
-                            .getValue(User.class)
-                            .getUserRating());
-
-                    user.setLicenceNumber(ds.child(userID)
-                            .getValue(User.class)
-                            .getLicenceNumber());
-
-                    user.setCar(ds.child(userID)
-                            .getValue(User.class)
-                            .getCar());
-
-                    user.setRegistrationPlate(ds.child(userID)
-                            .getValue(User.class)
-                            .getRegistrationPlate());
-
-                    user.setSeats(ds.child(userID)
-                            .getValue(User.class)
-                            .getSeats());
-
-                    user.setIsCarOwner(ds.child(userID)
-                            .getValue(User.class)
-                            .getIsCarOwner());
-
-                    user.setGender(ds.child(userID)
-                            .getValue(User.class)
-                            .getGender());
-
-                    user.setCarPhoto(ds.child(userID)
-                            .getValue(User.class)
-                            .getCarPhoto());
-
-                    user.setEducation(ds.child(userID)
-                            .getValue(User.class)
-                            .getEducation());
-
-                    user.setWork(ds.child(userID)
-                            .getValue(User.class)
-                            .getWork());
-
-                    user.setBio(ds.child(userID)
-                            .getValue(User.class)
-                            .getBio());
-
                 } catch (NullPointerException e){
                     Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }
@@ -305,8 +236,82 @@ public class FirebaseMethods {
         return user;
     }
 
-    public User getSpecificUserSettings(DataSnapshot dataSnapshot, String user_id){
+    public Info getInfo(DataSnapshot dataSnapshot){
 
+        Info info = new Info();
+        for (DataSnapshot ds : dataSnapshot.getChildren()){
+            if(Objects.equals(ds.getKey(), "info")){
+                try {
+                    info.setProfilePhoto(ds.child(userID)
+                            .getValue(Info.class)
+                            .getProfilePhoto());
+
+                    info.setDateOfBird(ds.child(userID)
+                            .getValue(Info.class)
+                            .getDateOfBird());
+
+                    info.setMobileNumber(ds.child(userID)
+                            .getValue(Info.class)
+                            .getMobileNumber());
+
+                    info.setLicenceNumber(ds.child(userID)
+                            .getValue(Info.class)
+                            .getLicenceNumber());
+
+                    info.setCompletedRides(ds.child(userID)
+                            .getValue(Info.class)
+                            .getCompletedRides());
+
+                    info.setUserRating(ds.child(userID)
+                            .getValue(Info.class)
+                            .getUserRating());
+
+                    info.setLicenceNumber(ds.child(userID)
+                            .getValue(Info.class)
+                            .getLicenceNumber());
+
+                    info.setCar(ds.child(userID)
+                            .getValue(Info.class)
+                            .getCar());
+
+                    info.setRegistrationPlate(ds.child(userID)
+                            .getValue(Info.class)
+                            .getRegistrationPlate());
+
+                    info.setSeats(ds.child(userID)
+                            .getValue(Info.class)
+                            .getSeats());
+
+                    info.setGender(ds.child(userID)
+                            .getValue(Info.class)
+                            .getGender());
+
+                    info.setCarPhoto(ds.child(userID)
+                            .getValue(Info.class)
+                            .getCarPhoto());
+
+                    info.setEducation(ds.child(userID)
+                            .getValue(Info.class)
+                            .getEducation());
+
+                    info.setWork(ds.child(userID)
+                            .getValue(Info.class)
+                            .getWork());
+
+                    info.setBio(ds.child(userID)
+                            .getValue(Info.class)
+                            .getBio());
+
+                } catch (NullPointerException e){
+                    Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
+                }
+
+            }
+        }
+        return info;
+    }
+
+    public User getSpecificUser(DataSnapshot dataSnapshot, String user_id){
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(ds.getKey() != null && ds.getKey().equals("user")){
@@ -318,74 +323,6 @@ public class FirebaseMethods {
                         user.setEmail(ds.child(user_id)
                                 .getValue(User.class)
                                 .getEmail());
-
-                        user.setProfilePhoto(ds.child(user_id)
-                                .getValue(User.class)
-                                .getProfilePhoto());
-
-                        user.setFullName(ds.child(user_id)
-                                .getValue(User.class)
-                                .getFullName());
-
-                        user.setDateOfBird(ds.child(user_id)
-                                .getValue(User.class)
-                                .getDateOfBird());
-
-                        user.setMobileNumber(ds.child(user_id)
-                                .getValue(User.class)
-                                .getMobileNumber());
-
-                        user.setLicenceNumber(ds.child(user_id)
-                                .getValue(User.class)
-                                .getLicenceNumber());
-
-                        user.setCompletedRides(ds.child(user_id)
-                                .getValue(User.class)
-                                .getCompletedRides());
-
-                        user.setUserRating(ds.child(user_id)
-                                .getValue(User.class)
-                                .getUserRating());
-
-                        user.setLicenceNumber(ds.child(user_id)
-                                .getValue(User.class)
-                                .getLicenceNumber());
-
-                        user.setCar(ds.child(user_id)
-                                .getValue(User.class)
-                                .getCar());
-
-                        user.setRegistrationPlate(ds.child(user_id)
-                                .getValue(User.class)
-                                .getRegistrationPlate());
-
-                        user.setSeats(ds.child(user_id)
-                                .getValue(User.class)
-                                .getSeats());
-
-                        user.setIsCarOwner(ds.child(user_id)
-                                .getValue(User.class)
-                                .getIsCarOwner());
-
-                        user.setGender(ds.child(user_id)
-                                .getValue(User.class)
-                                .getGender());
-
-                        user.setCarPhoto(ds.child(user_id)
-                                .getValue(User.class)
-                                .getCarPhoto());
-
-                        user.setEducation(ds.child(user_id)
-                                .getValue(User.class)
-                                .getEducation());
-
-                        user.setWork(ds.child(user_id)
-                                .getValue(User.class)
-                                .getWork());
-
-                        user.setBio(ds.child(user_id)
-                                .getValue(User.class)
-                                .getBio());
                 } catch (NullPointerException e){
                 }
 

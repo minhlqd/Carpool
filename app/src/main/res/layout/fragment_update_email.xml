@@ -12,17 +12,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/relLayout1_fragment_details">
 
-            <include layout="@layout/snippet_top_profiletoolbar"/>
+            <include layout="@layout/snippet_top_profile_toolbar"/>
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relLayout2_fragment_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relLayout1_fragment_details"
-            android:id="@+id/relLayout2_fragment_details">
+            android:layout_below="@id/relLayout1_fragment_details">
 
-            <include layout="@layout/snippet_center_edit_email"/>
+            <include layout="@layout/snippet_center_edit_email" />
 
         </RelativeLayout>
 

@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -105,10 +106,10 @@ public class RegisterStepFourFragment extends Fragment {
 
         //instantiate objects
         finish = mView.findViewById(R.id.finish);
-        mLicence = mView.findViewById(R.id.licenceStepFourEditText);
-        mCar = mView.findViewById(R.id.carStepFourEditText);
-        mSeats = mView.findViewById(R.id.seatsStepFourEditText);
-        mRegistration = mView.findViewById(R.id.registrationStepFourEditText);
+        mLicence = mView.findViewById(R.id.licence);
+        mCar = mView.findViewById(R.id.car);
+        mSeats = mView.findViewById(R.id.seats);
+        mRegistration = mView.findViewById(R.id.registration);
         mCarToggle = mView.findViewById(R.id.carToggle);
         mCarTogglePassenger = mView.findViewById(R.id.passenger);
         mCarToggleDiver = mView.findViewById(R.id.driver);
@@ -130,38 +131,29 @@ public class RegisterStepFourFragment extends Fragment {
             switch (checkedId)
             {
                 case R.id.driver:
-                    mCarToggleDiver.setTextColor(R.color.white);
-                    mCarTogglePassenger.setTextColor(R.color.dark_grey);
-                    mCarPhoto.setBackground(getContext().getDrawable(R.drawable.driver));
+                    mCarToggleDiver.setTextColor(Color.WHITE);
+                    mCarTogglePassenger.setTextColor(Color.BLACK);
+                    mCarPhoto.setImageResource(R.drawable.driver);
                     mVehicle.setVisibility(View.VISIBLE);
                     mDestinationLinearLayout.setVisibility(View.GONE);
                     break;
                 case R.id.passenger:
-                    mCarTogglePassenger.setTextColor(R.color.white);
-                    mCarToggleDiver.setTextColor(R.color.dark_grey);
-                    mCarPhoto.setBackground(getContext().getDrawable(R.drawable.car_sharing));
+                    mCarTogglePassenger.setTextColor(Color.WHITE);
+                    mCarToggleDiver.setTextColor(Color.BLACK);
+                    mCarPhoto.setImageResource(R.drawable.car_sharing);
                     mVehicle.setVisibility(View.GONE);
                     mDestinationLinearLayout.setVisibility(View.VISIBLE);
                     break;
             }
         });
 
-        /*//Make edit fields invisible by default
-        mLicence.setVisibility(View.INVISIBLE);
-        mCar.setVisibility(View.INVISIBLE);
-        mSeats.setVisibility(View.INVISIBLE);
-        mRegistration.setVisibility(View.INVISIBLE);
-        mLicenceLayout.setVisibility(View.INVISIBLE);
-        mCarLayout.setVisibility(View.INVISIBLE);
-        mRegistrationLayout.setVisibility(View.INVISIBLE);
-        mSeatsLayout.setVisibility(View.INVISIBLE);*/
-
         finish.setOnClickListener(v -> {
+            Log.d("MinhMX", "onCreateView: " + mSeats.getText().toString());
             switch (mCarToggle.getCheckedRadioButtonId())
             {
                 case R.id.driver:
                     if (mLicence.getText().length() > 0 && mCar.getText().length() > 0
-                            && mSeats.getText().length() > 0 && mRegistration.getText().length() > 0 ) {
+                            && mRegistration.getText().length() > 0 ) {
                         mOnButtonClickListener.onButtonClicked(v);
                     }
                     break;
@@ -196,7 +188,6 @@ public class RegisterStepFourFragment extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
-            Log.i("STEP3", "onActivityResult: " + filePath);
             try {
                 if (getActivity() != null) {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
@@ -242,6 +233,7 @@ public class RegisterStepFourFragment extends Fragment {
     }
 
     public int getSeats() {
+        Log.d("MinhMX", "getSeats: " + mSeats.getText());
         if (mSeats.getText().length() > 0){
             return Integer.parseInt(mSeats.getText().toString());
         }
@@ -287,7 +279,6 @@ public class RegisterStepFourFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 }

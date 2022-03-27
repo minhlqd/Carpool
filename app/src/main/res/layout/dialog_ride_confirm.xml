@@ -231,23 +231,21 @@
                             android:id="@+id/pickupLocationConfirm"
                             android:layout_below="@id/durationConfirm"
                             android:layout_marginTop="10dp"
-                            android:text="Pickup: " />
+                            android:text="@string/pickup" />
 
 
                     </RelativeLayout>
 
-
-
                     <Button
+                        android:id="@+id/dialogConfirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Pay and book"
-                        android:id="@+id/dialogConfirm"
-                        android:layout_marginRight="16dp"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginBottom="16dp"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/btn_style" />
+                        android:background="@drawable/btn_style"
+                        android:text="@string/pay_and_book"
+                        android:textColor="@android:color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -256,7 +254,7 @@
                         android:textColor="@color/dark_grey"
                         android:layout_marginBottom="10dp"
                         android:layout_gravity="center"
-                        android:text="Dismiss"
+                        android:text="@string/dismiss"
                         android:id="@+id/dialogCancel"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

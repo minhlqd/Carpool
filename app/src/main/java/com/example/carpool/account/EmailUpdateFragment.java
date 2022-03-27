@@ -1,6 +1,5 @@
 package com.example.carpool.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +18,10 @@ import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.dialogs.ConfirmPasswordDialog;
 import com.example.carpool.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,12 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDialog.onConfirmPasswordListener {
 
-    private static final String TAG = "EmailUpdateFragment";
+    private static final String TAG = "MinhMX";
 
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -57,54 +53,37 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
         AuthCredential credential = EmailAuthProvider
                 .getCredential(mAuth.getCurrentUser().getEmail(), password);
 
-        // Prompt the user to re-provide their sign-in credentials
+        assert user != null;
         user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-
-                            // -- check to see if email is already in databse -- //
-                            mAuth.fetchSignInMethodsForEmail(mEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                    if (task.isSuccessful()){
-                                        try {
-                                            if (task.getResult().getSignInMethods().size() == 1) {
-                                                Toast.makeText(getActivity(), "Email in use", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                                                //Updating email method
-                                                assert user != null;
-                                                user.updateEmail(mEmail.getText().toString())
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    Toast.makeText(getActivity(), "User email address updated.", Toast.LENGTH_SHORT).show();
-
-                                                                    mFirebaseMethods.updateEmail(mEmail.getText().toString());
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        } catch (NullPointerException e){
-                                            Log.e(TAG, "onComplete: NullPointerExceptionL " + e.getMessage());
-                                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        mAuth.fetchSignInMethodsForEmail(mEmail.getText().toString()).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()){
+                                try {
+                                    if (task1.getResult().getSignInMethods().size() == 1) {
+                                        Toast.makeText(getActivity(), "Email in use", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
+                                        assert user1 != null;
+                                        user1.updateEmail(mEmail.getText().toString())
+                                                .addOnCompleteListener(task11 -> {
+                                                    if (task11.isSuccessful()) {
+                                                        Toast.makeText(getActivity(), "User email address updated.", Toast.LENGTH_SHORT).show();
+                                                        mFirebaseMethods.updateEmail(mEmail.getText().toString());
+                                                    }
+                                                });
                                     }
+                                } catch (NullPointerException e){
+                                    Log.e(TAG, "onComplete: NullPointerExceptionL " + e.getMessage());
                                 }
-                            });
+                            }
+                        });
 
-                        } else {
-                            Log.d(TAG, "onComplete: re-auth failed");
-                        }
+                    } else {
+                        Log.d(TAG, "onComplete: re-auth failed");
                     }
                 });
 
@@ -118,13 +97,12 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
 
 
         //Widget setup
-        mEmail = (EditText) view.findViewById(R.id.emailEditTextSnippet);
+        mEmail = (EditText) view.findViewById(R.id.update_password);
         mChangeEmailButton = (Button) view.findViewById(R.id.snippetEmailBtn);
 
-        //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         setupFirebaseAuth();
@@ -133,44 +111,26 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
 
         //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), AccountActivity.class);
-                startActivity(intent);
-            }
+        backArrow.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
         });
 
         return view;
     }
 
-    /**
-     * Retrieves the data inside the widgets and saves it to the database.
-     */
     private void saveEmailSettings(){
         final String email = mEmail.getText().toString();
 
-        //Check if the email exists in the database
         if (!mUserSettings.getEmail().equals(email)){
-             //1. Reauthenticate
-            //- confirm the password and email
             ConfirmPasswordDialog dialog = new ConfirmPasswordDialog();
+            assert getFragmentManager() != null;
             dialog.show(getFragmentManager(), getString(R.string.confirm_password_dialog));
             dialog.setTargetFragment(EmailUpdateFragment.this, 1);
-            //2. check if the email exists
-            //- fetchProvidersForEmail(String email)
-            //3. submit the change
-            //- submit the new email for database auth
-        }
-        else {
-
         }
     }
 
-    private void setProfileWidgets(User userSettings){
-        User user = userSettings;
-
-        mUserSettings = userSettings;
+    private void setProfileWidgets(User user){
+        mUserSettings = user;
 
         mEmail.setText(user.getEmail());
     }
@@ -186,7 +146,7 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot));
 
             }
 
@@ -197,9 +157,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
         });
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

@@ -19,7 +19,7 @@
                 android:focusableInTouchMode="true"
                 android:focusable="true"
                 android:layout_marginTop="30dp"
-                android:id="@+id/relLayout1">
+                android:id="@+id/text_input_email">
 
 
                 <androidx.cardview.widget.CardView

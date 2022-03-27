@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/background_app_bar"
-        android:backgroundTint="#40CF7F">
+        android:background="@drawable/background_app_bar">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -16,7 +13,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
 
                 <ImageView
                     android:layout_width="30dp"
@@ -31,14 +27,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_regular"
                     android:gravity="center_horizontal"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginRight="50dp"
-                    android:fontFamily="@font/main"
                     android:text="@string/update"
-                    android:textSize="16sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

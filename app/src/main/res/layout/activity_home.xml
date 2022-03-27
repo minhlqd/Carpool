@@ -87,7 +87,7 @@
                         android:id="@+id/locationLayout">
 
                         <ImageView
-                            android:id="@+id/locationImage"
+                            android:id="@+id/location_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -99,7 +99,7 @@
                             android:id="@+id/location"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignStart="@id/locationImage"
+                            android:layout_alignStart="@id/location_image"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="35dp"
                             android:layout_marginTop="14dp"

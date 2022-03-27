@@ -97,11 +97,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
 
         setViewPager();
 
-        /*mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();*/
-
-
         setupFirebaseAuth();
     }
 
@@ -168,10 +163,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 break;
 
             case R.id.finish:
-                //handle currPos is reached last item
-                //mViewPager.setCurrentItem(currPos + 1);
-                //getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepFourFragment).commit();
-                gatherData(); //To create the account on the last step of fragment
+                gatherData();
                 break;
             case R.id.restartRegistrationBtn:
                 //handle currPos is zero
@@ -227,21 +219,21 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 .equalTo(username);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                /*for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     if (singleSnapshot.exists()){
                         append = myRef.push().getKey().substring(3,10);
                     }
                 }
 
-                String mUsername = "";
-                mUsername = username + append;
+                String mUsername;
+                mUsername = username + append;*/
 
-                //add new user to the database
-                mFirebaseMethods.addNewUser(email, fullName, mUsername, profile_photo, mobileNumber, dob, licence_number, car, registration_plate, seats, education, work, bio, carOwner, gender, car_photo, startPoint, destination, role);
-
-                Toast.makeText(mContext, "Signup successful. You may login now!.", Toast.LENGTH_SHORT).show();
+                mFirebaseMethods.addNewUser(
+                        email, fullName, username, profile_photo, mobileNumber
+                        , dob, licence_number, car, registration_plate, seats
+                        , education, work, bio, carOwner, gender, car_photo
+                        , startPoint, destination, role);
 
                 mAuth.signOut();
             }
@@ -254,7 +246,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     }
 
     private void setupFirebaseAuth(){
-
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
@@ -263,7 +254,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             FirebaseUser user = firebaseAuth.getCurrentUser();
 
             if (user != null) {
-
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

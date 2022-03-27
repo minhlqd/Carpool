@@ -23,6 +23,10 @@ public class Info {
     private String destination;
     private String role;
 
+    public Info(){
+
+    }
+
     public Info(String profilePhoto, String dateOfBird, String licenceNumber, String gender,
                 String registrationPlate, String car, String carPhoto, String education,
                 String work, String bio, Long mobileNumber, int completedRides, int seats, int userRating,

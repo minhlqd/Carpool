@@ -36,7 +36,7 @@
                 android:layout_below="@id/changeProfilePhoto"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/white_border_bottom"
-                android:id="@+id/relLayout1">
+                android:id="@+id/text_input_email">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -59,7 +59,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/relLayout1"
+                android:layout_below="@id/text_input_email"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/white_border_bottom"
                 android:id="@+id/relLayout2">
@@ -67,7 +67,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_fullname"
+                    android:src="@drawable/ic_full_name"
                     android:layout_centerVertical="true"/>
 
                 <EditText

@@ -60,21 +60,23 @@ dependencies {
     //Universal image loader
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
-     //Firebase connection and authentication
-     implementation 'com.google.firebase:firebase-core:20.1.0'
-     implementation 'com.google.firebase:firebase-auth:21.0.2'
-     implementation 'com.google.firebase:firebase-database:20.0.4'
+    //Firebase connection and authentication
+    implementation 'com.google.firebase:firebase-core:20.1.2'
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
 
-     //Firebase storage
-     implementation 'com.google.firebase:firebase-storage:20.0.1'
+    //Firebase storage
+    implementation 'com.google.firebase:firebase-storage:20.0.1'
 
-     //Firebase messaging
-     implementation 'com.google.firebase:firebase-messaging:23.0.1'
+    //Firebase messaging
+    implementation 'com.google.firebase:firebase-messaging:23.0.2'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.2'
 
-     //Google play services
-     implementation 'com.google.android.gms:play-services-maps:18.0.2'
-     implementation "com.google.android.gms:play-services-location:19.0.1"
-     implementation "com.google.android.gms:play-services-places:17.0.0"
+    //Google play services
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation "com.google.android.gms:play-services-location:19.0.1"
+    implementation "com.google.android.gms:play-services-places:17.0.0"
+    implementation "com.google.android.libraries.places:places:2.5.0"
 
     //GeoFire
     implementation 'com.firebase:geofire-android:2.3.1'

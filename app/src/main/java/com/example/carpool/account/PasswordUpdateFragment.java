@@ -2,7 +2,6 @@ package com.example.carpool.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import java.util.Objects;
 
 public class PasswordUpdateFragment extends Fragment {
 
-    private static final String TAG = "PasswordUpdateFragment";
+    private static final String TAG = "MinhMX";
 
     //Fragment view
     private View view;
@@ -41,7 +40,7 @@ public class PasswordUpdateFragment extends Fragment {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -57,8 +56,8 @@ public class PasswordUpdateFragment extends Fragment {
 
         //Firebase setup
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(getActivity());
 
         mPassword = (EditText) view.findViewById(R.id.passwordEditTextSnippet);
@@ -76,12 +75,8 @@ public class PasswordUpdateFragment extends Fragment {
 
         //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), AccountActivity.class);
-                startActivity(intent);
-            }
+        backArrow.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
         });
 
         setupFirebaseAuth();

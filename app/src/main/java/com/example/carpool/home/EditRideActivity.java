@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carpool.common.ApplicationContext;
 import com.example.carpool.common.Common;
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.dialogs.OfferRideCreatedDialog;
@@ -254,21 +255,20 @@ public class EditRideActivity extends AppCompatActivity {
         }
     }
 
-    private void setProfileWidgets(User userSettings){
+    private void setProfileWidgets(User user, Info info){
 
-        User user = userSettings;
 
-        mUserSettings = userSettings;
+        mUserSettings = user;
 
-        UniversalImageLoader.setImage(user.getCarPhoto(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
 
         username = user.getUsername();
-        userRating = user.getUserRating();
-        completeRides = user.getCompletedRides();
-        profile_photo = user.getProfilePhoto();
-        carID = user.getCar();
-        seatsID = user.getSeats() - 1;
-        licencePlateID = user.getRegistrationPlate();
+        userRating = info.getUserRating();
+        completeRides = info.getCompletedRides();
+        profile_photo = info.getProfilePhoto();
+        carID = info.getCar();
+        seatsID = info.getSeats() - 1;
+        licencePlateID = info.getRegistrationPlate();
 
         mUsername.setText(username);
         mLicencePlateEditText.setText(licencePlateID);
@@ -308,7 +308,7 @@ public class EditRideActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot));
 
             }
 

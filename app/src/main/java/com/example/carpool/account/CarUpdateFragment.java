@@ -1,8 +1,14 @@
 package com.example.carpool.account;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +25,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
-import com.example.carpool.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,14 +36,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CarUpdateFragment extends Fragment {
 
     private static final String TAG = "CarUpdateFragment";
+    private static final int PICK_IMAGE_REQUEST = 29;
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -51,15 +61,22 @@ public class CarUpdateFragment extends Fragment {
     //Fragment view
     private View view;
     private CircleImageView mCarPhoto;
-    private EditText mCar, mRegistration, mLicence, mSeats;
+    private EditText mCar;
+    private EditText mRegistration;
+    private EditText mLicence;
+    private EditText mSeats;
     private Button mSnippetCarBtn;
     private RadioGroup mCarOwnerRadioGroup;
-    private RadioButton ownerYesButton, ownerNoButton;
+    private RadioButton driver;
+    private RadioButton passenger;
     private RelativeLayout mCarDetailsLayout;
 
     //vars
-    private User mUserSettings;
+    private Info mInfo;
     private Boolean carOwner;
+
+    private String role;
+    private Uri filePath;
 
     @Nullable
     @Override
@@ -71,8 +88,8 @@ public class CarUpdateFragment extends Fragment {
         mLicence = view.findViewById(R.id.licenceEditText);
         mSeats = view.findViewById(R.id.seatsEditText);
         mCarOwnerRadioGroup = view.findViewById(R.id.carToggle);
-        ownerYesButton = view.findViewById(R.id.driver);
-        ownerNoButton = view.findViewById(R.id.passenger);
+        driver = view.findViewById(R.id.driver);
+        passenger = view.findViewById(R.id.passenger);
         mCarDetailsLayout = view.findViewById(R.id.carDetailsLayout);
 
         mAuth = FirebaseAuth.getInstance();
@@ -97,21 +114,20 @@ public class CarUpdateFragment extends Fragment {
             startActivity(intent);
         });
 
-        mCarOwnerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                switch (checkedId) {
-                    case R.id.driver:
-                        ownerYesButton.setChecked(true);
-                        mCarDetailsLayout.setVisibility(View.VISIBLE);
-                        break;
-                    case R.id.passenger:
-                        ownerNoButton.setChecked(true);
-                        mCarDetailsLayout.setVisibility(View.GONE);
-                        break;
-                }
+        mCarOwnerRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.driver:
+                    driver.setChecked(true);
+                    driver.setTextColor(Color.WHITE);
+                    passenger.setTextColor(Color.BLACK);
+                    mCarDetailsLayout.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.passenger:
+                    passenger.setChecked(true);
+                    driver.setTextColor(Color.BLACK);
+                    passenger.setTextColor(Color.WHITE);
+                    mCarDetailsLayout.setVisibility(View.GONE);
+                    break;
             }
         });
 
@@ -202,25 +218,55 @@ public class CarUpdateFragment extends Fragment {
         });
     }
 
-    private void setProfileWidgets(User userSettings){
+    private void setProfileWidgets(Info info){
 
-        mUserSettings = userSettings;
+        this.mInfo = info;
 
-        UniversalImageLoader.setImage(userSettings.getCarPhoto(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
 
-        mCar.setText(userSettings.getCar());
-        mRegistration.setText(userSettings.getRegistrationPlate());
-        mLicence.setText(userSettings.getLicenceNumber());
-        mSeats.setText(String.valueOf(userSettings.getSeats()));
+        mCar.setText(info.getCar());
+        mRegistration.setText(info.getRegistrationPlate());
+        mLicence.setText(info.getLicenceNumber());
+        mSeats.setText(String.valueOf(info.getSeats()));
 
         mCarPhoto.setOnClickListener(v -> {
-           /* Intent intent = new Intent(getActivity(), ShareActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //268435456
-            getActivity().startActivity(intent);
-            getActivity().finish();*/
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+            filePath = data.getData();
+            try {
+                if (getActivity() != null) {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                    mCarPhoto.setImageBitmap(bitmap);
+                    //uploadImage();
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /*private void uploadImage(){
+        if (filePath != null){
+            final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
+                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        imgURL = uri.toString();
+                    }))
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }*/
 
     private void setupFirebaseAuth(){
 
@@ -231,7 +277,7 @@ public class CarUpdateFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getInfo(dataSnapshot));
 
             }
 
@@ -249,19 +295,19 @@ public class CarUpdateFragment extends Fragment {
     }
 
     public void getUserInformation() {
-        mRef.child("user").child(userID).child("carOwner").addValueEventListener(new ValueEventListener() {
+        mRef.child("info").child(userID).child("role").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                carOwner = dataSnapshot.getValue(Boolean.class);
-                /*if (!carOwner) {
-                    ownerNoButton.setChecked(true);
+                role = dataSnapshot.getValue(String.class);
+                if (role != null && role.equals("passenger")) {
+                    driver.setChecked(true);
                     mCarDetailsLayout.setVisibility(View.GONE);
                     mCar.setText("");
                     mRegistration.setText("");
                     mLicence.setText("");
                     mSeats.setText("");
                     mCarPhoto.setImageDrawable(null);
-                }*/
+                }
             }
 
             @Override

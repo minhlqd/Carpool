@@ -7,14 +7,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relativeLayout1">
+        android:id="@+id/relative_layout_profile">
 
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/layout_center_accountsettings" />
+            <include layout="@layout/layout_center_account_settings" />
         </RelativeLayout>
 
         <include layout="@layout/layout_bottom_navigation_view"/>

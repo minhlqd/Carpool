@@ -163,7 +163,7 @@
     <string name="user_1" translatable="false">User 1</string>
     <string name="participants" translatable="false">Participants</string>
     <string name="_0_rides" translatable="false">0 Rides</string>
-    <string name="cost" translatable="false">Cost</string>
+    <string name="cost">Cost</string>
     <string name="_6_00" translatable="false">£6.00</string>
     <string name="departure_time" translatable="false">Departure time</string>
     <string name="_5_00_5_30_pm" translatable="false">5:00 – 5:30 PM</string>
@@ -186,17 +186,17 @@
     <string name="_3_seats_left" translatable="false">3 Seats Left!</string>
     <string name="log_out" translatable="false">Log out</string>
     <string name="account_settings" translatable="false">Account settings</string>
-    <string name="update_email_address" translatable="false">Update email Address</string>
-    <string name="change_password" translatable="false">Change password</string>
-    <string name="update_my_details" translatable="false">Update my details</string>
+    <string name="update_email_address">Update email Address</string>
+    <string name="change_password">Change password</string>
+    <string name="update_my_details">Update my details</string>
     <string name="update">Update</string>
-    <string name="view_profile" translatable="false">View profile</string>
+    <string name="view_profile">View profile</string>
     <string name="profile" translatable="false">profile</string>
     <string name="no_rides_booked" translatable="false">No rides booked</string>
     <string name="connecting_to_server_please_wait" translatable="false">Connecting to server please wait…</string>
     <string name="payment_confirmation" translatable="false">Payment Confirmation</string>
     <string name="pay" translatable="false">PAY</string>
-    <string name="cancel" translatable="false">Cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="MinhMX" translatable="false">John Doe</string>
     <string name="work_and_education" translatable="false">Work and education</string>
     <string name="navy_express" translatable="false">Tesco Express</string>
@@ -283,4 +283,6 @@
     <string name="all_fields">All fields must be filled in</string>
     <string name="passenger">Passenger</string>
     <string name="driver">Driver</string>
+    <string name="pay_and_book">Pay and book</string>
+    <string name="pickup">Pickup:</string>
 </resources>

@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_register"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-        <RelativeLayout
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/background_btn_register"
+        android:id="@+id/text_input_email">
+        <EditText
+            android:layout_marginStart="10dp"
+            android:drawableStart="@drawable/ic_email"
+            android:id="@+id/update_email"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:padding="20dp">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/email"
+            android:inputType="textNoSuggestions"
+            tools:ignore="TextFields" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Email edit text field -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="80dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/white_border_bottom"
-                android:id="@+id/relLayout1">
+    <com.google.android.material.textfield.TextInputLayout
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/text_input_email"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/background_btn_register"
+        android:id="@+id/text_input_password">
+        <EditText
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:drawableStart="@drawable/ic_password_lock"
+            android:id="@+id/update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/password"
+            android:fontFamily="@font/roboto_light"
+            android:textSize="20sp"
+            android:inputType="textNoSuggestions"
+            tools:ignore="TextFields" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_email"
-                    android:layout_centerVertical="true"/>
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/snippetEmailBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/background_btn_login"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/change_email"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:id="@+id/emailEditTextSnippet"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="40dp"
-                    android:background="@null"
-                    android:inputType="textNoSuggestions"
-                    tools:ignore="TextFields" />
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/snippetEmailBtn"
-                android:layout_width="380dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/relLayout1"
-                android:text="@string/change_email"
-                android:textColor="@color/white"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/dark_grey"/>
-
-        </RelativeLayout>
-</merge>
+</androidx.constraintlayout.widget.ConstraintLayout>

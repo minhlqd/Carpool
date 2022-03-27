@@ -67,10 +67,19 @@
     <string name="yes">Có</string>
     <string name="intent_location">LOCATION</string>
     <string name="intent_current_long_titude">currentLongtitude</string>
-    <string name="intent_gender">sameGender</string>
-    <string name="intent_date">DATE</string>
-    <string name="all_fields">All fields must be filled in</string>
-    <string name="passenger">Passenger</string>
-    <string name="driver">Driver</string>
+    <string name="intent_gender">Giới tính</string>
+    <string name="intent_date">Ngày</string>
+    <string name="all_fields">Hãy điền đầy đủ tất cả các trường</string>
+    <string name="passenger">Người tham gia</string>
+    <string name="driver">Tài xế</string>
     <string name="update">Cập nhật</string>
+    <string name="cost" translatable="false">Giá</string>
+    <string name="change_password" translatable="false">Thay đổi mật khẩu</string>
+    <string name="cancel" translatable="false">Hủy</string>
+    <string name="update_email_address" translatable="false">Cập nhật email</string>
+    <string name="view_profile">Hồ sơ</string>
+    <string name="update_my_details" translatable="false">Cập nhật thông tin</string>
+    <string name="pay_and_book">Pay and book</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="pickup">Pickup:</string>
 </resources>

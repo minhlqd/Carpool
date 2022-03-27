@@ -79,39 +79,42 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
 
-
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<Ride>();
+        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("availableRide").orderByChild("destination").toString());
 
         mRef.child("availableRide").orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange: " + true);
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                                Ride r = dataSnapshot1.getValue(Ride.class);
-                                    if (r.getSeatsAvailable() > 0) {
-                                        Date aParsed = null;
-                                        Date bParsed = null;
-                                        try {
-                                            aParsed = parseDate(r.getDateOfJourney());
-                                            bParsed = parseDate(date);
-                                            Log.i(TAG, "onDataChange: " + aParsed + bParsed);
-                                            if (aParsed.after(bParsed) || aParsed.equals(bParsed)) {
-                                                if (!(r.getUser_id().contains(user_id))) {
-                                                    rides.add(r);
-                                                    mNoResultsFoundLayout.setVisibility(View.INVISIBLE);
-                                                }
+                                Ride ride = dataSnapshot1.getValue(Ride.class);
+                                rides.add(ride);
+                                mNoResultsFoundLayout.setVisibility(View.GONE);
+                                /* if (ride.getSeatsAvailable() > 0) {
+                                    Date aParsed = null;
+                                    Date bParsed = null;
+                                    try {
+                                        aParsed = parseDate(ride.getDateOfJourney());
+                                        bParsed = parseDate(date);
+                                        Log.i(TAG, "onDataChange: " + aParsed + bParsed);
+                                        if (aParsed.after(bParsed) || aParsed.equals(bParsed)) {
+                                            Log.d(TAG, "onDataChange: " + ride.getUser_id() + " " + user_id);
+                                            if (!(ride.getUser_id().contains(user_id))) {
+                                                rides.add(ride);
+                                                mNoResultsFoundLayout.setVisibility(View.GONE);
                                             }
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
                                         }
-
-                                }
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }*/
                             }
                             myAdapter = new SearchAdapter(SearchResultsActivity.this, rides);
                             mRecyclerView.setAdapter(myAdapter);

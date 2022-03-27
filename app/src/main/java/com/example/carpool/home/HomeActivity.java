@@ -123,9 +123,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String userID;
 
     //Widgets
-    private AutoCompleteTextView destination, location;
-    private Button mSearchBtn, mDirectionsBtn, mSwitchTextBtn;
-    private RadioButton findButton, offerButton;
+    private AutoCompleteTextView destination;
+    private AutoCompleteTextView location;
+    private Button mSearchBtn;
+    private Button mDirectionsBtn;
+    private Button mSwitchTextBtn;
+    private RadioButton findButton;
+    private RadioButton offerButton;
     private RadioGroup mRideSelectionRadioGroup;
     private BottomNavigationView bottomNavigationView;
     private ImageView mLocationBtn;
@@ -150,9 +154,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
             }
 
-            findButton = findViewById(R.id.findButton);
-            offerButton = findViewById(R.id.offerButton);
-
             getUserInformation(userID);
 
             updateFirebaseToken();
@@ -169,13 +170,25 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mSwitchTextBtn = findViewById(R.id.switchTextBtn);
         mDirectionsBtn = findViewById(R.id.directionsBtn);
         mRideSelectionRadioGroup = findViewById(R.id.toggle);
-        mLocationBtn = findViewById(R.id.locationImage);
+        mLocationBtn = findViewById(R.id.location_image);
+        findButton = findViewById(R.id.findButton);
+        offerButton = findViewById(R.id.offerButton);
 
         mLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDeviceLocationAndAddMarker();
             }
+        });
+
+        findButton.setOnClickListener(v -> {
+            findButton.setTextColor(R.color.white);
+            offerButton.setTextColor(R.color.dark_grey);
+        });
+
+        offerButton.setOnClickListener(v -> {
+            findButton.setTextColor(R.color.dark_grey);
+            offerButton.setTextColor(R.color.white);
         });
 
         mSwitchTextBtn.setOnClickListener(new View.OnClickListener() {
@@ -200,7 +213,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 int whichIndex = mRideSelectionRadioGroup.getCheckedRadioButtonId();
-                if (whichIndex == R.id.offerButton && destination.getText().toString().trim().length() > 0 && location.getText().toString().trim().length() > 0) {
+                if (whichIndex == R.id.offerButton
+                        && destination.getText().toString().trim().length() > 0
+                        && location.getText().toString().trim().length() > 0) {
 
                     Intent offerRideActivity = new Intent(mContext, OfferRideFragment.class);
                     offerRideActivity.putExtra(getString(R.string.intent_location), destination.getText().toString());
@@ -209,13 +224,14 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     offerRideActivity.putExtra(getString(R.string.intent_current_long_titude), currentLongtitude);
 
                     Bundle b = new Bundle();
-                    Log.d(TAG, "onClick: " + currentLocation);
                     b.putParcelable(getString(R.string.latlng), currentLocation);
                     offerRideActivity.putExtras(b);
 
                     startActivity(offerRideActivity);
 
-                } else if (whichIndex == R.id.findButton && destination.getText().toString().trim().length() > 0 && location.getText().toString().trim().length() > 0) {
+                } else if (whichIndex == R.id.findButton
+                        && destination.getText().toString().trim().length() > 0
+                        && location.getText().toString().trim().length() > 0) {
 
                     Intent findRideActivity = new Intent(mContext, SearchRideActivity.class);
                     findRideActivity.putExtra(getString(R.string.intent_location), location.getText().toString());
@@ -395,7 +411,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocationAndAddMarker() {
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
@@ -620,11 +635,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             final AutocompletePrediction item = mPlaceAutocompleteAdapter.getItem(position);
             final String placeId = item.getPlaceId();
 
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
 
-            Log.d(TAG, "onItemClick: " + mUpdatePlaceDetailsCallback);
+            Log.d(TAG, "onItemClick: " + mUpdatePlaceDetailsCallback + placeResult);
         }
     };
 
@@ -748,12 +762,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mRef.child("user").child(uid).child("carOwner").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                carOwner = dataSnapshot.getValue(Boolean.class);
+                /*carOwner = dataSnapshot.getValue(Boolean.class);
                 if (!carOwner) {
                     offerButton.setEnabled(false);
                     offerButton.setAlpha(.5f);
                     offerButton.setClickable(false);
-                }
+                }*/
             }
 
             @Override

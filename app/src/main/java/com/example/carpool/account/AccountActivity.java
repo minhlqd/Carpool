@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.carpool.leaderboard.LeaderboardActivity;
-import com.example.carpool.login.LoginActivity;
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.settings.SettingsActivity;
 import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
@@ -35,7 +35,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -52,7 +51,14 @@ public class AccountActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     //activity widgets
-    private Button mEmailUpdateButton, mPasswordUpdateButton, mDetailsUpdateButton, mCarUpdateButton, mSignOutButton, mSettingsBtn, mHelpBtn, mAddPaymentInformationBtn;
+    private Button mEmailUpdateButton;
+    private Button mPasswordUpdateButton;
+    private Button mDetailsUpdateButton;
+    private Button mCarUpdateButton;
+    private Button mSignOutButton;
+    private Button mSettingsBtn;
+    private Button mHelpBtn;
+    private Button mAddPaymentInformationBtn;
     private ImageView profilePhoto, leaderboards;
     private TextView mDisplayUsername, mCompleteRides, mEmail;
     private RatingBar mRatingBar;
@@ -147,14 +153,11 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        mCarUpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*setViewPager(3);*/
-                mRelativeLayout.setVisibility(View.GONE);
-                bottomNavigationView.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
-            }
+        mCarUpdateButton.setOnClickListener(v -> {
+            /*setViewPager(3);*/
+            mRelativeLayout.setVisibility(View.GONE);
+            bottomNavigationView.setVisibility(View.GONE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
         });
     }
 
@@ -175,7 +178,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private void setupActivityWidgets(){
         mViewPager = findViewById(R.id.container);
-        mRelativeLayout = findViewById(R.id.relLayout1);
+        mRelativeLayout = findViewById(R.id.relative_layout_profile);
         mEmailUpdateButton = findViewById(R.id.updateEmailButton);
         mPasswordUpdateButton = findViewById(R.id.updatePasswordButton);
         mDetailsUpdateButton = findViewById(R.id.updateDetailsButton);
@@ -194,14 +197,14 @@ public class AccountActivity extends AppCompatActivity {
 
 
     @SuppressLint("SetTextI18n")
-    private void setProfileWidgets(User userSettings){
+    private void setProfileWidgets(User user, Info info){
 
-        UniversalImageLoader.setImage(userSettings.getProfilePhoto(), profilePhoto, null,"");
+        UniversalImageLoader.setImage(info.getProfilePhoto(), profilePhoto, null,"");
 
-        mDisplayUsername.setText(userSettings.getUsername());
-        mCompleteRides.setText(userSettings.getCompletedRides() + " rides");
-        mEmail.setText(userSettings.getEmail());
-        mRatingBar.setRating(userSettings.getUserRating());
+        mDisplayUsername.setText(user.getUsername());
+        mCompleteRides.setText(info.getCompletedRides() + " rides");
+        mEmail.setText(user.getEmail());
+        mRatingBar.setRating(info.getUserRating());
     }
 
     private void setupBadge(int reminderLength){
@@ -228,7 +231,10 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(
+                        mFirebaseMethods.getUser(dataSnapshot),
+                        mFirebaseMethods.getInfo(dataSnapshot)
+                );
 
             }
 

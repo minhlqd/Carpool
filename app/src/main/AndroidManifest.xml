@@ -29,14 +29,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyALhuFi29R8SgFwDNkXtHc-oqe8BaoG94o" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <activity
             android:name=".payment.PaymentActivity"
             android:label="@string/title_activity_payment" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".home.HomeActivity"
             android:exported="true">

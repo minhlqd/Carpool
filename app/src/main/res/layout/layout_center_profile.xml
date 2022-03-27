@@ -1,208 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
+        android:id="@+id/detailsView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/profile_background">
+
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_arrow"
+            android:backgroundTint="@color/white" />
+
+        <ImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/dr_expresso" />
+
+
+        <TextView
+            android:id="@+id/nameTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ratingBar"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/MinhMX"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/customRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:numStars="5"
+            android:progressTint="@color/rating_scale"
+            android:rating="5.0"
+            android:stepSize="0.1" />
+
+    </RelativeLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relLayout1">
+        android:layout_below="@id/detailsView">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:id="@+id/detailsView"
-            android:background="@drawable/profile_background"
-            android:layout_height="220dp">
+            android:layout_height="wrap_content">
 
-           <ImageView
-               android:layout_width="30dp"
-               android:layout_height="30dp"
-               android:id="@+id/backBtn"
-               android:layout_margin="10dp"
-               android:backgroundTint="@color/white"
-               android:background="@drawable/ic_arrow"/>
+            <TextView
+                android:id="@+id/workandEducationTextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="7dp"
+                android:text="@string/work_and_education"
+                android:textColor="@color/dark_grey"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/profile_photo"
-                android:src="@drawable/dr_expresso"
-                android:layout_centerInParent="true"/>
+            <LinearLayout
+                android:id="@+id/workLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/workandEducationTextview"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_work" />
+
+                <TextView
+                    android:id="@+id/workTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="7dp"
+                    android:text="@string/navy_express"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/educationLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/workLayout"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_education" />
+
+                <TextView
+                    android:id="@+id/educationTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="7dp"
+                    android:text="@string/engineering_and_technology_of_university"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
 
 
             <TextView
-                android:id="@+id/nameTextview"
+                android:id="@+id/personalBio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/educationLayout"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="30dp"
-                android:layout_above="@id/ratingBar"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="7dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="23sp"
-                android:text="@string/MinhMX" />
+                android:text="@string/Uet"
+                android:textColor="@color/dark_grey"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
+            <TextView
+                android:id="@+id/personaBioText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:rating="5.0"
-                android:layout_alignParentStart="true"
-                style="@style/customRatingBar"
-                android:progressTint="@color/rating_scale"
-                android:numStars="5"
-                android:stepSize="0.1"
-                android:layout_alignParentBottom="true" />
+                android:layout_below="@id/personalBio"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been" />
 
-        </RelativeLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/detailsView">
+            <TextView
+                android:id="@+id/ListenToHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/personaBioText"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="7dp"
+                android:text="@string/recent_reviews"
+                android:textColor="@color/dark_grey"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
+                android:id="@+id/reviewLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/workandEducationTextview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="7dp"
-                    android:text="@string/work_and_education"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/workLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/workandEducationTextview"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_work" />
-
-                    <TextView
-                        android:id="@+id/workTextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="7dp"
-                        android:text="@string/navy_express"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/educationLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/workLayout"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_education" />
-
-                    <TextView
-                        android:id="@+id/educationTextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="7dp"
-                        android:text="@string/engineering_and_technology_of_university"
-                        android:textColor="@color/dark_grey"
-                        android:textSize="13sp" />
-
-                </LinearLayout>
+                android:layout_height="80dp"
+                android:layout_below="@id/ListenToHeading"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:id="@+id/personalBio"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/review1"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/educationLayout"
+                    android:layout_centerInParent="true"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="7dp"
-                    android:text="@string/Uet"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/ic_speech_bubble"
+                    android:padding="15dp"
+                    android:text="@string/great_driver_got_me_in_time"
+                    android:textAlignment="center" />
 
-                <TextView
-                    android:id="@+id/personaBioText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/personalBio"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been" />
-
-                <TextView
-                    android:id="@+id/ListenToHeading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/personaBioText"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="7dp"
-                    android:text="@string/recent_reviews"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:id="@+id/reviewLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_below="@id/ListenToHeading"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/review1"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="13dp"
-                        android:background="@drawable/ic_speech_bubble"
-                        android:padding="15dp"
-                        android:text="@string/great_driver_got_me_in_time"
-                        android:textAlignment="center" />
-
-                </RelativeLayout>
             </RelativeLayout>
-        </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/background_btn_login"
-            android:text="@string/log_out"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </RelativeLayout>
-</merge>
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_btn_login"
+        android:text="@string/log_out"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</RelativeLayout>

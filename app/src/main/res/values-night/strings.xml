@@ -8,4 +8,7 @@
     <string name="all_fields">All fields must be filled in</string>
     <string name="passenger">Passenger</string>
     <string name="driver">Driver</string>
+    <string name="pay_and_book">Pay and book</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="pickup">Pickup:</string>
 </resources>

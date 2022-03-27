@@ -19,12 +19,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class BookRideDialog extends Dialog implements View.OnClickListener  {
 
-    private static final String TAG = "ViewRideCreatedDialog";
-    public Context c;
-    public Dialog d;
+    private static final String TAG = "MinhMX";
+    public Context context;
+    public Dialog dialog;
 
     // variables
-    private TextView mUsername, mRidesCompleted, mCost, mDepartureTime, mExtraTime, mFromStreet, mFromPostcode, mFromCity, mToStreet, mToPostcode, mToCity, mCancelDialogBtn, mDurationTextview, mPickupLocation;
+    private TextView mUsername;
+    private TextView mRidesCompleted;
+    private TextView mCost;
+    private TextView mDepartureTime;
+    private TextView mExtraTime;
+    private TextView mFromStreet;
+    private TextView mFromPostcode;
+    private TextView mFromCity;
+    private TextView mToStreet;
+    private TextView mToPostcode;
+    private TextView mToCity;
+    private TextView mCancelDialogBtn;
+    private TextView mDurationTextview;
+    private TextView mPickupLocation;
     private RatingBar mRatingBar;
     private Button mEditRideBtn;
     private SectionsStatePageAdapter pageAdapter;
@@ -63,11 +76,10 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         mViewProfileBtn.setOnClickListener(this);
     }
 
-    public BookRideDialog(Context a, String rideID, String username, String licencePlate, String rides, String seats, String from, String to, String date, String dateOnly, String cost, Float rating, String pickupTime, String extraTime, String duration, String userID,
+    public BookRideDialog(Context context, String rideID, String username, String licencePlate, String rides, String seats, String from, String to, String date, String dateOnly, String cost, Float rating, String pickupTime, String extraTime, String duration, String userID,
                           String profile_photo, String completedRides, String pickupLocation) {
-        super(a);
-        // TODO Auto-generated constructor stub
-        this.c = a;
+        super(context);
+        this.context = context;
         this.rideID = rideID;
         this.username = username;
         this.rides = rides;
@@ -88,6 +100,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         this.licencePlate = licencePlate;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -107,7 +120,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     }
 
     private void showDialog(){
-        Intent intent = new Intent(c, PaymentActivity.class);
+        Intent intent = new Intent(context, PaymentActivity.class);
         intent.putExtra("userID", userID);
         intent.putExtra("currentLocation", from);
         intent.putExtra("destination", to);
@@ -119,14 +132,14 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         intent.putExtra("pickupTime", pickupTime);
         intent.putExtra("licencePlate", licencePlate);
         intent.putExtra("cost", cost);
-        c.startActivity(intent);
+        context.startActivity(intent);
     }
 
     private void showIntentProfile(){
         //Confirmation to delete the ride dialog
-        Intent intent = new Intent(c, ProfileActivity.class);
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra("userID", userID);
-        c.startActivity(intent);
+        context.startActivity(intent);
     }
 
 

@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relativeLayout1">
+        android:id="@+id/relative_layout_profile">
         <include layout="@layout/snippet_toolbar_request"/>
 
 

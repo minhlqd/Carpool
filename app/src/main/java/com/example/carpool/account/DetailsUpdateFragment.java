@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.User;
@@ -159,18 +160,17 @@ public class DetailsUpdateFragment extends Fragment {
         });
     }
 
-    private void setProfileWidgets(User userSettings){
+    private void setProfileWidgets(User user, Info info){
 
-        User user = userSettings;
 
-        mUserSettings = userSettings;
+        mUserSettings = user;
 
-        UniversalImageLoader.setImage(user.getProfilePhoto(), mProfilePhoto, null,"");
+        UniversalImageLoader.setImage(info.getProfilePhoto(), mProfilePhoto, null,"");
 
         mUsername.setText(user.getUsername());
         mFullName.setText(user.getFullName());
-        mMobileNumber.setText(String.valueOf(user.getMobileNumber()));
-        mDob.setText(String.valueOf(user.getDateOfBird()));
+        mMobileNumber.setText(String.valueOf(info.getMobileNumber()));
+        mDob.setText(String.valueOf(info.getDateOfBird()));
 
         mProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +184,6 @@ public class DetailsUpdateFragment extends Fragment {
     }
 
 
-    /** --------------------------- Firebase ---------------------------- **/
 
     private void setupFirebaseAuth(){
 
@@ -195,7 +194,8 @@ public class DetailsUpdateFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot),
+                        mFirebaseMethods.getInfo(dataSnapshot));
 
             }
 

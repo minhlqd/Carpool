@@ -71,7 +71,19 @@ public class PaymentActivity extends AppCompatActivity {
     private LinearLayout mGroupWaiting, mGroupPayment;
 
     //Activity data
-    private String userID, currentLocation, destination, rideID, profile_photo, profile_photo2, pickupLocation, currentUserID, username, cost, pickupTime, dateOnly, licencePlate;
+    private String userID;
+    private String currentLocation;
+    private String destination;
+    private String rideID;
+    private String profile_photo;
+    private String profile_photo2;
+    private String pickupLocation;
+    private String currentUserID;
+    private String username;
+    private String cost;
+    private String pickupTime;
+    private String dateOnly;
+    private String licencePlate;
     private int seatsAvailable = 0;
 
 
@@ -102,19 +114,9 @@ public class PaymentActivity extends AppCompatActivity {
 
         new getToken().execute();
 
-        mPaymentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitPayment();
-            }
-        });
+        mPaymentBtn.setOnClickListener(v -> submitPayment());
 
-        mCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mCancelBtn.setOnClickListener(v -> finish());
     }
 
     private void submitPayment() {
@@ -180,18 +182,15 @@ public class PaymentActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECK_OUT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.toString().contains("Successful")) {
-                            Toast.makeText(mContext, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                            requestPickupHere();
-                        } else {
-                            Toast.makeText(mContext, "Transaction failed!", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                        Log.d(TAG, "onResponse: " + response.toString());
+                response -> {
+                    if (response.toString().contains("Successful")) {
+                        Toast.makeText(mContext, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                        requestPickupHere();
+                    } else {
+                        Toast.makeText(mContext, "Transaction failed!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
+                    Log.d(TAG, "onResponse: " + response.toString());
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -290,11 +289,13 @@ public class PaymentActivity extends AppCompatActivity {
                             Notification data = new Notification(currentUserID, userID, rideID, extraData, destination);
                             Sender content = new Sender(data, token.getToken());
 
+                            Log.d(TAG, "onDataChange: " + content);
+
                             mService.sendMessage(content)
                                     .enqueue(new Callback<FCMResponse>() {
                                         @Override
                                         public void onResponse(Call<FCMResponse> call, retrofit2.Response<FCMResponse> response) {
-                                            Log.i(TAG, "onResponse: " + response.toString());
+                                            Log.i(TAG, "onResponse: " + response);
                                             if (response.body().success == 1 || response.code() == 200){
                                                 Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
                                                 updateSeatsRemaining();
@@ -339,7 +340,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
-        myRef.child("user").child(currentUserID).child("profile_photo").addValueEventListener(new ValueEventListener() {
+        myRef.child("info").child(currentUserID).child("profile_photo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 profile_photo = dataSnapshot.getValue(String.class);

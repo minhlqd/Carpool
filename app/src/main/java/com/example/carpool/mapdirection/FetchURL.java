@@ -1,5 +1,6 @@
 package com.example.carpool.mapdirection;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,6 +16,7 @@ import java.net.URL;
 
 
 public class FetchURL extends AsyncTask<String, Void, String> {
+    @SuppressLint("StaticFieldLeak")
     Context mContext;
     GoogleMap mMap;
     String directionMode = "driving";
@@ -63,6 +65,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
             data = sb.toString();
             br.close();
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             assert iStream != null;
             iStream.close();

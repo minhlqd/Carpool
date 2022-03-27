@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_fullname"
+            android:drawableStart="@drawable/ic_full_name"
             android:drawablePadding="10dp"
             android:fontFamily="sans-serif"
             android:hint="@string/full_name"

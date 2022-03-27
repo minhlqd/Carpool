@@ -1,5 +1,6 @@
 package com.example.carpool.home;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carpool.common.ApplicationContext;
 import com.example.carpool.common.Common;
+import com.example.carpool.models.Info;
 import com.example.carpool.pickup.PickupLocationActivity;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
@@ -51,7 +53,6 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private OfferRideFragment mContext;
     private ApplicationContext applicationContext;
 
-
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -60,19 +61,43 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private String userID;
 
     //Widgets
-    private EditText mDateOfJourneyEditText, mCostEditText, mPickupEditText, mExtraTimeEditText, mLuggageEditText, mPickupLocationEditText;
+    private EditText mDateOfJourneyEditText;
+    private EditText mCostEditText;
+    private EditText mPickupEditText;
+    private EditText mExtraTimeEditText;
+    private EditText mLuggageEditText;
+    private EditText mPickupLocationEditText;
     private MaterialAnimatedSwitch mSameGender;
     private Button mSnippetOfferRideButton;
     private Boolean sameGenderBoolean = false;
-    private Calendar mCalandar;
+    private Calendar mCalendar;
     private DatePickerDialog.OnDateSetListener date;
     private CircleImageView mCarPhoto;
-    private TextView mLicencePlateEditText, mCarEditText, mSeatsEditText, mDestinationEditText, mFromEditText, mUsername, durationTxt;
+    private TextView mLicencePlateEditText;
+    private TextView mCarEditText;
+    private TextView mSeatsEditText;
+    private TextView mDestinationEditText;
+    private TextView mFromEditText;
+    private TextView mUsername;
+    private TextView durationTxt;
 
 
     //vars
     private User mUserSettings;
-    private String destinationId, locationId, profile_photo, username, pickupTimeID, costID, dateOfJourneyID, lengthOfJourneyID, extraTimeID, licencePlateID, carID, luggageID, destinationId2, locationId2;
+    private String destinationId;
+    private String locationId;
+    private String profile_photo;
+    private String username;
+    private String pickupTimeID;
+    private String costID;
+    private String dateOfJourneyID;
+    private String lengthOfJourneyID;
+    private String extraTimeID;
+    private String licencePlateID;
+    private String carID;
+    private String luggageID;
+    private String destinationId2;
+    private String locationId2;
     private int userRating, seatsID;
     private int completeRides;
     private double currentLatitude, currentLongtitude;
@@ -114,18 +139,14 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mPickupLocationEditText = (EditText) findViewById(R.id.pickupLocationEditText);
         mCarPhoto = (CircleImageView) findViewById(R.id.car_image);
         durationTxt = (TextView) findViewById(R.id.durationTxt);
-        mDateOfJourneyEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(OfferRideFragment.this, date, mCalandar
-                        .get(Calendar.YEAR), mCalandar.get(Calendar.MONTH),
-                        mCalandar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                datePickerDialog.show();
-            }
+        mDateOfJourneyEditText.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 0);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(OfferRideFragment.this, date, mCalendar
+                    .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
         });
 
         mSameGender = (MaterialAnimatedSwitch) findViewById(R.id.genderSwitch);
@@ -141,24 +162,21 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 //        });
 
        mPickupEditText = (EditText) findViewById(R.id.pickupEditText);
-        mPickupEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(OfferRideFragment.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        mPickupEditText.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
+       mPickupEditText.setOnClickListener(v -> {
+           Calendar mCurrentTime = Calendar.getInstance();
+           int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+           int minute = mCurrentTime.get(Calendar.MINUTE);
+           TimePickerDialog mTimePicker;
+           mTimePicker = new TimePickerDialog(OfferRideFragment.this, new TimePickerDialog.OnTimeSetListener() {
+               @SuppressLint("SetTextI18n")
+               @Override
+               public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                   mPickupEditText.setText( selectedHour + ":" + selectedMinute);
+               }
+           }, hour, minute, true);//Yes 24 hour time
+           mTimePicker.setTitle("Select Time");
+           mTimePicker.show();
+       });
 
         ImageView backArrow = (ImageView) findViewById(R.id.backArrow);
         backArrow.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +280,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         String dateFormat = "dd/MM/yy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
 
-        mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalandar.getTime()));
+        mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalendar.getTime()));
     }
 
     private void getActivityData() {
@@ -295,22 +313,19 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 //            currentLongtitude = Long.parseLong(getIntent().getStringExtra("currentLongtitude"));
     }
 
-    private void setProfileWidgets(User userSettings){
-        Log.d(TAG, "setProfileWidgets: setting user widgets from firebase data");
+    private void setProfileWidgets(User user, Info info){
 
-        User user = userSettings;
+        mUserSettings = user;
 
-        mUserSettings = userSettings;
-
-        UniversalImageLoader.setImage(user.getCarPhoto(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
 
         username = user.getUsername();
-        userRating = user.getUserRating();
-        completeRides = user.getCompletedRides();
-        profile_photo = user.getProfilePhoto();
-        carID = user.getCar();
-        seatsID = user.getSeats() - 1;
-        licencePlateID = user.getRegistrationPlate();
+        userRating = info.getUserRating();
+        completeRides = info.getCompletedRides();
+        profile_photo = info.getProfilePhoto();
+        carID = info.getCar();
+        seatsID = info.getSeats() - 1;
+        licencePlateID = info.getRegistrationPlate();
 
         mUsername.setText(username);
         mLicencePlateEditText.setText(licencePlateID);
@@ -320,13 +335,13 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mSeatsEditText.setText(String.valueOf(seatsID) + " Seats left!");
         durationTxt.setText("Duration: "+ ApplicationContext.getDuration());
 
-        mCalandar = Calendar.getInstance();
+        mCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mCalandar.set(Calendar.YEAR, year);
-                mCalandar.set(Calendar.MONTH, month);
-                mCalandar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, month);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
             }
         };
@@ -351,7 +366,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot));
 
             }
 

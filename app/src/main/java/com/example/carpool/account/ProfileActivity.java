@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carpool.R;
 import com.example.carpool.login.LoginActivity;
+import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.User;
@@ -124,15 +125,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setProfileWidgets(User userSettings){
+    private void setProfileWidgets(User user, Info info){
 
-        UniversalImageLoader.setImage(userSettings.getProfilePhoto(), profilePhoto, null,"");
+        UniversalImageLoader.setImage(info.getProfilePhoto(), profilePhoto, null,"");
 
-        mDisplayUsername.setText(userSettings.getUsername());
-        mRatingBar.setRating(userSettings.getUserRating());
-        mPersonalBio.setText(userSettings.getBio());
-        mEducationTextview.setText(userSettings.getEducation());
-        mWorkTextview.setText(userSettings.getWork());
+        mDisplayUsername.setText(user.getUsername());
+        mRatingBar.setRating(info.getUserRating());
+        mPersonalBio.setText(info.getBio());
+        mEducationTextview.setText(info.getEducation());
+        mWorkTextview.setText(info.getWork());
     }
 
     private void fetchUserReviews(){
@@ -176,7 +177,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getSpecificUserSettings(dataSnapshot, userID));
+                setProfileWidgets(mFirebaseMethods.getSpecificUser(dataSnapshot, userID),
+                        mFirebaseMethods.getInfo(dataSnapshot));
 
             }
 

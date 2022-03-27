@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ParticipantsAdapter;
 import com.example.carpool.R;
+import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.Participants;
@@ -119,7 +120,8 @@ public class ParticipantsDialog extends Dialog implements
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setDriverWidgets(mFirebaseMethods.getSpecificUserSettings(dataSnapshot, userID));
+                setDriverWidgets(mFirebaseMethods.getSpecificUser(dataSnapshot, userID),
+                        mFirebaseMethods.getInfo(dataSnapshot));
             }
 
             @Override
@@ -129,20 +131,12 @@ public class ParticipantsDialog extends Dialog implements
         });
     }
 
-    private void setDriverWidgets(User userSettings){
-
-        User user = userSettings;
-
-        UniversalImageLoader.setImage(user.getProfilePhoto(), user_id_1, null,"");
+    private void setDriverWidgets(User user, Info info){
+        UniversalImageLoader.setImage(info.getProfilePhoto(), user_id_1, null,"");
 
         username1.setText(user.getUsername());
     }
 
-    /**
-     * This method will find all the participants information including username and profile picture
-     * and populate the recycler view with the information. The condition of accepted must be true
-     * otherwise they have not be included by the user.
-     */
     private void findParticipantDetails(){
         mRef.child("requestRide").child(rideID).addValueEventListener(new ValueEventListener() {
             @Override
