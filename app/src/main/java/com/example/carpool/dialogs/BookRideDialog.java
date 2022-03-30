@@ -39,8 +39,10 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private TextView mDurationTextview;
     private TextView mPickupLocation;
     private RatingBar mRatingBar;
-    private Button mEditRideBtn;
+    private Button mPayAndBook;
+
     private SectionsStatePageAdapter pageAdapter;
+
     private final String rides;
     private final String seats;
     private final String from;
@@ -61,8 +63,6 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private final Float rating;
     private FloatingActionButton mViewProfileBtn;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         setupWidgets();
 
         mCancelDialogBtn.setOnClickListener(this);
-        mEditRideBtn.setOnClickListener(this);
+        mPayAndBook.setOnClickListener(this);
         mViewProfileBtn.setOnClickListener(this);
     }
 
@@ -104,7 +104,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.dialogConfirm:
+            case R.id.pay_and_book:
                 showDialog();
                 break;
             case R.id.dialogCancel:
@@ -157,12 +157,10 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
 
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
 
-
-        mEditRideBtn = (Button) findViewById(R.id.dialogConfirm);
+        mPayAndBook = (Button) findViewById(R.id.pay_and_book);
         mCancelDialogBtn = (TextView) findViewById(R.id.dialogCancel);
         mDurationTextview = (TextView) findViewById(R.id.durationConfirm);
         mViewProfileBtn = (FloatingActionButton) findViewById(R.id.viewProfileBtn);
-
 
         mCost.setText(cost);
         mUsername.setText(username);

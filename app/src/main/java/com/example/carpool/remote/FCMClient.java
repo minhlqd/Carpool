@@ -1,5 +1,7 @@
 package com.example.carpool.remote;
 
+import android.util.Log;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,6 +16,7 @@ public class FCMClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+        Log.d("MinhMX", "getClient: " + retrofit.baseUrl());
         return retrofit;
     }
 }

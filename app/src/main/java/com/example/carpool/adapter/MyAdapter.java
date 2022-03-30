@@ -50,15 +50,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         final String userID = ride.get(position).getUser_id();
 
         final String username = ride.get(position).getUsername();
-        final String rides = String.valueOf(ride.get(position).getCompleteRides() + " Rides");
-        final String seats = String.valueOf(ride.get(position).getSeatsAvailable() + " Seats Left!");
+        final String rides = ride.get(position).getCompleteRides() + " Rides";
+        final String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
         String from = "From: " + ride.get(position).getCurrentLocation();
         String to = "To: " + ride.get(position).getDestination();
         final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
-        final String cost = String.valueOf("£ " + ride.get(position).getCost()) + ".00";
+        final String cost = "£ " + ride.get(position).getCost() + ".00";
         final Float rating = (float) ride.get(position).getUserRating();
-        final String dateOnly = String.valueOf(ride.get(position).getPickupTime() + " PM");
-        final String extraTime = String.valueOf(ride.get(position).getExtraTime() + " mins");
+        final String dateOnly = ride.get(position).getPickupTime() + " PM";
+        final String extraTime = ride.get(position).getExtraTime() + " mins";
         final String fromOnly = parseLocation(ride.get(position).getCurrentLocation());
         final String toOnly = parseLocation(ride.get(position).getDestination());
         final String rideID = ride.get(position).getRideID();
@@ -130,11 +130,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         }
     }
-    /**
-     * parses date to a readable format
-     * @param time
-     * @return
-     */
+
     public String parseDateToddMMyyyy(String time) {
         String inputPattern = "dd/MM/yyyy";
         String outputPattern = "dd MMMM";

@@ -31,6 +31,7 @@ import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.example.carpool.common.Common;
 import com.example.carpool.R;
+import com.example.carpool.models.User;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.FCMResponse;
 import com.example.carpool.models.Notification;
@@ -56,11 +57,11 @@ public class PaymentActivity extends AppCompatActivity {
     private static final String TAG = "PaymentActivity";
     private static final int REQUEST_CODE = 1234;
 
-    private Context mContext = PaymentActivity.this;
+    private final Context mContext = PaymentActivity.this;
 
     //Payment variables
-    private String API_GET_TOKEN = "ENTER WEB APP URL HERE (SEE README FOR SETUP GUIDE)";
-    private String API_CHECK_OUT = "ENTER WEB APP URL HERE (SEE README FOR SETUP GUIDE)";
+    private final String API_GET_TOKEN = "ENTER WEB APP URL HERE (SEE README FOR SETUP GUIDE)";
+    private final String API_CHECK_OUT = "ENTER WEB APP URL HERE (SEE README FOR SETUP GUIDE)";
 
     private String token, amount;
     private HashMap<String, String> paramsHash;
@@ -114,14 +115,26 @@ public class PaymentActivity extends AppCompatActivity {
 
         new getToken().execute();
 
-        mPaymentBtn.setOnClickListener(v -> submitPayment());
+        mPaymentBtn.setOnClickListener(v ->
+                submitPayment());
 
         mCancelBtn.setOnClickListener(v -> finish());
     }
 
     private void submitPayment() {
-        DropInRequest dropInRequest = new DropInRequest().clientToken(token);
-        startActivityForResult(dropInRequest.getIntent(mContext), REQUEST_CODE);
+       /* DropInRequest dropInRequest = new DropInRequest().clientToken(token);
+        startActivityForResult(dropInRequest.getIntent(mContext), REQUEST_CODE);*/
+
+        if (!mEditAmount.getText().toString().isEmpty()) {
+            amount = getCurrentAmount();
+            paramsHash = new HashMap<>();
+            paramsHash.put("amount", amount);
+            //paramsHash.put("nonce", strNonce);
+
+            sendPayments();
+        } else {
+            Toast.makeText(mContext, "Please enter valid amount", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init(){
@@ -153,12 +166,10 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
                 DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 PaymentMethodNonce nonce = result.getPaymentMethodNonce();
                 String strNonce = nonce.getNonce();
-
                 if (!mEditAmount.getText().toString().isEmpty()) {
                     amount = getCurrentAmount();
                     paramsHash = new HashMap<>();
@@ -169,36 +180,26 @@ public class PaymentActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(mContext, "Please enter valid amount", Toast.LENGTH_SHORT).show();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(mContext, "User cancelled", Toast.LENGTH_SHORT).show();
             } else {
                 Exception exception = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                Log.d(TAG, "onActivityResult: " + exception.getMessage());
+                Log.d(TAG, "onActivityResult: true " + exception.getMessage());
             }
-        }
     }
 
     private void sendPayments() {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
+        requestPickupHere();
+        /*RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECK_OUT,
-                response -> {
-                    if (response.toString().contains("Successful")) {
-                        Toast.makeText(mContext, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                        requestPickupHere();
-                    } else {
-                        Toast.makeText(mContext, "Transaction failed!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                    Log.d(TAG, "onResponse: " + response.toString());
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onResponse: " + error.getMessage());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECK_OUT, response -> {
+            if (response.contains("Successful")) {
+                Toast.makeText(mContext, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                requestPickupHere();
+            } else {
+                Toast.makeText(mContext, "Transaction failed!", Toast.LENGTH_SHORT).show();
+                finish();
             }
-        })
-
-        {
+            Log.d(TAG, "onResponse: " + response); }
+        , error -> Log.d(TAG, "onResponse: " + error.getMessage())) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 if (paramsHash == null)
@@ -212,14 +213,14 @@ public class PaymentActivity extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
 
-        queue.add(stringRequest);
+        queue.add(stringRequest);*/
     }
 
     private class getToken extends AsyncTask{
@@ -237,8 +238,10 @@ public class PaymentActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] objects) {
+            mGroupWaiting.setVisibility(View.GONE);
+            mGroupPayment.setVisibility(View.VISIBLE);
             HttpClient client = new HttpClient();
-            client.get(API_GET_TOKEN, new HttpResponseCallback() {
+            /*client.get(API_GET_TOKEN, new HttpResponseCallback() {
                 @Override
                 public void success(final String responseBody) {
                     runOnUiThread(new Runnable() {
@@ -256,7 +259,7 @@ public class PaymentActivity extends AppCompatActivity {
                 public void failure(Exception exception) {
                     Log.d(TAG, "failure: " + exception.getMessage());
                 }
-            });
+            });*/
             return null;
         }
 
@@ -272,57 +275,51 @@ public class PaymentActivity extends AppCompatActivity {
         return mEditAmount.getText().toString().split("£")[1];
     }
 
-    /*------------------------------- Request booking after payment confirmation ---------------------------------- */
-
     private void requestPickupHere() {
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("user");
+        Log.d(TAG, "requestPickupHere: " + tokens.getKey());
+        tokens.orderByKey().equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    User user = dataSnapshot1.getValue(User.class);
+                    String extraData = username + "," + profile_photo + "," + currentLocation;
+                    Notification data = new Notification(currentUserID, userID, rideID, extraData, destination);
+                    Sender content = new Sender(data, user.getUsername());
 
-
-        tokens.orderByKey().equalTo(userID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                            Token token = dataSnapshot1.getValue(Token.class);
-
-                            String extraData = username + "," + profile_photo + "," + currentLocation;
-                            Notification data = new Notification(currentUserID, userID, rideID, extraData, destination);
-                            Sender content = new Sender(data, token.getToken());
-
-                            Log.d(TAG, "onDataChange: " + content);
-
-                            mService.sendMessage(content)
-                                    .enqueue(new Callback<FCMResponse>() {
-                                        @Override
-                                        public void onResponse(Call<FCMResponse> call, retrofit2.Response<FCMResponse> response) {
-                                            Log.i(TAG, "onResponse: " + response);
-                                            if (response.body().success == 1 || response.code() == 200){
-                                                Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
-                                                updateSeatsRemaining();
-                                                mFirebaseMethods.addPoints(userID, 200);
-                                            } else {
-                                                Toast.makeText(mContext, "Booking request failed!", Toast.LENGTH_SHORT).show();
-                                            }
-                                            finish();
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<FCMResponse> call, Throwable t) {
-                                            Log.e(TAG, "onFailure: "+ t.getMessage());
-                                        }
-                                    });
+                    Log.d(TAG, "onDataChange: " + content);
+                    mService.sendMessage(content).enqueue(new Callback<FCMResponse>() {
+                        @Override
+                        public void onResponse(Call<FCMResponse> call, retrofit2.Response<FCMResponse> response) {
+                            Log.i(TAG, "onResponse: " + response);
+                            assert response.body() != null;
+                            if (response.body().success == 1 || response.code() == 200){
+                                Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
+                                updateSeatsRemaining();
+                                mFirebaseMethods.addPoints(userID, 200);
+                            } else {
+                                Toast.makeText(mContext, "Booking request failed!", Toast.LENGTH_SHORT).show();
+                            }
+                            finish();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onFailure(Call<FCMResponse> call, Throwable t) {
+                            Log.e(TAG, "onFailure: "+ t.getMessage());
+                        }
+                    });
+                }
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         RequestUser request = new RequestUser(userID, profile_photo2, profile_photo, username, 1, destination, currentLocation, 1, false, rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation, licencePlate);
 
-        myRef.child("requestRide")
+        myRef.child("request_ride")
                 .child(rideID)
                 .child(currentUserID)
                 .setValue(request);
@@ -357,7 +354,7 @@ public class PaymentActivity extends AppCompatActivity {
         myRef.child("availableRide").child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: " + dataSnapshot.toString());
+                Log.d(TAG, "onDataChange: " + dataSnapshot);
                 seatsAvailable = dataSnapshot.getValue(Integer.class);
             }
 

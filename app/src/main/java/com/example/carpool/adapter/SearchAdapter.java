@@ -41,6 +41,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         mDataset = myDataset;
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext)
@@ -75,18 +76,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         if (to.length() > 20){
             to = to.substring(0 , Math.min(to.length(), 21));
             to = to + "...";
-            holder.to.setText(to);
-        } else {
-            holder.to.setText(to);
         }
+        holder.to.setText(to);
 
         if (from.length() > 20){
             from = from.substring(0 , Math.min(from.length(), 21));
             from = from + "...";
-            holder.from.setText(from);
-        } else {
-            holder.from.setText(from);
         }
+        holder.from.setText(from);
 
         if (ride.get(position).getSeatsAvailable() == 1) {
             seats = "Only " + ride.get(position).getSeatsAvailable() + " Seat remaining!";
@@ -142,18 +139,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         }
     }
-    /**
-     * parses date to a readable format
-     * @param time
-     * @return
-     */
+
     public String parseDateToddMMyyyy(String time) {
         String inputPattern = "dd/MM/yyyy";
         String outputPattern = "dd MMMM";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
-        Date date = null;
+        Date date;
         String str = null;
 
         try {
@@ -170,8 +163,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             location = location.replaceAll(",", "\n");
             location = location.replaceAll(" ", "");
             return location;
-        } else {
-
         }
 
         return location;

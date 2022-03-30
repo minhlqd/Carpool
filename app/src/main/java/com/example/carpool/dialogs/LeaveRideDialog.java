@@ -48,7 +48,7 @@ public class LeaveRideDialog extends Dialog implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_leave_ride);
         cancelDialog = (TextView) findViewById(R.id.dialogCancel);
-        confirmDialog = (Button) findViewById(R.id.dialogConfirm);
+        confirmDialog = (Button) findViewById(R.id.pay_and_book);
         cancelDialog.setOnClickListener(this);
         confirmDialog.setOnClickListener(this);
 
@@ -69,7 +69,7 @@ public class LeaveRideDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.dialogConfirm:
+            case R.id.pay_and_book:
                 leaveRide();
                 dismiss();
                 updateSeatsRemaining();

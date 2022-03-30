@@ -51,18 +51,19 @@ public class AccountActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     //activity widgets
-    private Button mEmailUpdateButton;
-    private Button mPasswordUpdateButton;
-    private Button mDetailsUpdateButton;
-    private Button mCarUpdateButton;
-    private Button mSignOutButton;
+    private RelativeLayout mEmailUpdate;
+    private RelativeLayout mPasswordUpdate;
+    private RelativeLayout mDetailsUpdate;
+    private RelativeLayout mCarUpdate;
     private Button mSettingsBtn;
     private Button mHelpBtn;
-    private Button mAddPaymentInformationBtn;
-    private ImageView profilePhoto, leaderboards;
-    private TextView mDisplayUsername, mCompleteRides, mEmail;
+    private RelativeLayout mInformation;
+    private ImageView profilePhoto;
+    private ImageView leaderboards;
+    private TextView mDisplayUsername;
+    private TextView mCompleteRides;
+    private TextView mEmail;
     private RatingBar mRatingBar;
-
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -93,30 +94,15 @@ public class AccountActivity extends AppCompatActivity {
         setupActivityWidgets();
 
         // OnClick Listener to navigate to the fragments
-        mEmailUpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*setViewPager(0);*/
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit();
-            }
-        });
+        mEmailUpdate.setOnClickListener(v ->
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit()
+        );
 
-        mSettingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-       /* mSignOutButton.setOnClickListener(v -> {
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
-            mAuth.signOut();
-            Intent intent = new Intent(AccountActivity.this,
-                    LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mSettingsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
             startActivity(intent);
-        });*/
+        });
+
 
         mHelpBtn.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, HelpFragment.class);
@@ -129,32 +115,20 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        mPasswordUpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*setViewPager(1);*/
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit();
-            }
+        mPasswordUpdate.setOnClickListener(v ->
+                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit()
+        );
+
+        mDetailsUpdate.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new DetailsUpdateFragment()).commit();
         });
 
-        mDetailsUpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*setViewPager(2);*/
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new DetailsUpdateFragment()).commit();
-            }
+        mInformation.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            startActivity(intent);
         });
 
-        mAddPaymentInformationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mCarUpdateButton.setOnClickListener(v -> {
-            /*setViewPager(3);*/
+        mCarUpdate.setOnClickListener(v -> {
             mRelativeLayout.setVisibility(View.GONE);
             bottomNavigationView.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
@@ -179,13 +153,12 @@ public class AccountActivity extends AppCompatActivity {
     private void setupActivityWidgets(){
         mViewPager = findViewById(R.id.container);
         mRelativeLayout = findViewById(R.id.relative_layout_profile);
-        mEmailUpdateButton = findViewById(R.id.updateEmailButton);
-        mPasswordUpdateButton = findViewById(R.id.updatePasswordButton);
-        mDetailsUpdateButton = findViewById(R.id.updateDetailsButton);
-        mAddPaymentInformationBtn = findViewById(R.id.addPaymentInformationBtn);
-        mCarUpdateButton = findViewById(R.id.updateCarDetailsButton);
+        mEmailUpdate = findViewById(R.id.email_update);
+        mPasswordUpdate = findViewById(R.id.change_password);
+        mDetailsUpdate = findViewById(R.id.update_profile);
+        mInformation = findViewById(R.id.information_update);
+        mCarUpdate = findViewById(R.id.update_car);
         profilePhoto = findViewById(R.id.profile_image);
-        //mSignOutButton = findViewById(R.id.signoutButton);
         mDisplayUsername = findViewById(R.id.displayUsername);
         mEmail = findViewById(R.id.email_textview);
         mCompleteRides = findViewById(R.id.rides_textview);
@@ -213,9 +186,6 @@ public class AccountActivity extends AppCompatActivity {
         }
     }
 
-    /***
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView(){
         bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
@@ -246,7 +216,7 @@ public class AccountActivity extends AppCompatActivity {
     }
     
     private void checkNotifications(){
-        mRef.child("Reminder").child(userID).addValueEventListener(new ValueEventListener() {
+        mRef.child("reminder").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;

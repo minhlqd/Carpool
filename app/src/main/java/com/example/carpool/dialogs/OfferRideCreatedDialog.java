@@ -37,7 +37,7 @@ public class OfferRideCreatedDialog extends Dialog implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_offer_ride_created);
         cancelDialog = (TextView) findViewById(R.id.dialogCancel);
-        confirmDialog = (Button) findViewById(R.id.dialogConfirm);
+        confirmDialog = (Button) findViewById(R.id.pay_and_book);
         cancelDialog.setOnClickListener(this);
         confirmDialog.setOnClickListener(v -> {
             //Shows the ride has been created successfully
@@ -59,7 +59,7 @@ public class OfferRideCreatedDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.dialogConfirm:
+            case R.id.pay_and_book:
                 dismiss();
                 Intent intent1 = new Intent(c, HelpFragment.class);
                 c.startActivity(intent1);

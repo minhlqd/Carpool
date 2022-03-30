@@ -112,7 +112,7 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
         int height = 120;

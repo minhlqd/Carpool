@@ -69,7 +69,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private EditText mPickupLocationEditText;
     private MaterialAnimatedSwitch mSameGender;
     private Button mSnippetOfferRideButton;
-    private Boolean sameGenderBoolean = false;
+    private final Boolean sameGenderBoolean = false;
     private Calendar mCalendar;
     private DatePickerDialog.OnDateSetListener date;
     private CircleImageView mCarPhoto;
@@ -221,10 +221,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
                 String from = mFromEditText.getText().toString();
                 String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
-                if(!isStringNull(pickupTime) && pickupTime != null &&
-                        !isIntNull(cost) && cost != 0 &&
-                        !isStringNull(dateOfJourney) && dateOfJourney != null
-                        && !isIntNull(extraTime)){
+                if(!isStringNull(pickupTime) && !isIntNull(cost) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
 
                     //Creates the ride information and adds it to the database
                     mFirebaseMethods.offerRide(userID , username, from, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
@@ -251,33 +248,25 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
     private boolean isStringNull(String string){
         Toast.makeText(this, "All fields must be filled in!", Toast.LENGTH_LONG).show();
-        if (string.equals("")){
-            return true;
-        } else {
-            return false;
-        }
+        return string.equals("");
     }
 
     private boolean isIntNull(int integer){
         Toast.makeText(this, "All fields must be filled in!", Toast.LENGTH_LONG).show();
-        if (integer < 0 || integer == 0){
-            return true;
-        } else {
-            return false;
-        }
+        return integer < 0 || integer == 0;
     }
 
     private String getCurrentDate(){
         Date todayDate = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String todayString = formatter.format(todayDate);
 
-        return todayString;
+        return formatter.format(todayDate);
     }
 
 
     private void updateLabel() {
-        String dateFormat = "dd/MM/yy";
+        String dateFormat = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
 
         mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalendar.getTime()));
@@ -332,18 +321,15 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mDestinationEditText.setText(destinationId);
         mFromEditText.setText(locationId);
         mCarEditText.setText(carID);
-        mSeatsEditText.setText(String.valueOf(seatsID) + " Seats left!");
+        mSeatsEditText.setText(seatsID + " Seats left!");
         durationTxt.setText("Duration: "+ ApplicationContext.getDuration());
 
         mCalendar = Calendar.getInstance();
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mCalendar.set(Calendar.YEAR, year);
-                mCalendar.set(Calendar.MONTH, month);
-                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
+        date = (view, year, month, dayOfMonth) -> {
+            mCalendar.set(Calendar.YEAR, year);
+            mCalendar.set(Calendar.MONTH, month);
+            mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         };
     }
 
@@ -354,10 +340,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mPickupLocationEditText.setText(Common.getClassName());
     }
 
-    /*----------------------------- SETUP FIREBASE -----------------------------------*/
-
     private void setupFirebaseAuth(){
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth");
 
         userID = mAuth.getCurrentUser().getUid();
 
@@ -365,7 +348,6 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot));
 
             }

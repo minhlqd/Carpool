@@ -25,7 +25,7 @@ public class ConfirmPasswordDialog extends DialogFragment {
         public void onConfirmPassword(String password);
     }
 
-    onConfirmPasswordListener mOnConfirmPassowrdListener;
+    onConfirmPasswordListener mOnConfirmPasswordListener;
 
     //vars
     private TextView mPassword;
@@ -40,13 +40,13 @@ public class ConfirmPasswordDialog extends DialogFragment {
         TextView cancelDialog = (TextView) view.findViewById(R.id.dialogCancel);
         cancelDialog.setOnClickListener(v -> getDialog().dismiss());
 
-        Button confirmDialog = (Button) view.findViewById(R.id.dialogConfirm);
+        Button confirmDialog = (Button) view.findViewById(R.id.pay_and_book);
         confirmDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String password = mPassword.getText().toString();
                 if(!password.equals("")) {
-                    mOnConfirmPassowrdListener.onConfirmPassword(password);
+                    mOnConfirmPasswordListener.onConfirmPassword(password);
                     getDialog().dismiss();
                 } else {
                     Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
@@ -62,7 +62,7 @@ public class ConfirmPasswordDialog extends DialogFragment {
         super.onAttach(context);
 
         try {
-            mOnConfirmPassowrdListener = (onConfirmPasswordListener) getTargetFragment();
+            mOnConfirmPasswordListener = (onConfirmPasswordListener) getTargetFragment();
         } catch  (ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage());
         }

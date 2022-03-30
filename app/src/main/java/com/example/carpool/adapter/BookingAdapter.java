@@ -111,7 +111,13 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         LinearLayout view;
-        TextView rides, from, to, date, seats, costs, bookingStatusTextview;
+        TextView rides;
+        TextView from;
+        TextView to;
+        TextView date;
+        TextView seats;
+        TextView costs;
+        TextView bookingStatusTextview;
         CircleImageView profile_photo;
         RatingBar ratingBar;
         CardView cardView;

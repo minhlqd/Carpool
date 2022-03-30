@@ -50,26 +50,21 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         holder.date.setText(date);
         holder.notificationText.setText(notificationText);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFirebaseMethods.checkForReminder(holder.notificationText.getText().toString());
+        holder.view.setOnClickListener(v -> {
+            mFirebaseMethods.checkForReminder(holder.notificationText.getText().toString());
 
-                mActivity.finish();
-                mActivity.startActivity(mActivity.getIntent());
-            }
+            mActivity.finish();
+            mActivity.startActivity(mActivity.getIntent());
         });
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return reminders.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-    {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout view;
         TextView notificationText, date;
         ImageView deleteRide;

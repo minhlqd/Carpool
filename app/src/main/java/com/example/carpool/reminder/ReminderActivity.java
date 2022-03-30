@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,10 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by P16174003 on 13/02/2019.
- */
-
 public class ReminderActivity extends AppCompatActivity {
     private static final String TAG = "ReminderActivity";
 
@@ -41,7 +36,7 @@ public class ReminderActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
-    private ReminderAdapter myAdapter;
+    private ReminderAdapter mReminderAdapter;
     private ArrayList<Reminder> reminders;
 
     //widgets
@@ -67,7 +62,7 @@ public class ReminderActivity extends AppCompatActivity {
         setupWidgets();
         setupRecyclerView();
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("Reminder").child(userID);
+        mRef = FirebaseDatabase.getInstance().getReference().child("reminder").child(userID);
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,12 +70,12 @@ public class ReminderActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             Log.i(TAG, "onDataChange: " + dataSnapshot1);
-                            Reminder r = dataSnapshot1.getValue(Reminder.class);
-                            reminders.add(r);
+                            Reminder reminder = dataSnapshot1.getValue(Reminder.class);
+                            reminders.add(reminder);
                     }
                 }
-                myAdapter = new ReminderAdapter(ReminderActivity.this, reminders, mActivity);
-                mRecyclerView.setAdapter(myAdapter);
+                mReminderAdapter = new ReminderAdapter(ReminderActivity.this, reminders, mActivity);
+                mRecyclerView.setAdapter(mReminderAdapter);
             }
 
             @Override
@@ -89,12 +84,7 @@ public class ReminderActivity extends AppCompatActivity {
             }
         });
 
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mBack.setOnClickListener(v -> finish());
     }
 
     private void setupWidgets(){
@@ -108,11 +98,10 @@ public class ReminderActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
-        reminders = new ArrayList<Reminder>();
+        reminders = new ArrayList<>();
     }
 
     private void setupFirebase(){
-
         mFirebaseMethods = new FirebaseMethods(mContext);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabse = FirebaseDatabase.getInstance();

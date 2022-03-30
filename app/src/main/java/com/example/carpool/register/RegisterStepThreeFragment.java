@@ -143,27 +143,13 @@ public class RegisterStepThreeFragment extends Fragment {
         });
 
         mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+        mBackButton3.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
-        mRestartRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnButtonClickListener.onButtonClicked(v);
-            }
-        });
+        mRestartRegistration.setOnClickListener(v ->
+                mOnButtonClickListener.onButtonClicked(v));
 
-        mRegistrationPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
+        mRegistrationPicture.setOnClickListener(v -> chooseImage());
 
         mDob.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();

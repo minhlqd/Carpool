@@ -61,7 +61,7 @@ public class DeleteConfirmationDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.dialogConfirm:
+            case R.id.pay_and_book:
                 mFirebaseMethods.deleteRide(rideID);
                 Intent intent1 = new Intent(c, RidesActivity.class);
                 c.startActivity(intent1);
@@ -78,7 +78,7 @@ public class DeleteConfirmationDialog extends Dialog implements
 
     private void setupWidgets(){
         //Setup widgets
-        mDeleteRideBtn = (Button) findViewById(R.id.dialogConfirm);
+        mDeleteRideBtn = (Button) findViewById(R.id.pay_and_book);
         mCancelDialogBtn = (TextView) findViewById(R.id.dialogCancel);
     }
 

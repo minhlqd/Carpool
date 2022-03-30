@@ -27,10 +27,25 @@ public class ViewRideCreatedDialog extends Dialog implements
     public Dialog d;
 
     // variables
-    private TextView mUsername, mRidesCompleted, mCost, mDepartureTime, mExtraTime, mFromStreet, mFromPostcode, mFromCity, mToStreet, mToPostcode, mToCity, mCancelDialogBtn, durationTextView, mPickupLocation;
+    private TextView mUsername;
+    private TextView mRidesCompleted;
+    private TextView mCost;
+    private TextView mDepartureTime;
+    private TextView mExtraTime;
+    private TextView mFromStreet;
+    private TextView mFromPostcode;
+    private TextView mFromCity;
+    private TextView mToStreet;
+    private TextView mToPostcode;
+    private TextView mToCity;
+    private TextView mCancelDialogBtn;
+    private TextView durationTextView;
+    private TextView mPickupLocation;
     private RatingBar mRatingBar;
     private Button mEditRideBtn;
-    private FloatingActionButton mDeleteRideBtn, mPaticipantsRideBtn, mViewProfileBtn;
+    private FloatingActionButton mDeleteRideBtn;
+    private FloatingActionButton mPaticipantsRideBtn;
+    private FloatingActionButton mViewProfileBtn;
     private final String userID;
     private final String rides;
     private final String seats;
@@ -87,7 +102,7 @@ public class ViewRideCreatedDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.dialogConfirm:
+            case R.id.pay_and_book:
                 dismiss();
                 Intent intent1 = new Intent(c, EditRideActivity.class);
                 intent1.putExtra("COST", cost);
@@ -153,7 +168,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
 
 
-        mEditRideBtn = (Button) findViewById(R.id.dialogConfirm);
+        mEditRideBtn = (Button) findViewById(R.id.pay_and_book);
         mDeleteRideBtn = (FloatingActionButton) findViewById(R.id.deleteRideBtn);
         mPaticipantsRideBtn = (FloatingActionButton) findViewById(R.id.paticipantsRideBtn);
         mViewProfileBtn = (FloatingActionButton) findViewById(R.id.viewProfileBtn);

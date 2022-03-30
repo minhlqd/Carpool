@@ -75,8 +75,6 @@ public class BookedActivity extends AppCompatActivity {
 
         checkNotifications();
 
-
-
         //Setup recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -116,9 +114,6 @@ public class BookedActivity extends AppCompatActivity {
     }
 
 
-    /***
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView(){
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
@@ -137,11 +132,8 @@ public class BookedActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Checks if there are notifications available for the current logged in user.
-     */
     private void checkNotifications(){
-        mRef.child("Reminder").child(user_id).addValueEventListener(new ValueEventListener() {
+        mRef.child("reminder").child(user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;
@@ -150,7 +142,6 @@ public class BookedActivity extends AppCompatActivity {
                         reminderLength++;
                     }
                 }
-                //Passes the number of notifications onto the setup badge method
                 setupBadge(reminderLength);
             }
 
@@ -161,12 +152,6 @@ public class BookedActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.carpool.R;
@@ -35,19 +36,18 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
        } else {
            if(remoteMessage.getData().get("body").contains(userID)){
-               showNotifcation(remoteMessage.getData());
+               showNotification(remoteMessage.getData());
            }
        }
     }
 
 
-
-    private void showNotifcation(Map<String,String> data) {
-        String title = data.get("title").toString();
-        String body = data.get("body").toString();
-        String username[] = data.get("username").split(",");
-        String rideID = data.get("rideID").toString();
-        String to = data.get("to").toString();
+    private void showNotification(@NonNull Map<String,String> data) {
+        String title = data.get("title");
+        String body = data.get("body");
+        String[] username = data.get("username").split(",");
+        String rideID = data.get("rideID");
+        String to = data.get("to");
 
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

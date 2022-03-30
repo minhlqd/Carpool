@@ -77,7 +77,7 @@ public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapte
         return leaderboards.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    static class MyViewHolder extends RecyclerView.ViewHolder
     {
         LinearLayout view;
         TextView userID, totalPoints, leaderboardPlace;

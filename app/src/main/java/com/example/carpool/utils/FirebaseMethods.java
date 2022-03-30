@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class FirebaseMethods {
 
-    private static final String TAG = "FirebaseMethods";
+    private static final String TAG = "MinhMX";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -86,7 +86,7 @@ public class FirebaseMethods {
 
     public void deleteRide(String rideID){
 
-        myRef.child("availableRide")
+        myRef.child("available_ride")
             .child(rideID)
             .removeValue();
 
@@ -176,7 +176,7 @@ public class FirebaseMethods {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
                             if (dataSnapshot2.getValue() != null && dataSnapshot2.getValue().equals(notificationComment)){
-                                deleteReminder(dataSnapshot1.getKey());
+                                /*deleteReminder(dataSnapshot1.getKey());*/
                             }
                         }
                     }
@@ -213,7 +213,7 @@ public class FirebaseMethods {
         });
     }
 
-    public User getUser(DataSnapshot dataSnapshot){
+    public User getUser(@NonNull DataSnapshot dataSnapshot){
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
@@ -236,8 +236,7 @@ public class FirebaseMethods {
         return user;
     }
 
-    public Info getInfo(DataSnapshot dataSnapshot){
-
+    public Info getInfo(@NonNull DataSnapshot dataSnapshot){
         Info info = new Info();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(Objects.equals(ds.getKey(), "info")){
@@ -311,7 +310,7 @@ public class FirebaseMethods {
         return info;
     }
 
-    public User getSpecificUser(DataSnapshot dataSnapshot, String user_id){
+    public User getSpecificUser(@NonNull DataSnapshot dataSnapshot, String user_id){
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(ds.getKey() != null && ds.getKey().equals("user")){

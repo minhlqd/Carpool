@@ -20,8 +20,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CustomerActivity extends AppCompatActivity {
     private static final String TAG = "CustomerActivity";
 
-    private TextView txtUsername, txtTo, txtFrom;
-    private String title, body, username, profile_photo, to, from, userID, rideID;
+    private TextView txtUsername;
+    private TextView txtTo;
+    private TextView txtFrom;
+    private String title;
+    private String body;
+    private String username;
+    private String profile_photo;
+    private String to;
+    private String from;
+    private String userID;
+    private String rideID;
     private Boolean rideAccepted;
 
     //Widgets
@@ -109,7 +118,7 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     private void acceptRide(){
-        myRef.child("requestRide")
+        myRef.child("request_ride")
                 .child(rideID)
                 .child(userID)
                 .child("accepted")
@@ -121,12 +130,11 @@ public class CustomerActivity extends AppCompatActivity {
 
     private void declineRide(){
 
-        myRef.child("requestRide")
+        myRef.child("request_ride")
                 .child(rideID)
                 .child(userID)
                 .removeValue();
 
-        //Will close the intent when the ride is accepted
         finish();
     }
 

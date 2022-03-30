@@ -47,11 +47,6 @@ public class SectionsStatePageAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-    /**
-     * returns the fragment with the number @param
-     * @param fragment
-     * @return
-     */
     public Integer getFragmentNumber(Fragment fragment){
         if (mFragmentNumbers.containsKey(fragment)){
             return mFragmentNumbers.get(fragment);
@@ -60,11 +55,6 @@ public class SectionsStatePageAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-    /**
-     * returns the fragment with the name @param
-     * @param fragmentNumber
-     * @return
-     */
     public String getFragmentName(Integer fragmentNumber){
         if (mFragmentNames.containsKey(fragmentNumber)){
             return mFragmentNames.get(fragmentNumber);

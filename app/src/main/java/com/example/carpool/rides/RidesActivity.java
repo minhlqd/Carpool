@@ -71,8 +71,6 @@ public class RidesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rides);
         setupBottomNavigationView();
 
-
-        //Setup firebase object
         mAuth = FirebaseAuth.getInstance();
         mFirebaseMethods = new FirebaseMethods(mContext);
         mFirebaseDatabse = FirebaseDatabase.getInstance();
@@ -83,27 +81,23 @@ public class RidesActivity extends AppCompatActivity {
 
         checkNotifications();
 
-
         //Setup recycler view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
-        rides = new ArrayList<Ride>();
+        rides = new ArrayList<>();
 
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
         mNotificationBtn = (ImageView) findViewById(R.id.notificationBtn) ;
         mNotificationBtn.setPadding(0, 0, 10, 0);
-        mNotificationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ReminderActivity.class);
-                startActivity(intent);
-            }
+        mNotificationBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ReminderActivity.class);
+            startActivity(intent);
         });
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("availableRide");
+        mRef = FirebaseDatabase.getInstance().getReference().child("available_ride");
 
         mRef.orderByChild("user_id").equalTo(user_id)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -132,9 +126,6 @@ public class RidesActivity extends AppCompatActivity {
     }
 
 
-    /***
-     * BottomNavigationView setup
-     */
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
@@ -161,16 +152,11 @@ public class RidesActivity extends AppCompatActivity {
 
             //Adds badge and notification number to the BottomViewNavigation
             BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView, reminderLength);
-        } else {
-
         }
     }
 
-    /**
-     * Checks if there are notifications available for the current logged in user.
-     */
     private void checkNotifications(){
-        mRef.child("Reminder").child(user_id).addValueEventListener(new ValueEventListener() {
+        mRef.child("reminder").child(user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;
@@ -179,7 +165,7 @@ public class RidesActivity extends AppCompatActivity {
                         reminderLength++;
                     }
                 }
-                //Passes the number of notifications onto the setup badge method
+
                 setupBadge(reminderLength);
             }
 
@@ -190,9 +176,6 @@ public class RidesActivity extends AppCompatActivity {
         });
     }
 
-    /***
-     *  Setup the firebase object
-     */
     @Override
     public void onStart() {
         super.onStart();

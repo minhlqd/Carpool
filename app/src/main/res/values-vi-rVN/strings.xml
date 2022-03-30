@@ -82,4 +82,5 @@
     <string name="pay_and_book">Pay and book</string>
     <string name="dismiss">Dismiss</string>
     <string name="pickup">Pickup:</string>
+    <string name="update_car">Update Car</string>
 </resources>

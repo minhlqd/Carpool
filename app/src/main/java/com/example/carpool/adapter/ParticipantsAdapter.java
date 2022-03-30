@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
@@ -33,13 +34,12 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         mDataset = myDataset;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                               int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.individual_participants, parent, false));
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final String username = participants.get(position).getUsername();
@@ -50,14 +50,13 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return participants.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-    {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+
         LinearLayout view;
         TextView username;
         ImageView profile_photo;
@@ -71,18 +70,14 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
         }
     }
-    /**
-     * parses date to a readable format
-     * @param time
-     * @return
-     */
+
     public String parseDateToddMMyyyy(String time) {
         String inputPattern = "dd/MM/yyyy";
         String outputPattern = "dd MMMM";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
-        Date date = null;
+        Date date;
         String str = null;
 
         try {
