@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.carpool.FrequentRoute.FrequentRouteActivity;
 import com.example.carpool.account.AccountActivity;
 import com.example.carpool.booked.BookedActivity;
 import com.example.carpool.home.HomeActivity;
@@ -35,25 +36,31 @@ public class BottomNavigationViewHelper {
                 switch (menuItem.getItemId()){
                     case R.id.menu_location:
                         if (view.getSelectedItemId() != R.id.menu_location) {
-                            Intent intentLocation = new Intent(context, HomeActivity.class); //ACTIVITY_NUMBER = 0
+                            Intent intentLocation = new Intent(context, HomeActivity.class);
                             context.startActivity(intentLocation);
                         }
                         break;
                     case R.id.menu_rides:
                         if (view.getSelectedItemId() != R.id.menu_rides) {
-                            Intent intentRides = new Intent(context, RidesActivity.class); //ACTIVITY_NUMBER = 1
+                            Intent intentRides = new Intent(context, RidesActivity.class);
                             context.startActivity(intentRides);
+                        }
+                        break;
+                    case R.id.menu_frequent_route:
+                        if (view.getSelectedItemId() != R.id.menu_frequent_route) {
+                            Intent intentFrequentRoute = new Intent(context, FrequentRouteActivity.class);
+                            context.startActivity(intentFrequentRoute);
                         }
                         break;
                     case R.id.menu_booked:
                         if (view.getSelectedItemId() != R.id.menu_booked) {
-                            Intent intentBooked = new Intent(context, BookedActivity.class); //ACTIVITY_NUMBER = 2
+                            Intent intentBooked = new Intent(context, BookedActivity.class);
                             context.startActivity(intentBooked);
                         }
                         break;
                     case R.id.menu_account:
                         if (view.getSelectedItemId() != R.id.menu_account) {
-                            Intent intentAccount = new Intent(context, AccountActivity.class); //ACTIVITY_NUMBER = 3
+                            Intent intentAccount = new Intent(context, AccountActivity.class);
                             context.startActivity(intentAccount);
                         }
                         break;
@@ -69,7 +76,7 @@ public class BottomNavigationViewHelper {
         View v = bottomNavigationMenuView.getChildAt(1);
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
         View badge = LayoutInflater.from(context).inflate(R.layout.util_navigation_notification, itemView, true);
-        TextView textView = (TextView) badge.findViewById(R.id.notificationsCount);
+        TextView textView = badge.findViewById(R.id.notificationsCount);
         textView.setText(String.valueOf(reminderLength));
     }
 

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
 import com.example.carpool.dialogs.BookRideDialog;
+import com.example.carpool.models.OfferRide;
 import com.example.carpool.models.Ride;
 import com.squareup.picasso.Picasso;
 
@@ -30,9 +31,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;
-    private ArrayList<Ride> ride;
+    private ArrayList<OfferRide> ride;
 
-    public SearchAdapter(Context context, ArrayList<Ride> rides){
+    public SearchAdapter(Context context, ArrayList<OfferRide> rides){
         this.mContext = context;
         this.ride = rides;
     }
@@ -51,7 +52,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         final String username = ride.get(position).getUsername();
         final String rides = ride.get(position).getCompleteRides() + " Rides";
         String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
@@ -68,21 +68,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         final String licencePlate = ride.get(position).getLicencePlate();
         final String rideID = ride.get(position).getRideID();
         final String duration = ride.get(position).getDuration();
-        final String userID = ride.get(position).getUser_id();
+        final String driverID = ride.get(position).getDriverID();
         final String profile_photo = ride.get(position).getProfile_picture();
         final String completedRides = String.valueOf(ride.get(position).getCompleteRides());
         final String pickupLocation = ride.get(position).getPickupLocation();
 
         if (to.length() > 20){
-            to = to.substring(0 , Math.min(to.length(), 21));
+            to = to.substring(0 , 21);
             to = to + "...";
         }
         holder.to.setText(to);
 
         if (from.length() > 20){
-            from = from.substring(0 , Math.min(from.length(), 21));
+            from = from.substring(0 , 21);
             from = from + "...";
         }
+        final String location = from;
+        final String destination = to;
+
         holder.from.setText(from);
 
         if (ride.get(position).getSeatsAvailable() == 1) {
@@ -100,9 +103,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         final String finalSeats = seats;
         holder.view.setOnClickListener(view -> {
+            Log.d("MinhMX", "onBindViewHolder: " + driverID);
             BookRideDialog dialog =
-                    new BookRideDialog(mContext, rideID ,username, licencePlate, rides, finalSeats, fromOnly,
-                            toOnly, date, dateOnly, cost, rating, pickupTime, extraTime, duration, userID,
+                    new BookRideDialog(mContext, rideID, username, licencePlate, rides, finalSeats, location, destination, date,
+                            dateOnly, cost, rating, pickupTime, extraTime, duration, driverID,
                             profile_photo, completedRides, pickupLocation);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();

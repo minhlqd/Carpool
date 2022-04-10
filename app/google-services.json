@@ -1,34 +1,37 @@
 {
   "project_info": {
-    "project_number": "876497108442",
-    "firebase_url": "https://gopool-92b35-default-rtdb.firebaseio.com",
-    "project_id": "gopool-92b35",
-    "storage_bucket": "gopool-92b35.appspot.com"
+    "project_number": "173562989443",
+    "firebase_url": "https://original-glider-346711-default-rtdb.firebaseio.com",
+    "project_id": "original-glider-346711",
+    "storage_bucket": "original-glider-346711.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:876497108442:android:7ce434465b845acc25d4e3",
+        "mobilesdk_app_id": "1:173562989443:android:1822e401d6dae9f88e04b6",
         "android_client_info": {
           "package_name": "com.example.carpool"
         }
       },
       "oauth_client": [
         {
-          "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+          "client_id": "173562989443-oa2e4vge65scomenbhkh01bd8ouruc0k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA3TixdelGRtIvtPlcIKXtLIouwC1pW69g"
+          "current_key": "AIzaSyBOfAQHh7zrcz6FIohGgZb8m-E87biKurw"
+        },
+        {
+          "current_key": "AIzaSyAz3l5S3kTNJmqnoJ9bf2vctnMmPnuv9d4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+              "client_id": "173562989443-oa2e4vge65scomenbhkh01bd8ouruc0k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -37,27 +40,38 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:876497108442:android:7727b579069cb4f025d4e3",
+        "mobilesdk_app_id": "1:173562989443:android:ac1272d640ad2bf78e04b6",
         "android_client_info": {
-          "package_name": "com.example.gopool"
+          "package_name": "com.uet.carpool"
         }
       },
       "oauth_client": [
         {
-          "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+          "client_id": "173562989443-qg0udtvpocn5o3rsn6c70hi6gmn1osti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uet.carpool",
+            "certificate_hash": "e63cb963a03f103f277ef03f815b02c298d7c698"
+          }
+        },
+        {
+          "client_id": "173562989443-oa2e4vge65scomenbhkh01bd8ouruc0k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA3TixdelGRtIvtPlcIKXtLIouwC1pW69g"
+          "current_key": "AIzaSyBOfAQHh7zrcz6FIohGgZb8m-E87biKurw"
+        },
+        {
+          "current_key": "AIzaSyAz3l5S3kTNJmqnoJ9bf2vctnMmPnuv9d4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "876497108442-b2pjl41r0msp5p7eu13o3l0tgpachts8.apps.googleusercontent.com",
+              "client_id": "173562989443-oa2e4vge65scomenbhkh01bd8ouruc0k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

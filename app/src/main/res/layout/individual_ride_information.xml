@@ -75,16 +75,16 @@
 
 
                 <TextView
+                    android:id="@+id/priceTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/toTxt"
-                    android:textSize="22sp"
-                    android:textColor="@color/black"
                     android:layout_alignParentTop="true"
                     android:gravity="end"
-                    android:textStyle="bold"
-                    android:id="@+id/priceTxt"
-                    android:text="@string/_6_00" />
+                    android:text="@string/_6_00"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <RatingBar
                     android:id="@+id/individualRatingBar"

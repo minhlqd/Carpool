@@ -1,5 +1,9 @@
 package com.example.carpool.home;
 
+import static com.example.carpool.utils.Utils.KEY_DESTINATION;
+import static com.example.carpool.utils.Utils.KEY_LOCATION;
+import static com.example.carpool.utils.Utils.KEY_SAME_GENDER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.SearchAdapter;
 import com.example.carpool.R;
+import com.example.carpool.models.OfferRide;
 import com.example.carpool.models.Ride;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +47,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
     private SearchAdapter myAdapter;
-    private ArrayList<Ride> rides;
+    private ArrayList<OfferRide> rides;
 
     //Firebase variables
     private FirebaseUser currentUser;
@@ -84,17 +89,17 @@ public class SearchResultsActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
-        rides = new ArrayList<Ride>();
-        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("availableRide").orderByChild("destination").toString());
+        rides = new ArrayList<OfferRide>();
+        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("available_ride").orderByChild("destination").toString());
 
-        mRef.child("availableRide").orderByChild("destination").equalTo(destination).limitToFirst(20)
+        mRef.child("available_ride").orderByChild("destination").equalTo(destination.toLowerCase()).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d(TAG, "onDataChange: " + true);
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                                Ride ride = dataSnapshot1.getValue(Ride.class);
+                                OfferRide ride = dataSnapshot1.getValue(OfferRide.class);
                                 rides.add(ride);
                                 mNoResultsFoundLayout.setVisibility(View.GONE);
                                 /* if (ride.getSeatsAvailable() > 0) {
@@ -149,9 +154,9 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            location = getIntent().getStringExtra(getString(R.string.intent_location));
-            destination = getIntent().getStringExtra(getString(R.string.intent_destination));
-            sameGender = getIntent().getExtras().getBoolean("sameGender");
+            location = getIntent().getStringExtra(KEY_LOCATION);
+            destination = getIntent().getStringExtra(KEY_DESTINATION);
+            sameGender = getIntent().getExtras().getBoolean(KEY_SAME_GENDER);
             date = getIntent().getStringExtra("DATE");
         }
     }

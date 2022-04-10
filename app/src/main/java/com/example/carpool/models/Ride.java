@@ -185,7 +185,7 @@ public class Ride {
         this.duration = duration;
     }
 
-    public String getUser_id() {
+    public String getUserId() {
         return user_id;
     }
 

@@ -3,7 +3,7 @@ package com.example.carpool.models;
 public class OfferRide {
 
     private String rideID;
-    private String user_id;
+    private String driverID;
     private String username;
     private String currentLocation;
     private String destination;
@@ -26,11 +26,11 @@ public class OfferRide {
 
     public OfferRide() { }
 
-    public OfferRide(String rideID, String user_id, String username, String currentLocation, String destination, String dateOfJourney, int seatsAvailable, String licencePlate,
+    public OfferRide(String rideID, String driverID, String username, String currentLocation, String destination, String dateOfJourney, int seatsAvailable, String licencePlate,
                      double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car, String pickupTime, int extraTime, String profile_picture, int cost,
                      int completeRides, int userRating, String duration, String pickupLocation) {
         this.rideID = rideID;
-        this.user_id = user_id;
+        this.driverID = driverID;
         this.username = username;
         this.currentLocation = currentLocation;
         this.destination = destination;
@@ -60,12 +60,12 @@ public class OfferRide {
         this.rideID = rideID;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getDriverID() {
+        return driverID;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
     }
 
     public String getUsername() {
@@ -224,7 +224,7 @@ public class OfferRide {
     public String toString() {
         return "OfferRide{" +
                 "rideID='" + rideID + '\'' +
-                ", user_id='" + user_id + '\'' +
+                ", driverID='" + driverID + '\'' +
                 ", username='" + username + '\'' +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", destination='" + destination + '\'' +

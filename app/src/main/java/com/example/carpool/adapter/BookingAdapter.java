@@ -53,8 +53,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         final String rideID = ride.get(position).getRide_id();
         final String licencePlate = ride.get(position).getLicencePlate();
         final String pickupTime = ride.get(position).getPickupTime();
-        String from = "From: " + ride.get(position).getLocation().replaceAll("\n", ", ");
-        String to = "To: " + ride.get(position).getDestination().replaceAll("\n", ", ");
+        String from = ride.get(position).getLocation().replaceAll("\n", ", ");
+        String to =ride.get(position).getDestination().replaceAll("\n", ", ");
         final String cost = String.valueOf("£ " + ride.get(position).getCost()) + ".00";
         final String pickupLocation = ride.get(position).getPickupLocation();
         final String date = ride.get(position).getDateOfJourney() + " - " + ride.get(position).getPickupTime();

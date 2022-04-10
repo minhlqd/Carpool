@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carpool.adapter.MyAdapter;
+import com.example.carpool.adapter.RidesAdapter;
 import com.example.carpool.R;
 import com.example.carpool.reminder.ReminderActivity;
 import com.example.carpool.utils.BadgeView;
@@ -48,22 +48,22 @@ public class RidesActivity extends AppCompatActivity {
     private ImageView mNotificationBtn;
 
     //Recycle View variables
-    private Context mContext = RidesActivity.this;
+    private final Context mContext = RidesActivity.this;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
-    private MyAdapter myAdapter;
+    private RidesAdapter ridesAdapter;
     private ArrayList<Ride> rides;
 
     //Firebase variables
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
 
-    private String user_id;
-    private int reminderLength = 0;
+    private String driverID;
+    private final int reminderLength = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,24 +73,24 @@ public class RidesActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseMethods = new FirebaseMethods(mContext);
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         if (mAuth.getCurrentUser() != null) {
-            user_id = mFirebaseMethods.getUserID();
+            driverID = mFirebaseMethods.getUserID();
         }
 
         checkNotifications();
 
         //Setup recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<>();
 
-        mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
-        mNotificationBtn = (ImageView) findViewById(R.id.notificationBtn) ;
+        mNoResultsFoundLayout = findViewById(R.id.noResultsFoundLayout);
+        mNotificationBtn = findViewById(R.id.notificationBtn);
         mNotificationBtn.setPadding(0, 0, 10, 0);
         mNotificationBtn.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, ReminderActivity.class);
@@ -99,7 +99,7 @@ public class RidesActivity extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference().child("available_ride");
 
-        mRef.orderByChild("user_id").equalTo(user_id)
+        mRef.orderByChild("driverID").equalTo(driverID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,13 +107,13 @@ public class RidesActivity extends AppCompatActivity {
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                     String rideID = dataSnapshot1.getKey();
                                     Log.i(TAG, "rideID: "+ rideID);
-                                    Ride r = dataSnapshot1.getValue(Ride.class);
-                                    rides.add(r);
+                                    Ride ride = dataSnapshot1.getValue(Ride.class);
+                                    rides.add(ride);
 
                                     mNoResultsFoundLayout.setVisibility(View.INVISIBLE);
                             }
-                            myAdapter = new MyAdapter(RidesActivity.this, rides);
-                            mRecyclerView.setAdapter(myAdapter);
+                            ridesAdapter = new RidesAdapter(RidesActivity.this, rides);
+                            mRecyclerView.setAdapter(ridesAdapter);
                         }
                     }
 
@@ -128,7 +128,7 @@ public class RidesActivity extends AppCompatActivity {
 
     private void setupBottomNavigationView(){
         Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavViewBar);
+        bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
 
         //Change current highlighted icon
@@ -156,7 +156,7 @@ public class RidesActivity extends AppCompatActivity {
     }
 
     private void checkNotifications(){
-        mRef.child("reminder").child(user_id).addValueEventListener(new ValueEventListener() {
+        mRef.child("reminder").child(driverID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;
@@ -168,12 +168,15 @@ public class RidesActivity extends AppCompatActivity {
 
                 setupBadge(reminderLength);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+    }
+
+    private void checkRequest(){
+        /*mRef.child("request_ride")*/
     }
 
     @Override

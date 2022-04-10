@@ -86,7 +86,7 @@ public class BookedActivity extends AppCompatActivity {
         //View setup
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
 
-        mRef.child("requestRide").addValueEventListener(new ValueEventListener() {
+        mRef.child("request_ride").orderByChild("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

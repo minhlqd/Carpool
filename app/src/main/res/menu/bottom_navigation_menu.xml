@@ -8,6 +8,12 @@
         android:title="" />
 
     <item
+        android:id="@+id/menu_frequent_route"
+        android:enabled="true"
+        android:icon="@drawable/ic_frequent_map"
+        android:title="" />
+
+    <item
         android:id="@+id/menu_rides"
         android:enabled="true"
         android:icon="@drawable/ic_notification"

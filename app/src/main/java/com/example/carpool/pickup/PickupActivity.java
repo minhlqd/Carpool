@@ -98,12 +98,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
-        mUnjoinBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogLeave();
-            }
-        });
+        mUnjoinBtn.setOnClickListener(v -> showDialogLeave());
     }
 
     private void setupWidgets() {

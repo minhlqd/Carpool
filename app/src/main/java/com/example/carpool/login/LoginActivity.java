@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.loginRequestProgressBar);
         mPleaseWait = findViewById(R.id.loadingPleaseWait);
         mLoadingCardView = findViewById(R.id.card_view_loading);
-        mEmail = findViewById(R.id.emailEditText);
-        mPassword = findViewById(R.id.passwordEditText);
+        mEmail = findViewById(R.id.email);
+        mPassword = findViewById(R.id.password);
         mBtn_signup = findViewById(R.id.btn_signup);
         mForgotPassword = findViewById(R.id.forgot_password);
 

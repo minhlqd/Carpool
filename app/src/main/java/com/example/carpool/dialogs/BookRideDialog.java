@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -54,7 +55,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private final String extraTime;
     private final String rideID;
     private final String duration;
-    private final String userID;
+    private final String driverID;
     private final String profile_photo;
     private final String completedRides;
     private final String pickupLocation;
@@ -76,7 +77,9 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         mViewProfileBtn.setOnClickListener(this);
     }
 
-    public BookRideDialog(Context context, String rideID, String username, String licencePlate, String rides, String seats, String from, String to, String date, String dateOnly, String cost, Float rating, String pickupTime, String extraTime, String duration, String userID,
+    public BookRideDialog(Context context, String rideID, String username, String licencePlate,
+                          String rides, String seats, String from, String to, String date, String dateOnly,
+                          String cost, Float rating, String pickupTime, String extraTime, String duration, String driverID,
                           String profile_photo, String completedRides, String pickupLocation) {
         super(context);
         this.context = context;
@@ -93,7 +96,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         this.extraTime = extraTime;
         this.pickupTime = pickupTime;
         this.duration = duration;
-        this.userID = userID;
+        this.driverID = driverID;
         this.profile_photo = profile_photo;
         this.completedRides = completedRides;
         this.pickupLocation = pickupLocation;
@@ -105,7 +108,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_and_book:
-                showDialog();
+                sendDataToPayment();
                 break;
             case R.id.dialogCancel:
                 dismiss();
@@ -119,9 +122,10 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         dismiss();
     }
 
-    private void showDialog(){
+    private void sendDataToPayment(){
         Intent intent = new Intent(context, PaymentActivity.class);
-        intent.putExtra("userID", userID);
+        intent.putExtra("userID", driverID);
+        Log.d(TAG, "showDialog: " + driverID);
         intent.putExtra("currentLocation", from);
         intent.putExtra("destination", to);
         intent.putExtra("dateOfJourney", date);
@@ -138,7 +142,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private void showIntentProfile(){
         //Confirmation to delete the ride dialog
         Intent intent = new Intent(context, ProfileActivity.class);
-        intent.putExtra("userID", userID);
+        intent.putExtra("userID", driverID);
         context.startActivity(intent);
     }
 
@@ -146,21 +150,21 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     @SuppressLint("SetTextI18n")
     private void setupWidgets(){
         //Setup widgets
-        mUsername = (TextView) findViewById(R.id.usernameTxt);
-        mRidesCompleted = (TextView) findViewById(R.id.completedRidesTxt);
-        mCost = (TextView) findViewById(R.id.costTxt);
-        mDepartureTime = (TextView) findViewById(R.id.timeTxt);
-        mExtraTime = (TextView) findViewById(R.id.extraTimeTxt);
-        mFromStreet = (TextView) findViewById(R.id.streetNameTxt);
-        mToStreet = (TextView) findViewById(R.id.streetName2Txt);
-        mPickupLocation = (TextView) findViewById(R.id.pickupLocationConfirm);
+        mUsername = findViewById(R.id.usernameTxt);
+        mRidesCompleted = findViewById(R.id.completedRidesTxt);
+        mCost = findViewById(R.id.costTxt);
+        mDepartureTime = findViewById(R.id.timeTxt);
+        mExtraTime = findViewById(R.id.extraTimeTxt);
+        mFromStreet = findViewById(R.id.streetNameTxt);
+        mToStreet = findViewById(R.id.streetName2Txt);
+        mPickupLocation = findViewById(R.id.pickupLocationConfirm);
 
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
+        mRatingBar = findViewById(R.id.ratingBar);
 
-        mPayAndBook = (Button) findViewById(R.id.pay_and_book);
-        mCancelDialogBtn = (TextView) findViewById(R.id.dialogCancel);
-        mDurationTextview = (TextView) findViewById(R.id.durationConfirm);
-        mViewProfileBtn = (FloatingActionButton) findViewById(R.id.viewProfileBtn);
+        mPayAndBook = findViewById(R.id.pay_and_book);
+        mCancelDialogBtn = findViewById(R.id.dialogCancel);
+        mDurationTextview = findViewById(R.id.durationConfirm);
+        mViewProfileBtn = findViewById(R.id.viewProfileBtn);
 
         mCost.setText(cost);
         mUsername.setText(username);

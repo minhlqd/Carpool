@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "com.example.carpool"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 31
         multiDexEnabled true
         versionCode 1
@@ -76,7 +76,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation "com.google.android.gms:play-services-location:19.0.1"
     implementation "com.google.android.gms:play-services-places:17.0.0"
-    implementation "com.google.android.libraries.places:places:2.5.0"
 
     //GeoFire
     implementation 'com.firebase:geofire-android:2.3.1'
@@ -103,7 +102,7 @@ dependencies {
     //Brain-tree
     implementation 'com.braintreepayments.api:drop-in:3.7.0'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.9.0'
 
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13.2'
@@ -111,4 +110,5 @@ dependencies {
     testImplementation 'androidx.test:core:1.4.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:1.10.19'
+    implementation 'com.google.android.libraries.places:places-compat:2.6.0'
 }

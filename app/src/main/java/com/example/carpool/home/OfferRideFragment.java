@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +57,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private FirebaseUser currentUser;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseMethods mFirebaseMethods;
-    private String userID;
+    private String driverID;
 
     //Widgets
     private EditText mDateOfJourneyEditText;
@@ -121,24 +120,23 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         //Disables focused keyboard on view startup
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-
         getActivityData();
         setupFirebase();
         setupFirebaseAuth();
 
-        mUsername = (TextView) findViewById(R.id.usernameTxt);
-        mDestinationEditText = (TextView) findViewById(R.id.destinationEditText);
-        mFromEditText = (TextView) findViewById(R.id.fromEditText);
-        mCostEditText = (EditText) findViewById(R.id.costEditText);
-        mLicencePlateEditText = (TextView) findViewById(R.id.licencePlateEditText);
-        mExtraTimeEditText = (EditText) findViewById(R.id.extraTimeEditText);
-        mSeatsEditText = (TextView) findViewById(R.id.seatsEditText);
-        mCarEditText = (TextView) findViewById(R.id.carEditText);
-        mLuggageEditText = (EditText) findViewById(R.id.luggageEditText);
-        mDateOfJourneyEditText = (EditText) findViewById(R.id.DateOfJourneyEditText);
-        mPickupLocationEditText = (EditText) findViewById(R.id.pickupLocationEditText);
-        mCarPhoto = (CircleImageView) findViewById(R.id.car_image);
-        durationTxt = (TextView) findViewById(R.id.durationTxt);
+        mUsername = findViewById(R.id.usernameTxt);
+        mDestinationEditText = findViewById(R.id.destinationEditText);
+        mFromEditText = findViewById(R.id.fromEditText);
+        mCostEditText = findViewById(R.id.costEditText);
+        mLicencePlateEditText = findViewById(R.id.licencePlateEditText);
+        mExtraTimeEditText = findViewById(R.id.extraTimeEditText);
+        mSeatsEditText = findViewById(R.id.seatsEditText);
+        mCarEditText = findViewById(R.id.carEditText);
+        mLuggageEditText = findViewById(R.id.luggageEditText);
+        mDateOfJourneyEditText = findViewById(R.id.DateOfJourneyEditText);
+        mPickupLocationEditText = findViewById(R.id.pickupLocationEditText);
+        mCarPhoto = findViewById(R.id.car_image);
+        durationTxt = findViewById(R.id.durationTxt);
         mDateOfJourneyEditText.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, 0);
@@ -161,7 +159,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 //            }
 //        });
 
-       mPickupEditText = (EditText) findViewById(R.id.pickupEditText);
+       mPickupEditText = findViewById(R.id.pickupEditText);
        mPickupEditText.setOnClickListener(v -> {
            Calendar mCurrentTime = Calendar.getInstance();
            int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -178,13 +176,10 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
            mTimePicker.show();
        });
 
-        ImageView backArrow = (ImageView) findViewById(R.id.backArrow);
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: navigating back to HomeActivity");
-                finish();
-            }
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Log.d(TAG, "onClick: navigating back to HomeActivity");
+            finish();
         });
 
         mPickupLocationEditText.setOnClickListener(new View.OnClickListener() {
@@ -203,45 +198,38 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         });
 
 
-        mSnippetOfferRideButton = (Button) findViewById(R.id.snippetOfferRideButton);
-        mSnippetOfferRideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cost = Integer.parseInt(mCostEditText.getText().toString());
-                String dateOfJourney = mDateOfJourneyEditText.getText().toString();
-                int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
-                int seatsAvailable = seatsID;
-                int luggageAllowance = Integer.parseInt(mLuggageEditText.getText().toString());
+        mSnippetOfferRideButton = findViewById(R.id.snippetOfferRideButton);
+        mSnippetOfferRideButton.setOnClickListener(v -> {
+            int cost = Integer.parseInt(mCostEditText.getText().toString());
+            String dateOfJourney = mDateOfJourneyEditText.getText().toString();
+            int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
+            int seatsAvailable = seatsID;
+            int luggageAllowance = Integer.parseInt(mLuggageEditText.getText().toString());
 
-                String licencePlate = mLicencePlateEditText.getText().toString();
-                String pickupLocation = mPickupLocationEditText.getText().toString();
-                String pickupTime = mPickupEditText.getText().toString();
-                String car = mCarEditText.getText().toString();
-                String destination = mDestinationEditText.getText().toString();
-                String from = mFromEditText.getText().toString();
-                String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
+            String licencePlate = mLicencePlateEditText.getText().toString();
+            String pickupLocation = mPickupLocationEditText.getText().toString();
+            String pickupTime = mPickupEditText.getText().toString();
+            String car = mCarEditText.getText().toString();
+            String destination = mDestinationEditText.getText().toString();
+            String location = mFromEditText.getText().toString();
+            String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
-                if(!isStringNull(pickupTime) && !isIntNull(cost) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
+            if(!isStringNull(pickupTime) && !isIntNull(cost) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
+                mFirebaseMethods.offerRide(driverID, username, location.toLowerCase(), destination.toLowerCase(), dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
+                        sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
 
-                    //Creates the ride information and adds it to the database
-                    mFirebaseMethods.offerRide(userID , username, from, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
-                            sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
+                mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
 
-                    //Adds a notification to firebase
-                    mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
+                mFirebaseMethods.addPoints(driverID, 100);
 
-                    mFirebaseMethods.addPoints(userID, 100);
+                OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
-                    //Shows the ride has been created successfully
-                    OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
+                /*finish();*/
 
-                    finish();
-
-                } else {
-                    Toast.makeText(OfferRideFragment.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(OfferRideFragment.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -277,31 +265,14 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         if (extras != null) {
           //  if (extras.containsKey("DESTINATION")){
                 //from Home view passed to this class
-                locationId = getIntent().getStringExtra("DESTINATION");
-                destinationId = getIntent().getStringExtra("LOCATION");
+                locationId = getIntent().getStringExtra("LOCATION");
+                destinationId = getIntent().getStringExtra("DESTINATION");
                 Bundle b = getIntent().getExtras();
                 currentLocation = b.getParcelable("LatLng");
-                /*Log.i(TAG, "getActivityData: " + currentLocation.toString());*/
-//            } else {
-//
-//                //from ViewRideCreatedDialog passed to this class
-//                pickupTimeID = getIntent().getStringExtra("PICKUPTIME");
-//                costID = getIntent().getStringExtra("COST");
-//                dateOfJourneyID = getIntent().getStringExtra("DATE");
-//                lengthOfJourneyID = getIntent().getStringExtra("LENGTH");
-//                extraTimeID = getIntent().getStringExtra("EXTRATIME");
-//                seatsID = getIntent().getStringExtra("SEATS");
-//                licencePlateID = getIntent().getStringExtra("LICENCE");
-//                carID = getIntent().getStringExtra("CAR");
-//                luggageID = getIntent().getStringExtra("LUGGAGE");
-//                destinationId2 = getIntent().getStringExtra("DESTINATION2");
-//                locationId2 = getIntent().getStringExtra("FROM2");
-//            }
         }
-//            currentLatitude = Long.parseLong(getIntent().getStringExtra("currentLatitue"));
-//            currentLongtitude = Long.parseLong(getIntent().getStringExtra("currentLongtitude"));
     }
 
+    @SuppressLint("SetTextI18n")
     private void setProfileWidgets(User user, Info info){
 
         mUserSettings = user;
@@ -342,7 +313,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
     private void setupFirebaseAuth(){
 
-        userID = mAuth.getCurrentUser().getUid();
+        driverID = mAuth.getCurrentUser().getUid();
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override

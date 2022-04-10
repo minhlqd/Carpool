@@ -176,7 +176,7 @@
     <string name="welcome" translatable="false">Welcome</string>
     <string name="welcome_to_carpool_get_started_viewing_the_help_guide" translatable="false">Welcome to Carpool, get started viewing the help guide.</string>
     <string name="get_started" translatable="false">GET STARTED</string>
-    <string name="money" translatable="false">£</string>
+    <string name="money" translatable="false">VND</string>
     <string name="booking_pending" translatable="false">Booking pending!</string>
     <string name="_1" translatable="false">1</string>
     <string name="_0_points" translatable="false">0 points</string>
@@ -277,7 +277,7 @@
     <string name="intent_current_latitue" translatable="false">currentLatitue</string>
     <string name="intent_current_long_titude">currentLongtitude</string>
     <string name="latlng" translatable="false">LatLng</string>
-    <string name="google_map_api" translatable="false">AIzaSyALhuFi29R8SgFwDNkXtHc-oqe8BaoG94o</string>
+    <string name="google_map_api" translatable="false">AIzaSyAp6Jn3nO1E6W-4-cmp8Uwo5Bnt6JXety0</string>
     <string name="intent_gender">sameGender</string>
     <string name="intent_date">DATE</string>
     <string name="all_fields">All fields must be filled in</string>
@@ -286,4 +286,7 @@
     <string name="pay_and_book">Pay and book</string>
     <string name="pickup">Pickup:</string>
     <string name="update_car">Update Car</string>
+    <string name="radio_button_1" translatable="false">Participant</string>
+    <string name="radio_button_2" translatable="false">Passenger</string>
+    <string name="radio_button_3" translatable="false">Diver</string>
 </resources>

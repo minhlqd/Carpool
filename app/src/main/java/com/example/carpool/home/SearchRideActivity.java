@@ -1,5 +1,9 @@
 package com.example.carpool.home;
 
+import static com.example.carpool.utils.Utils.KEY_DESTINATION;
+import static com.example.carpool.utils.Utils.KEY_LOCATION;
+import static com.example.carpool.utils.Utils.KEY_SAME_GENDER;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +48,7 @@ public class SearchRideActivity extends AppCompatActivity {
     private View view;
 
     private EditText mDestinationEditText;
-    private EditText mFromEditText;
+    private EditText mLocationEditText;
     private EditText mDateOfJourneyEditText;
     private Button mSnippetSeachARideBtn;
     private Switch mSameGenderSearchSwitch;
@@ -90,11 +94,11 @@ public class SearchRideActivity extends AppCompatActivity {
 
 
         mSnippetSeachARideBtn.setOnClickListener(v -> {
-            if (mDateOfJourneyEditText.getText().length() > 0 &&  mFromEditText.getText().length() > 0 && mDestinationEditText.getText().length() > 0) {
+            if (mDateOfJourneyEditText.getText().length() > 0 &&  mLocationEditText.getText().length() > 0 && mDestinationEditText.getText().length() > 0) {
                 Intent intent = new Intent(mContext, SearchResultsActivity.class);
-                intent.putExtra(getString(R.string.intent_location), mDestinationEditText.getText().toString());
-                intent.putExtra(getString(R.string.intent_destination), mFromEditText.getText().toString());
-                intent.putExtra(getString(R.string.intent_gender), sameGender);
+                intent.putExtra(KEY_LOCATION, mLocationEditText.getText().toString());
+                intent.putExtra(KEY_DESTINATION, mDestinationEditText.getText().toString());
+                intent.putExtra(KEY_SAME_GENDER, sameGender);
                 intent.putExtra(getString(R.string.intent_date), mDateOfJourneyEditText.getText().toString());
                 startActivity(intent);
             } else {
@@ -106,7 +110,7 @@ public class SearchRideActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mFromEditText.setText(getIntent().getStringExtra(getString(R.string.intent_location)));
+            mLocationEditText.setText(getIntent().getStringExtra(getString(R.string.intent_location)));
             mDestinationEditText.setText(getIntent().getStringExtra(getString(R.string.intent_destination)));
         }
     }
@@ -118,7 +122,7 @@ public class SearchRideActivity extends AppCompatActivity {
         mFirebaseMethods = new FirebaseMethods(this);
 
         mDestinationEditText = (EditText) findViewById(R.id.destinationEditText);
-        mFromEditText = (EditText) findViewById(R.id.locationEditText);
+        mLocationEditText = (EditText) findViewById(R.id.locationEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.dateEditText);
         mSameGenderSearchSwitch = (Switch) findViewById(R.id.sameGenderSearchSwitch);
         mSnippetSeachARideBtn = (Button) findViewById(R.id.snippetSearchARideBtn);

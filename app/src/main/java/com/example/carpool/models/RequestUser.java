@@ -1,7 +1,8 @@
 package com.example.carpool.models;
 
 public class RequestUser {
-    private String user_id;
+    private String driverID;
+    private String passengerID;
     private String profile_photo;
     private String userProfilePhoto;
     private String username;
@@ -20,9 +21,10 @@ public class RequestUser {
     public RequestUser() {
     }
 
-    public RequestUser(String user_id, String profile_photo, String userProfilePhoto, String username, int seats, String destination, String location, int luggage, Boolean accepted, String ride_id, String dateOfJourney,
+    public RequestUser(String driverID, String passengerID, String profile_photo, String userProfilePhoto, String username, int seats, String destination, String location, int luggage, Boolean accepted, String ride_id, String dateOfJourney,
                        String pickupTime, Float cost, String pickupLocation, String licencePlate) {
-        this.user_id = user_id;
+        this.driverID = driverID;
+        this.passengerID = passengerID;
         this.profile_photo = profile_photo;
         this.userProfilePhoto = userProfilePhoto;
         this.username = username;
@@ -39,12 +41,20 @@ public class RequestUser {
         this.licencePlate = licencePlate;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getPassengerID() {
+        return passengerID;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setPassengerID(String passengerID) {
+        this.passengerID = passengerID;
+    }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
     }
 
     public String getProfile_photo() {
@@ -162,7 +172,8 @@ public class RequestUser {
     @Override
     public String toString() {
         return "Request{" +
-                "user_id='" + user_id + '\'' +
+                "driverID='" + driverID + '\'' +
+                "passengerID='" + passengerID + '\'' +
                 ", profile_photo='" + profile_photo + '\'' +
                 ", userProfilePhoto='" + userProfilePhoto + '\'' +
                 ", username='" + username + '\'' +

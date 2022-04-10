@@ -24,17 +24,17 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;
     private ArrayList<Ride> ride;
 
-    public MyAdapter(Context c, ArrayList<Ride> o){
+    public RidesAdapter(Context c, ArrayList<Ride> o){
         this.mContext = c;
         this.ride = o;
     }
 
-    public MyAdapter(String[] myDataset) {
+    public RidesAdapter(String[] myDataset) {
         mDataset = myDataset;
     }
 
@@ -47,15 +47,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final String userID = ride.get(position).getUser_id();
+        final String userID = ride.get(position).getUserId();
 
         final String username = ride.get(position).getUsername();
         final String rides = ride.get(position).getCompleteRides() + " Rides";
         final String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
-        String from = "From: " + ride.get(position).getCurrentLocation();
-        String to = "To: " + ride.get(position).getDestination();
+        String from = ride.get(position).getCurrentLocation();
+        String to = ride.get(position).getDestination();
         final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
-        final String cost = "£ " + ride.get(position).getCost() + ".00";
+        final String cost = ride.get(position).getCost() + "";
         final Float rating = (float) ride.get(position).getUserRating();
         final String dateOnly = ride.get(position).getPickupTime() + " PM";
         final String extraTime = ride.get(position).getExtraTime() + " mins";
@@ -70,33 +70,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.rides.setText(rides);
         holder.seats.setText(seats);
         if (to.length() > 20){
-            to = to.substring(0 , Math.min(to.length(), 19));
+            to = to.substring(0 , 19);
             to = to + "...";
-            holder.to.setText(to);
-        } else {
-            holder.to.setText(to);
         }
+        holder.to.setText(to);
 
         if (from.length() > 20){
-            from = from.substring(0 , Math.min(from.length(), 19));
+            from = from.substring(0 , 19);
             from = from + "...";
-            holder.from.setText(from);
-        } else {
-            holder.from.setText(from);
         }
+        holder.from.setText(from);
 
         holder.date.setText(date);
         holder.costs.setText(cost);
         holder.ratingBar.setRating(rating);
         Picasso.get().load(ride.get(position).getProfile_picture()).into(holder.profile_photo);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ViewRideCreatedDialog dialog = new ViewRideCreatedDialog(mContext, rideID ,username, rides, seats, fromOnly, toOnly, date, cost, rating, dateOnly, extraTime, duration, completeRides, pickupLocation ,userID);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
+        holder.view.setOnClickListener(view -> {
+            ViewRideCreatedDialog dialog = new ViewRideCreatedDialog(mContext, rideID ,username, rides, seats, fromOnly, toOnly, date, cost, rating, dateOnly, extraTime, duration, completeRides, pickupLocation ,userID);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
         });
     }
 

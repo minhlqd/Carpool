@@ -14,14 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.data.DataBufferUtils;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePrediction;
-import com.google.android.gms.location.places.AutocompletePredictionBufferResponse;
-import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.libraries.places.compat.AutocompleteFilter;
+import com.google.android.libraries.places.compat.AutocompletePrediction;
+import com.google.android.libraries.places.compat.AutocompletePredictionBufferResponse;
+import com.google.android.libraries.places.compat.GeoDataClient;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

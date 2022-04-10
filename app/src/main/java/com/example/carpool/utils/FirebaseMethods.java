@@ -67,17 +67,18 @@ public class FirebaseMethods {
                 });
     }
 
-    public void offerRide(String user_id, String username, String currentLocation, String destination, String dateOfJourney,
+    public void offerRide(String driverID, String username, String currentLocation, String destination, String dateOfJourney,
                           int seatsAvailable, String licencePlate, double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car,
                           String pickupTime, int extraTime, String profile_photo, int cost, int completeRides, int userRating, String duration, String pickupLocation){
 
         String rideKey = mFirebaseDatabase.getReference().push().getKey();
 
 
-        OfferRide offerRide = new OfferRide(rideKey, user_id, username,destination, currentLocation, dateOfJourney, seatsAvailable, licencePlate,
+        OfferRide offerRide = new OfferRide(rideKey, driverID, username,destination, currentLocation, dateOfJourney, seatsAvailable, licencePlate,
                                             currentlongitude, currentlatitude, sameGender, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost,
                                             completeRides, userRating, duration, pickupLocation);
 
+        Log.d(TAG, "offerRide: " + true);
         myRef.child(mContext.getString(R.string.dbName_availableRide))
                 .child(rideKey)
                 .setValue(offerRide);

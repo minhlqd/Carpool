@@ -63,15 +63,15 @@
                     android:layout_centerVertical="true"/>
 
                 <EditText
+                    android:id="@+id/destinationEditText"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/destinationEditText"
-                    android:hint="@string/destination"
                     android:layout_centerVertical="true"
-                    android:focusable="false"
                     android:layout_marginStart="40dp"
                     android:background="@null"
-                    android:inputType="textNoSuggestions"/>
+                    android:focusable="false"
+                    android:hint="@string/destination"
+                    android:inputType="textNoSuggestions" />
             </RelativeLayout>
 
             <RelativeLayout
