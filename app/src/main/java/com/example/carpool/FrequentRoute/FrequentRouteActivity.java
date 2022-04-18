@@ -1,5 +1,7 @@
 package com.example.carpool.FrequentRoute;
 
+import static com.example.carpool.utils.Utils.checkNotifications;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +26,11 @@ import com.example.carpool.utils.FirebaseMethods;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,29 +45,22 @@ public class FrequentRouteActivity extends AppCompatActivity {
     private static final String TAG = "FrequentRouteActivity";
     private static final int ACTIVITY_NUMBER = 1;
 
-    //View variables
     private RelativeLayout mNoResultsFoundLayout;
     private BottomNavigationView bottomNavigationView;
-    private Context mContext = FrequentRouteActivity.this;
+    private final Context mContext = FrequentRouteActivity.this;
 
-    //Recycle View variables
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
     private FrequentRouteAdapter mAdapter;
     private ArrayList<FrequentRouteResults> routes;
 
-
-    //Firebase variables
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
 
     private String user_id;
-
-    //Backend
     private FrequentRouteService mFrequentService;
 
     @Override
@@ -71,23 +70,22 @@ public class FrequentRouteActivity extends AppCompatActivity {
         setupBottomNavigationView();
 
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         if (mAuth.getCurrentUser() != null) {
             user_id = mAuth.getCurrentUser().getUid();
             Log.i(TAG, "onCreate: " + user_id);
         }
 
-        //setup recycle view
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
 
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
         mFrequentService = FrequentRouteClient.getFrequentRouteClient();
         routes = new ArrayList<>();
+        checkNotifications(mRef, user_id, mContext, bottomNavigationView);
     }
 
     private void setupBottomNavigationView() {
@@ -96,7 +94,6 @@ public class FrequentRouteActivity extends AppCompatActivity {
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
         //BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView);
 
-        //Change current highlighted icon
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUMBER);
         menuItem.setChecked(true);
@@ -120,7 +117,7 @@ public class FrequentRouteActivity extends AppCompatActivity {
         mFrequentService.getRouteByAccountId(user_id)
                 .enqueue(new Callback<List<FrequentRouteResults>>() {
                     @Override
-                    public void onResponse(Call<List<FrequentRouteResults>> call, Response<List<FrequentRouteResults>> response) {
+                    public void onResponse(@NonNull Call<List<FrequentRouteResults>> call, @NonNull Response<List<FrequentRouteResults>> response) {
                         if (response.isSuccessful()) {
                             List<FrequentRouteResults> routeList = response.body();
                             if (!routeList.isEmpty()) {
@@ -142,5 +139,4 @@ public class FrequentRouteActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

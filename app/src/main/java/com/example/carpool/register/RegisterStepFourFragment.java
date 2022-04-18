@@ -126,7 +126,7 @@ public class RegisterStepFourFragment extends Fragment {
 
         mCarPhoto.setOnClickListener(v -> chooseImage());
 
-        mCarToggle.check(mCarTogglePassenger.getId());
+        /*mCarToggle.check(mCarTogglePassenger.getId());*/
         mCarToggle.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId)
             {

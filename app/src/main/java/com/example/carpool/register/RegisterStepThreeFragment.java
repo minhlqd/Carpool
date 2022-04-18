@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -162,14 +163,29 @@ public class RegisterStepThreeFragment extends Fragment {
             datePickerDialog.show();
         });
 
+
+        mGenderGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId)
+            {
+                case R.id.femaleButton:
+                    maleRadioButton.setTextColor(Color.WHITE);
+                    femaleRadioButton.setTextColor(Color.BLACK);
+                    break;
+                case R.id.maleButton:
+                    femaleRadioButton.setTextColor(Color.WHITE);
+                    maleRadioButton.setTextColor(Color.BLACK);
+                    break;
+            }
+        });
+
         return mView;
     }
 
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        intent.setAction(Intent.ACTION_PICK);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -242,6 +258,10 @@ public class RegisterStepThreeFragment extends Fragment {
             return "Male";
         }
         return "Not specified";
+    }
+
+    public String getUserImgURL() {
+        return imgURL;
     }
 
     public String getRegistrationPicture() {

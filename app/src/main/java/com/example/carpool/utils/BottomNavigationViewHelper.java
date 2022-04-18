@@ -15,6 +15,7 @@ import com.example.carpool.account.AccountActivity;
 import com.example.carpool.booked.BookedActivity;
 import com.example.carpool.home.HomeActivity;
 import com.example.carpool.R;
+import com.example.carpool.reminder.ReminderActivity;
 import com.example.carpool.rides.RidesActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -35,34 +36,24 @@ public class BottomNavigationViewHelper {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.menu_location:
-                        if (view.getSelectedItemId() != R.id.menu_location) {
-                            Intent intentLocation = new Intent(context, HomeActivity.class);
-                            context.startActivity(intentLocation);
-                        }
+                        Intent intentLocation = new Intent(context, HomeActivity.class);
+                        context.startActivity(intentLocation);
                         break;
                     case R.id.menu_rides:
-                        if (view.getSelectedItemId() != R.id.menu_rides) {
-                            Intent intentRides = new Intent(context, RidesActivity.class);
-                            context.startActivity(intentRides);
-                        }
+                        Intent intentRides = new Intent(context, RidesActivity.class);
+                        context.startActivity(intentRides);
                         break;
                     case R.id.menu_frequent_route:
-                        if (view.getSelectedItemId() != R.id.menu_frequent_route) {
-                            Intent intentFrequentRoute = new Intent(context, FrequentRouteActivity.class);
-                            context.startActivity(intentFrequentRoute);
-                        }
+                        Intent intentFrequentRoute = new Intent(context, FrequentRouteActivity.class);
+                        context.startActivity(intentFrequentRoute);
                         break;
                     case R.id.menu_booked:
-                        if (view.getSelectedItemId() != R.id.menu_booked) {
-                            Intent intentBooked = new Intent(context, BookedActivity.class);
-                            context.startActivity(intentBooked);
-                        }
+                        Intent intentBooked = new Intent(context, BookedActivity.class);
+                        context.startActivity(intentBooked);
                         break;
                     case R.id.menu_account:
-                        if (view.getSelectedItemId() != R.id.menu_account) {
-                            Intent intentAccount = new Intent(context, AccountActivity.class);
-                            context.startActivity(intentAccount);
-                        }
+                        Intent intentAccount = new Intent(context, AccountActivity.class);
+                        context.startActivity(intentAccount);
                         break;
                 }
 
@@ -73,11 +64,20 @@ public class BottomNavigationViewHelper {
 
     public static void addBadge(final Context context, BottomNavigationView bottomNavigationView, int reminderLength){
         BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
-        View v = bottomNavigationMenuView.getChildAt(1);
+        View v = bottomNavigationMenuView.getChildAt(2);
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
         View badge = LayoutInflater.from(context).inflate(R.layout.util_navigation_notification, itemView, true);
         TextView textView = badge.findViewById(R.id.notificationsCount);
         textView.setText(String.valueOf(reminderLength));
+    }
+
+    public static void addBadgeRequest(final Context context, BottomNavigationView bottomNavigationView, int request){
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+        View v = bottomNavigationMenuView.getChildAt(3);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) v;
+        View badge = LayoutInflater.from(context).inflate(R.layout.util_navigation_notification, itemView, true);
+        TextView textView = badge.findViewById(R.id.notificationsCount);
+        textView.setText(String.valueOf(request));
     }
 
     public static void removeBadge(BottomNavigationView navigationView, int index) {

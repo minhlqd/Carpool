@@ -1,9 +1,15 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.checkNotifications;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,13 +42,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "AccountActivity";
-    private static final int ACTIVITY_NUMBER = 3;
+    private static final int ACTIVITY_NUMBER = 4;
 
     private final Context mContext = AccountActivity.this;
 
@@ -69,8 +80,14 @@ public class AccountActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
+
+    private Uri filePath;
+
+    private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,20 +99,22 @@ public class AccountActivity extends AppCompatActivity {
         mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(mContext);
 
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
         if (mAuth.getCurrentUser() != null){
-            //Gets userID of current user signed in
             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
-        checkNotifications();
         setupFirebaseAuth();
         setupFragments();
         setupBottomNavigationView();
         setupActivityWidgets();
 
-        // OnClick Listener to navigate to the fragments
+        checkNotifications(mRef, userID, mContext, bottomNavigationView);
+
         mEmailUpdate.setOnClickListener(v ->
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit()
+            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit()
         );
 
         mSettingsBtn.setOnClickListener(v -> {
@@ -116,7 +135,7 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         mPasswordUpdate.setOnClickListener(v ->
-                getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit()
+            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit()
         );
 
         mDetailsUpdate.setOnClickListener(v -> {
@@ -133,14 +152,56 @@ public class AccountActivity extends AppCompatActivity {
             bottomNavigationView.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
         });
+
+        profilePhoto.setOnClickListener(v -> {
+                chooseImage();
+        });
+    }
+
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                profilePhoto.setImageBitmap(bitmap);
+                uploadImage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage(){
+        if (filePath != null){
+            final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
+            ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
+                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        mRef.child("info").child(userID).child("profilePhoto").setValue(uri.toString());
+                        Log.d(TAG, "uploadImage: "  + uri);
+                    }))
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to upload", Toast.LENGTH_SHORT).show();
+                    });
+        }
     }
 
     private void setupFragments() {
         pageAdapter = new SectionsStatePageAdapter(getSupportFragmentManager());
-        pageAdapter.addFragment(new EmailUpdateFragment(), getString(R.string.edit_email)); //fragment 0
-        pageAdapter.addFragment(new PasswordUpdateFragment(), getString(R.string.edit_password));  //fragment 1
-        pageAdapter.addFragment(new DetailsUpdateFragment(),  getString(R.string.edit_details));  //fragment 2
-        pageAdapter.addFragment(new CarUpdateFragment(),  getString(R.string.car_information));  //fragment 3
+        pageAdapter.addFragment(new EmailUpdateFragment(), getString(R.string.edit_email));
+        pageAdapter.addFragment(new PasswordUpdateFragment(), getString(R.string.edit_password));
+        pageAdapter.addFragment(new DetailsUpdateFragment(),  getString(R.string.edit_details));
+        pageAdapter.addFragment(new CarUpdateFragment(),  getString(R.string.car_information));
     }
 
     private void setViewPager(int fragmentNumber) {
@@ -180,11 +241,6 @@ public class AccountActivity extends AppCompatActivity {
         mRatingBar.setRating(info.getUserRating());
     }
 
-    private void setupBadge(int reminderLength){
-        if (reminderLength > 0){
-            BottomNavigationViewHelper.addBadge(mContext, bottomNavigationView, reminderLength);
-        }
-    }
 
     private void setupBottomNavigationView(){
         bottomNavigationView = findViewById(R.id.bottomNavViewBar);
@@ -214,26 +270,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
-    
-    private void checkNotifications(){
-        mRef.child("reminder").child(userID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int reminderLength = 0;
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        reminderLength++;
-                    }
-                }
-                setupBadge(reminderLength);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     @Override
     public void onStart() {

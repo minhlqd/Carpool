@@ -17,17 +17,25 @@ public class Ride {
     private int seatsAvailable;
     private int extraTime;
     private int cost;
-    private int userRating;
+    private float userRating;
     private String duration;
-    private String user_id;
+    private String driverID;
+    private String passengerID;
     private String pickupLocation;
     private String licencePlate;
 
     public Ride() {
     }
 
-    public Ride(String rideID, String username, String profile_picture, String currentLocation, String licencePlate, String destination, String lengthOfJourney, String car, String dateOfJourney, String pickupTime, Boolean sameGender,
-                int completeRides, int extraTime, int seatsAvailable, int cost, int userRating, String duration, String user_id, String pickupLocation) {
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public String getPassengerID() {
+        return passengerID;
+    }
+
+    public Ride(String rideID, String username, String profile_picture, String currentLocation, String destination, String lengthOfJourney, String car, String dateOfJourney, String pickupTime, Boolean sameGender, int completeRides, int seatsAvailable, int extraTime, int cost, float userRating, String duration, String driverID, String passengerID, String pickupLocation, String licencePlate) {
         this.rideID = rideID;
         this.username = username;
         this.profile_picture = profile_picture;
@@ -36,17 +44,22 @@ public class Ride {
         this.lengthOfJourney = lengthOfJourney;
         this.car = car;
         this.dateOfJourney = dateOfJourney;
-        this.sameGender = sameGender;
         this.pickupTime = pickupTime;
+        this.sameGender = sameGender;
         this.completeRides = completeRides;
         this.seatsAvailable = seatsAvailable;
         this.extraTime = extraTime;
         this.cost = cost;
         this.userRating = userRating;
         this.duration = duration;
-        this.user_id = user_id;
+        this.driverID = driverID;
+        this.passengerID = passengerID;
         this.pickupLocation = pickupLocation;
         this.licencePlate = licencePlate;
+    }
+
+    public void setPassengerID(String passengerID) {
+        this.passengerID = passengerID;
     }
 
     public String getRideID() {
@@ -73,11 +86,11 @@ public class Ride {
         this.username = username;
     }
 
-    public int getUserRating() {
+    public float getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(int userRating) {
+    public void setUserRating(float userRating) {
         this.userRating = userRating;
     }
 
@@ -186,11 +199,11 @@ public class Ride {
     }
 
     public String getUserId() {
-        return user_id;
+        return driverID;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
     }
 
     public String getPickupLocation() {
@@ -220,7 +233,8 @@ public class Ride {
                 ", cost=" + cost +
                 ", userRating=" + userRating +
                 ", duration='" + duration + '\'' +
-                ", user_id='" + user_id + '\'' +
+                ", driverID='" + driverID + '\'' +
+                ", passengerID='" + passengerID + '\'' +
                 ", pickupLocation='" + pickupLocation + '\'' +
                 ", licencePlate='" + licencePlate + '\'' +
                 '}';

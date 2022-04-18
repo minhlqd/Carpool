@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class ProfileActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
     private FirebaseMethods mFirebaseMethods;
     private String userID;
@@ -58,20 +59,14 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(mContext);
 
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
 
-//        TextView textView1 =  new TextView(this);
-//        textViewHashMap.put(1, textView1);
-//        TextView textView2 =  new TextView(this);
-//        textViewHashMap.put(2, textView2);
-//        TextView textView3 =  new TextView(this);
-//        textViewHashMap.put(2, textView3);
 
         setupActivityWidgets();
 
@@ -83,19 +78,10 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        mReviewLayout.addView(textView1);
-//        mReviewLayout.addView(textView2);
-//        mReviewLayout.addView(textView3);
         getActivityData();
-        //fetchUserReviews();
         setupFirebaseAuth();
 
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mBackBtn.setOnClickListener(v -> finish());
 
     }
 
@@ -152,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 int textViewCount = 1;
 
-                                textViewHashMap.get(textViewCount).setText(userReview.getComment());
+                                Objects.requireNonNull(textViewHashMap.get(textViewCount)).setText(userReview.getComment());
                                 Log.i(TAG, "onDataChange: " + userReview);
 
                                 textViewCount++;
@@ -175,8 +161,6 @@ public class ProfileActivity extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getSpecificUser(dataSnapshot, userID),
                         mFirebaseMethods.getInfo(dataSnapshot));
 

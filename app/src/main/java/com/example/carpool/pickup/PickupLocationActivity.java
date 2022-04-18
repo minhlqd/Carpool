@@ -78,7 +78,7 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void setupWidgets() {
-        mConfirm = (Button) findViewById(R.id.confirmLocationBtn);
+        mConfirm = findViewById(R.id.confirmLocationBtn);
         helpDialog();
 
     }
@@ -157,7 +157,7 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
-    private void getAddress(LatLng latLng) throws IOException {
+    private void  getAddress(LatLng latLng) throws IOException {
         geocoder = new Geocoder(mContext, Locale.getDefault());
 
         addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);

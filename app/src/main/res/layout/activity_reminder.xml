@@ -25,8 +25,8 @@
             <include layout="@layout/layout_center_reminder"/>
 
         </RelativeLayout>
-
     </RelativeLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

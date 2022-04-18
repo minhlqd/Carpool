@@ -30,7 +30,7 @@
             android:background="@drawable/ic_arrow"
             android:backgroundTint="@color/white" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_photo"
             android:layout_width="100dp"
             android:layout_height="100dp"

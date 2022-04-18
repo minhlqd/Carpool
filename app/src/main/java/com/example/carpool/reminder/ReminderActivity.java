@@ -1,9 +1,13 @@
 package com.example.carpool.reminder;
 
+import static com.example.carpool.utils.Utils.checkNotifications;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ReminderAdapter;
 import com.example.carpool.R;
+import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.Reminder;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +44,8 @@ public class ReminderActivity extends AppCompatActivity {
     private RecyclerView.Adapter mRecycleAdapter;
     private ReminderAdapter mReminderAdapter;
     private ArrayList<Reminder> reminders;
+
+    private BottomNavigationView bottomNavigationView;
 
     //widgets
     private TextView mUsername;
@@ -85,6 +93,7 @@ public class ReminderActivity extends AppCompatActivity {
         });
 
         mBack.setOnClickListener(v -> finish());
+        checkNotifications(mRef, userID, mContext, bottomNavigationView);
     }
 
     private void setupWidgets(){
@@ -110,5 +119,6 @@ public class ReminderActivity extends AppCompatActivity {
             userID = mAuth.getCurrentUser().getUid();
         }
     }
+
 
 }

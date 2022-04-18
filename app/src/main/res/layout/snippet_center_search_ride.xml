@@ -14,9 +14,9 @@
             android:padding="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_change"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:id="@+id/profile_change"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/find_a_ride" />
 
@@ -29,11 +29,11 @@
                 android:background="@drawable/background_btn_register">
 
                 <ImageView
-                    android:layout_marginStart="5dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_location" />
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_gps" />
 
                 <EditText
                     android:id="@+id/locationEditText"
@@ -56,11 +56,11 @@
                 android:id="@+id/relLayout2">
 
                 <ImageView
-                    android:layout_marginStart="5dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_destination"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_location" />
 
                 <EditText
                     android:id="@+id/destinationEditText"
@@ -102,39 +102,32 @@
                     tools:ignore="TextFields" />
             </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/relLayout4"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_btn_register"
-            android:id="@+id/relLayout5">
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/linear"
+                android:layout_below="@+id/relLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:layout_gravity="center"
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_marginStart="5dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_gender"
-                android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/same_gender"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
-            <Switch
-                android:id="@+id/sameGenderSearchSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="40dp"
-                android:paddingTop="13dp"
-                android:paddingBottom="10dp"
-                android:text="@string/same_gender"
-                android:textColor="#A2A2A2"
-                android:textSize="17sp"
-                tools:ignore="RtlSymmetry,UseSwitchCompatOrMaterialXml" />
-        </RelativeLayout>
 
         <Button
             android:id="@+id/snippetSearchARideBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@id/relLayout5"
+            android:layout_below="@id/linear"
             android:text="@string/find_a_ride"
             android:textSize="20sp"
             android:textAllCaps="false"

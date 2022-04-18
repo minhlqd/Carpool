@@ -44,7 +44,7 @@ public class UniversalImageLoader {
     }
 
     public static void setImage(String imgURL, ImageView image, final ProgressBar mProgressBar, String append){
-        ImageLoader imageLoader = ImageLoader.getInstance();
+       /* ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -73,6 +73,6 @@ public class UniversalImageLoader {
                     mProgressBar.setVisibility(View.GONE);
                 }
             }
-        });
+        });*/
     }
 }

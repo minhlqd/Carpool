@@ -75,12 +75,13 @@
                             android:layout_marginStart="5dp"/>
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/viewProfileBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/viewProfileBtn"
                             android:layout_alignParentEnd="true"
                             android:elevation="16dp"
-                            android:src="@drawable/ic_profile"/>
+                            app:backgroundTint="@color/background_float_action_button"
+                            android:src="@drawable/ic_profile" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -101,14 +102,13 @@
                             android:text="@string/cost" />
 
                         <TextView
+                            android:id="@+id/costTxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:id="@+id/costTxt"
+                            android:layout_marginTop="20dp"
                             android:text="@string/_6_00"
                             android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp" />
+                            android:textSize="20sp" />
 
 
 
@@ -118,6 +118,7 @@
                             android:id="@+id/paticipantsRideBtn"
                             android:layout_alignParentEnd="true"
                             android:elevation="16dp"
+                            app:backgroundTint="@color/background_float_action_button"
                             android:src="@drawable/ic_people"/>
                     </RelativeLayout>
 
@@ -167,12 +168,13 @@
 
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/deleteRideBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/deleteRideBtn"
                             android:layout_alignParentRight="true"
                             android:elevation="16dp"
-                            android:src="@drawable/ic_delete"/>
+                            app:backgroundTint="@color/background_float_action_button"
+                            android:src="@drawable/ic_delete" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -186,9 +188,9 @@
                         android:layout_marginBottom="5dp">
 
                         <ImageView
+                            android:id="@+id/profile_logo"
                             android:layout_width="23dp"
                             android:layout_height="130dp"
-                            android:id="@+id/profile_logo"
                             android:background="@drawable/destination_line" />
 
                         <TextView
@@ -201,7 +203,7 @@
                             android:text="From:" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
                             android:layout_below="@id/locationTxt"
@@ -221,12 +223,13 @@
                             android:text="To:" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
                             android:layout_below="@id/locationTxt"
                             android:id="@+id/streetName2Txt"
                             android:layout_marginLeft="180dp"
+                            android:singleLine="true"
                             android:text="37 Belgrave Gate" />
 
 
@@ -238,7 +241,7 @@
                             android:id="@+id/durationNew"
                             android:layout_below="@id/streetName2Txt"
                             android:layout_marginTop="50dp"
-                            android:text="Duration: 1 hour 14 mins" />
+                            android:text="@string/duration_1_hour_14_mins" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -248,7 +251,7 @@
                             android:id="@+id/pickupLocationNew"
                             android:layout_below="@id/durationNew"
                             android:layout_marginTop="10dp"
-                            android:text="Pickup: 1 hour 14 mins" />
+                            android:text="@string/pickup_1_hour_14_mins" />
 
                     </RelativeLayout>
 
@@ -257,7 +260,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Edit ride"
+                        android:text="@string/edit_ride"
                         android:id="@+id/pay_and_book"
                         android:layout_marginRight="16dp"
                         android:layout_marginLeft="16dp"
@@ -272,7 +275,7 @@
                         android:textColor="@color/dark_grey"
                         android:layout_marginBottom="10dp"
                         android:layout_gravity="center"
-                        android:text="Dismiss"
+                        android:text="@string/dismiss"
                         android:id="@+id/dialogCancel"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

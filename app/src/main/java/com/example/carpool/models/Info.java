@@ -16,7 +16,7 @@ public class Info {
     private Long mobileNumber;
     private int completedRides;
     private int seats;
-    private int userRating;
+    private float userRating;
     private int points;
     private Boolean isCarOwner;
     private String startPoint;
@@ -164,11 +164,11 @@ public class Info {
         this.seats = seats;
     }
 
-    public int getUserRating() {
+    public float getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(int userRating) {
+    public void setUserRating(float userRating) {
         this.userRating = userRating;
     }
 

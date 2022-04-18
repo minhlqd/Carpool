@@ -19,7 +19,7 @@ public class DeleteConfirmationDialog extends Dialog implements
         View.OnClickListener  {
 
     private static final String TAG = "ViewRideCreatedDialog";
-    public Context c;
+    public Context context;
     public Dialog d;
 
     //Firebase
@@ -53,7 +53,7 @@ public class DeleteConfirmationDialog extends Dialog implements
 
     public DeleteConfirmationDialog(Context a, String rideID) {
         super(a);
-        this.c = a;
+        this.context = a;
         this.rideID = rideID;
     }
 
@@ -63,8 +63,8 @@ public class DeleteConfirmationDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.pay_and_book:
                 mFirebaseMethods.deleteRide(rideID);
-                Intent intent1 = new Intent(c, RidesActivity.class);
-                c.startActivity(intent1);
+                Intent intent1 = new Intent(context, RidesActivity.class);
+                context.startActivity(intent1);
                 dismiss();
                 break;
             case R.id.dialogCancel:
@@ -84,7 +84,7 @@ public class DeleteConfirmationDialog extends Dialog implements
 
     private void setupFirebase() {
 
-        mFirebaseMethods = new FirebaseMethods(c);
+        mFirebaseMethods = new FirebaseMethods(context);
     }
 
 }

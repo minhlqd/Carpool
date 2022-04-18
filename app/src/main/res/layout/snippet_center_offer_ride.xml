@@ -56,25 +56,25 @@
                         android:layout_marginTop="3dp" />
 
                     <TextView
+                        android:id="@+id/licencePlateEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/dark_grey"
-                        android:id="@+id/licencePlateEditText"
-                        android:text="@string/registration"
                         android:layout_below="@id/carEditText"
                         android:layout_marginStart="80dp"
-                        android:layout_marginTop="3dp"/>
+                        android:layout_marginTop="3dp"
+                        android:text="@string/registration"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/seatsEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
                         android:layout_alignParentEnd="true"
-                        android:textSize="13sp"
+                        android:layout_marginTop="26dp"
+                        android:text="@string/_3_seats_left"
                         android:textColor="@color/dark_grey"
-                        android:id="@+id/seatsEditText"
-                        android:text="@string/_3_seats_left" />
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -107,12 +107,12 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/ridersHeadingTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:id="@+id/ridersHeadingTxt"
+                        android:layout_marginStart="150dp"
                         android:text="@string/date_of_journey"
-                        android:layout_marginStart="150dp"/>
+                        android:textSize="14sp" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -237,13 +237,14 @@
                         android:text="@string/from" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_below="@id/locationTxt"
                         android:id="@+id/destinationEditText"
+                        android:layout_width="100dp"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locationTxt"
                         android:layout_marginStart="30dp"
-                        android:text="@string/location" />
+                        android:text="@string/location"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,13 +256,14 @@
                         android:text="@string/to" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_below="@id/locationTxt"
                         android:id="@+id/fromEditText"
+                        android:layout_width="100dp"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locationTxt"
                         android:layout_marginStart="180dp"
-                        android:text="@string/location" />
+                        android:text="@string/location"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -10,10 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,8 +52,9 @@ public class SearchRideActivity extends AppCompatActivity {
     private EditText mLocationEditText;
     private EditText mDateOfJourneyEditText;
     private Button mSnippetSeachARideBtn;
-    private Switch mSameGenderSearchSwitch;
+    private LinearLayout mSameGenderSearchLinearLayout;
     private Boolean sameGender;
+    private CheckBox checkBox;
 
     //vars
     private User mUserSettings;
@@ -73,13 +75,13 @@ public class SearchRideActivity extends AppCompatActivity {
         ImageView backArrow = (ImageView) findViewById(R.id.backArrowFindRide);
         backArrow.setOnClickListener(v -> finish());
 
-        mSameGenderSearchSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        /*mSameGenderSearchLinearLayout.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 sameGender = true;
             } else {
                 sameGender = false;
             }
-        });
+        });*/
 
         mDateOfJourneyEditText.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -98,7 +100,7 @@ public class SearchRideActivity extends AppCompatActivity {
                 Intent intent = new Intent(mContext, SearchResultsActivity.class);
                 intent.putExtra(KEY_LOCATION, mLocationEditText.getText().toString());
                 intent.putExtra(KEY_DESTINATION, mDestinationEditText.getText().toString());
-                intent.putExtra(KEY_SAME_GENDER, sameGender);
+                intent.putExtra(KEY_SAME_GENDER, checkBox.isChecked());
                 intent.putExtra(getString(R.string.intent_date), mDateOfJourneyEditText.getText().toString());
                 startActivity(intent);
             } else {
@@ -124,8 +126,9 @@ public class SearchRideActivity extends AppCompatActivity {
         mDestinationEditText = (EditText) findViewById(R.id.destinationEditText);
         mLocationEditText = (EditText) findViewById(R.id.locationEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.dateEditText);
-        mSameGenderSearchSwitch = (Switch) findViewById(R.id.sameGenderSearchSwitch);
+        mSameGenderSearchLinearLayout = (LinearLayout) findViewById(R.id.linear);
         mSnippetSeachARideBtn = (Button) findViewById(R.id.snippetSearchARideBtn);
+        checkBox = findViewById(R.id.checkbox);
 
         mCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
@@ -137,6 +140,10 @@ public class SearchRideActivity extends AppCompatActivity {
                 updateLabel();
             }
         };
+
+        mSameGenderSearchLinearLayout.setOnClickListener(v -> {
+            checkBox.setChecked(!checkBox.isChecked());
+        });
     }
 
     private void updateLabel() {

@@ -14,6 +14,11 @@ public class Participants {
         this.accepted = accepted;
     }
 
+    public Participants(String username, Boolean accepted) {
+        this.username = username;
+        this.accepted = accepted;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -42,7 +47,6 @@ public class Participants {
     public String toString() {
         return "Participants{" +
                 "username='" + username + '\'' +
-                ", userProfilePhoto='" + userProfilePhoto + '\'' +
                 ", accepted=" + accepted +
                 '}';
     }

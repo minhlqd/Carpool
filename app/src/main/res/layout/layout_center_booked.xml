@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,23 +11,24 @@
         android:layout_gravity="center">
 
         <include layout="@layout/layout_center_viewpager"/>
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
-            android:id="@+id/recycler_view"
-            android:scrollbars="vertical">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:scrollbars="vertical"
+            tools:listitem="@layout/individual_booking_information" />
 
         <ImageView
+            android:id="@+id/notFoundIcon"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:id="@+id/notFoundIcon"
-            android:src="@drawable/ic_no_booked"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_no_booked" />
 
         <TextView
+            android:id="@+id/notFoundBooked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/notFoundIcon"

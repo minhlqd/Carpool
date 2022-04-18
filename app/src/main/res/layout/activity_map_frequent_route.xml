@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -30,7 +28,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="You would to be:"
+                android:text="@string/you_would_to_be"
                 android:fontFamily="@font/madeleina"
                 android:textColor="@color/grey"
                 android:textSize="22sp"
@@ -42,8 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_above="@+id/view_below"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 >
@@ -77,12 +74,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            android:text="share"
+            android:text="@string/share"
+            android:textAllCaps="false"
             android:clickable="false"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="13dp"
-            android:layout_alignParentBottom="true"
             android:textColor="@android:color/white"
             android:background="@drawable/background_btn_login" />
 
@@ -94,8 +91,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/background_btn_register"
-            android:text="cancel sharing"
-            android:textColor="@android:color/white"
+            android:text="@string/cancel_sharing"
+            android:textAllCaps="false"
+            android:textColor="@color/background_float_action_button"
             android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

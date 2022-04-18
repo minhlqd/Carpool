@@ -1,5 +1,7 @@
 package com.example.carpool.common;
 
+import android.util.Log;
+
 import com.example.carpool.remote.FCMClient;
 import com.example.carpool.remote.IFCMService;
 
@@ -12,6 +14,7 @@ public class Common {
     public static String statusTrip = null;
 
     public static IFCMService getFCMService(){
+        Log.d("FirebaseFCM", "getFCMService: " + fcmURL);
         return FCMClient.getClient(fcmURL).create(IFCMService.class);
     }
 

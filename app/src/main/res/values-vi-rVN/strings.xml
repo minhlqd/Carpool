@@ -3,7 +3,7 @@
     <string name="app_name">Carpool</string>
     <string name="payment_information">Thông tin thanh toán</string>
     <string name="car_information">Thông tin xe</string>
-    <string name="offer_ride">Đặt xe</string>
+    <string name="offer_ride">Tạo chuyến đi</string>
     <string name="find_ride">Tìm xe</string>
     <string name="dbName_user">Người dùng</string>
     <string name="title_activity_settings">Cài đặt</string>
@@ -15,11 +15,11 @@
     <string name="password">Mật khẩu</string>
     <string name="log_in">Đăng nhập</string>
     <string name="or_sign_up_with_other">Đăng ký</string>
-    <string name="find_a_ride">Tìm xem</string>
+    <string name="find_a_ride">Tìm chuyến đi</string>
     <string name="location">Vị trí</string>
     <string name="destination">Nơi đến</string>
     <string name="get_directions">Chỉ dẫn</string>
-    <string name="booking_request">Yêu cầu</string>
+    <string name="booking_request">Yêu cầu đặt xe</string>
     <string name="seats_required_1">Chỗ ngồi cần có: 1</string>
     <string name="confirm">Xác nhận</string>
     <string name="forgot_password">Quên mật khẩu</string>
@@ -73,14 +73,47 @@
     <string name="passenger">Người tham gia</string>
     <string name="driver">Tài xế</string>
     <string name="update">Cập nhật</string>
-    <string name="cost" translatable="false">Giá</string>
-    <string name="change_password" translatable="false">Thay đổi mật khẩu</string>
-    <string name="cancel" translatable="false">Hủy</string>
-    <string name="update_email_address" translatable="false">Cập nhật email</string>
+    <string name="cost" >Giá</string>
+    <string name="change_password" >Thay đổi mật khẩu</string>
+    <string name="cancel" >Hủy</string>
+    <string name="update_email_address" >Cập nhật email</string>
     <string name="view_profile">Hồ sơ</string>
-    <string name="update_my_details" translatable="false">Cập nhật thông tin</string>
-    <string name="pay_and_book">Pay and book</string>
+    <string name="update_my_details" >Cập nhật thông tin</string>
+    <string name="pay_and_book">Thanh toán và đặt chỗ</string>
     <string name="dismiss">Dismiss</string>
-    <string name="pickup">Pickup:</string>
-    <string name="update_car">Update Car</string>
+    <string name="pickup">Đón:</string>
+    <string name="update_car">Cập nhật thông tin xe</string>
+    <string name="accept">Đồng ý</string>
+    <string name="inject">Từ chối</string>
+    <string name="start_share">Bắt đầu chia sẻ</string>
+    <string name="end_share">Kết thúc chia sẻ</string>
+    <string name="radio_button_1">Người tham gia</string>
+    <string name="radio_button_2">Người đi chung</string>
+    <string name="radio_button_3">Tài xế</string>
+    <string name="your_rides" >Chuyến xe của bạn</string>
+    <string name="search_results">Kết quả tìm kiếm</string>
+    <string name="change_photo" >Thay dổi ảnh đại diện</string>
+    <string name="edit_ride">Chỉnh xử chuyến xe</string>
+    <string name="enter_luggage">Nhập hành lý</string>
+    <string name="maxiumum_luggage_kg" >Hành lý tối đa (kg)</string>
+    <string name="duration_1_hour_14_mins" >Trong</string>
+    <string name="pick_up_time">Thời gian đón</string>
+    <string name="enter_extra_time">Thời gian</string>
+    <string name="pick_up_location" >Đón tại vị trí</string>
+    <string name="tap_for_location">Nhấn để chọn vị trí</string>
+    <string name="tap_for_date">Nhấn để chọn ngày</string>
+    <string name="change_email">Thay đổi email</string>
+    <string name="share_route">Chia sẻ</string>
+    <string name="share">Chia sẻ</string>
+    <string name="cancel_sharing">Kết thúc chia sẻ </string>
+    <string name="you_would_to_be">Bạn sẽ là:</string>
+    <string name="pickup_1_hour_14_mins">Pickup: 1 hour 14 mins</string>
+    <string name="date_of_journey">Ngày</string>
+    <string name="same_gender">Cùng giới tính</string>
+    <string name="extra_time_added">Thêm</string>
+    <string name="seats_left">ghế trống</string>
+    <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey">Xin chào, Tôi là {Username} và muốn yêu cầu một chỗ ngồi trên chuyến xe của bạn!</string>
+    <string name="from_hanoi_vn">From: HaNoi, VN</string>
+    <string name="to_nam_dinh_vn">To: NamDinh, VN</string>
+
 </resources>

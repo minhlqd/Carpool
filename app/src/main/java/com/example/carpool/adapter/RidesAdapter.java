@@ -3,6 +3,7 @@ package com.example.carpool.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carpool.R;
 import com.example.carpool.dialogs.ViewRideCreatedDialog;
 import com.example.carpool.models.Ride;
+import com.example.carpool.utils.UniversalImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -47,16 +49,17 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        Log.d("MinhMX", "onBindViewHolder: " + ride.get(position));
         final String userID = ride.get(position).getUserId();
 
         final String username = ride.get(position).getUsername();
         final String rides = ride.get(position).getCompleteRides() + " Rides";
         final String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
-        String from = ride.get(position).getCurrentLocation();
-        String to = ride.get(position).getDestination();
+        String from = "From: " + ride.get(position).getCurrentLocation();
+        String to = "To: " + ride.get(position).getDestination();
         final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
         final String cost = ride.get(position).getCost() + "";
-        final Float rating = (float) ride.get(position).getUserRating();
+        final float rating = (float) ride.get(position).getUserRating();
         final String dateOnly = ride.get(position).getPickupTime() + " PM";
         final String extraTime = ride.get(position).getExtraTime() + " mins";
         final String fromOnly = parseLocation(ride.get(position).getCurrentLocation());
@@ -84,16 +87,22 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         holder.date.setText(date);
         holder.costs.setText(cost);
         holder.ratingBar.setRating(rating);
-        Picasso.get().load(ride.get(position).getProfile_picture()).into(holder.profile_photo);
+        /*if (ride.get(position).getProfile_picture() != null) {
+            Picasso.get().load(ride.get(position).getProfile_picture()).into(holder.profile_photo);
+        } else {
+            holder.profile_photo.setImageResource(R.drawable.ic_profile);
+        }*/
+
+        UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");
 
         holder.view.setOnClickListener(view -> {
+            Log.d("MinhMX", "onBindViewHolder: "+ userID);
             ViewRideCreatedDialog dialog = new ViewRideCreatedDialog(mContext, rideID ,username, rides, seats, fromOnly, toOnly, date, cost, rating, dateOnly, extraTime, duration, completeRides, pickupLocation ,userID);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         });
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return ride.size();
@@ -109,17 +118,17 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            view = (LinearLayout) itemView.findViewById(R.id.view);
-            rides = (TextView) itemView.findViewById(R.id.indivcompletedRidesTxt);
-            from = (TextView) itemView.findViewById(R.id.fromTxt);
-            to = (TextView) itemView.findViewById(R.id.toTxt);
-            date = (TextView) itemView.findViewById(R.id.individualTimeTxt);
-            seats = (TextView) itemView.findViewById(R.id.seatsTxt);
-            costs = (TextView) itemView.findViewById(R.id.priceTxt);
+            view = itemView.findViewById(R.id.view);
+            rides = itemView.findViewById(R.id.indivcompletedRidesTxt);
+            from = itemView.findViewById(R.id.fromTxt);
+            to = itemView.findViewById(R.id.toTxt);
+            date = itemView.findViewById(R.id.individualTimeTxt);
+            seats = itemView.findViewById(R.id.seatsTxt);
+            costs = itemView.findViewById(R.id.priceTxt);
 
-            ratingBar = (RatingBar) itemView.findViewById(R.id.individualRatingBar);
+            ratingBar = itemView.findViewById(R.id.individualRatingBar);
 
-            profile_photo = (CircleImageView) itemView.findViewById(R.id.indiviual_profile_picture);
+            profile_photo = itemView.findViewById(R.id.indiviual_profile_picture);
 
         }
     }

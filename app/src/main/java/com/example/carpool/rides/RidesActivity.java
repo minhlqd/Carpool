@@ -40,14 +40,12 @@ import java.util.ArrayList;
 public class RidesActivity extends AppCompatActivity {
 
     private static final String TAG = "RidesActivity";
-    private static final int ACTIVITY_NUMBER = 1;
+    private static final int ACTIVITY_NUMBER = 2;
 
-    //View variables
     private BottomNavigationView bottomNavigationView;
     private RelativeLayout mNoResultsFoundLayout;
     private ImageView mNotificationBtn;
 
-    //Recycle View variables
     private final Context mContext = RidesActivity.this;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -55,7 +53,6 @@ public class RidesActivity extends AppCompatActivity {
     private RidesAdapter ridesAdapter;
     private ArrayList<Ride> rides;
 
-    //Firebase variables
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
@@ -106,8 +103,8 @@ public class RidesActivity extends AppCompatActivity {
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                     String rideID = dataSnapshot1.getKey();
-                                    Log.i(TAG, "rideID: "+ rideID);
                                     Ride ride = dataSnapshot1.getValue(Ride.class);
+                                Log.i(TAG, "rideID: "+ ride);
                                     rides.add(ride);
 
                                     mNoResultsFoundLayout.setVisibility(View.INVISIBLE);
@@ -173,10 +170,6 @@ public class RidesActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void checkRequest(){
-        /*mRef.child("request_ride")*/
     }
 
     @Override

@@ -23,13 +23,13 @@
             android:textSize="15sp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="9dp"
-            android:textStyle="italic"
             android:id="@+id/tv_id"
-            android:text="ID:" />
+            android:text="Id:" />
 
         <LinearLayout
+            android:paddingTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -38,21 +38,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/profileLayout"
-                android:padding="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp">
 
                 <TextView
+                    android:id="@+id/fromTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="9dp"
-                    android:textStyle="bold"
-                    android:id="@+id/fromTxt"
-                    android:text="From:" />
+                    android:text="@string/from"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -79,17 +78,17 @@
                     android:textStyle="bold"
                     android:id="@+id/individualDateTxt"
                     android:text="Time: " />
+
                 <TextView
+                    android:id="@+id/tv_type_share"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/individualDateTxt"
-                    android:textSize="16sp"
-                    android:textColor="@color/bt_blue_pressed"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/tv_type_share"
-                    android:text="You are: " />
-
+                    android:text="You are: "
+                    android:textColor="@color/bt_blue_pressed"
+                    android:textSize="16sp" />
 
 
                 <TextView
@@ -102,8 +101,7 @@
                     android:gravity="end"
                     android:text="km"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
-                    android:textStyle="italic" />
+                    android:textSize="22sp"/>
 
 
 

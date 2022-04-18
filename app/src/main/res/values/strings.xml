@@ -8,7 +8,7 @@
     <string name="edit_details" translatable="false">Edit details</string>
     <string name="payment_information">Payment Information</string>
     <string name="car_information">Car Information</string>
-    <string name="offer_ride">Offer ride</string>
+    <string name="offer_ride">Create ride</string>
     <string name="find_ride">Find ride</string>
 
     <!-- Firebase database fields -->
@@ -138,10 +138,10 @@
     <string name="location">Location</string>
     <string name="destination">Destination</string>
     <string name="get_directions">Get directions</string>
-    <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey" translatable="false">Hi, i\'m {Username} and would like to request a seat on your journey!</string>
+    <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey">Hi, i\'m {Username} and would like to request a seat on your journey!</string>
     <string name="booking_request">Booking request</string>
-    <string name="from_hanoi_vn" translatable="false">From: HaNoi, VN</string>
-    <string name="to_nam_dinh_vn" translatable="false">To: NamDinh, VN</string>
+    <string name="from_hanoi_vn">From: HaNoi, VN</string>
+    <string name="to_nam_dinh_vn">To: NamDinh, VN</string>
     <string name="seats_required_1">Seats required: 1</string>
     <string name="todo" translatable="false">TODO</string>
     <string name="confirmation" translatable="false">Confirmation</string>
@@ -151,7 +151,7 @@
     <string name="delete_ride" translatable="false">Delete ride</string>
     <string name="are_you_sure_you_want_to_delete_this_ride_this_cannot_be_undone" translatable="false">Are you sure you want to delete this ride? This cannot be undone</string>
     <string name="delete" translatable="false">Delete</string>
-    <string name="dismiss" translatable="false">Dismiss</string>
+    <string name="dismiss">Dismiss</string>
     <string name="comment" translatable="false">Comment</string>
     <string name="leave_feedback" translatable="false">Leave feedback</string>
     <string name="leave_ride" translatable="false">Leave ride</string>
@@ -167,7 +167,7 @@
     <string name="_6_00" translatable="false">£6.00</string>
     <string name="departure_time" translatable="false">Departure time</string>
     <string name="_5_00_5_30_pm" translatable="false">5:00 – 5:30 PM</string>
-    <string name="extra_time_added" translatable="false">Extra time added</string>
+    <string name="extra_time_added">Extra time added</string>
     <string name="_5_min" translatable="false">5 min</string>
     <string name="from" translatable="false">From:</string>
     <string name="_18_bishop_street" translatable="false">18 Bishop Street</string>
@@ -214,29 +214,28 @@
     <string name="licence_number">Licence number</string>
     <string name="car">Car</string>
     <string name="seats">Seats</string>
-    <string name="change_email" translatable="false">Change email</string>
+    <string name="change_email">Change email</string>
     <string name="username" translatable="false">Username</string>
     <string name="car_name" translatable="false">Car name</string>
     <string name="registration" translatable="false">Registration</string>
-    <string name="date_of_journey" translatable="false">Date of journey</string>
-    <string name="tap_for_date" translatable="false">Tap for date</string>
-    <string name="pick_up_location" translatable="false">Pick up location</string>
-    <string name="tap_for_location" translatable="false">Tap for location</string>
-    <string name="pick_up_time" translatable="false">Pick up time</string>
+    <string name="date_of_journey">Date of journey</string>
+    <string name="tap_for_date">Tap for date</string>
+    <string name="pick_up_location">Pick up location</string>
+    <string name="tap_for_location">Tap for location</string>
+    <string name="pick_up_time">Pick up time</string>
     <string name="tap_for_time" translatable="false">Tap for time</string>
-    <string name="enter_extra_time" translatable="false">Enter extra time</string>
-    <string name="duration_1_hour_14_mins" translatable="false">Duration: 1 hour 14 mins</string>
-    <string name="same_gender" translatable="false">Same gender</string>
-    <string name="maxiumum_luggage_kg" translatable="false">Maxiumum luggage (kg)</string>
-    <string name="enter_luggage" translatable="false">Enter luggage</string>
-    <string name="edit_ride" translatable="false">Edit ride</string>
-    <string name="change_photo" translatable="false">Change Photo</string>
+    <string name="enter_extra_time">Enter extra time</string>
+    <string name="same_gender">Same gender</string>
+    <string name="maxiumum_luggage_kg">Maxiumum luggage (kg)</string>
+    <string name="enter_luggage">Enter luggage</string>
+    <string name="edit_ride">Edit ride</string>
+    <string name="change_photo">Change Photo</string>
     <string name="fullname">FullName</string>
     <string name="mobile_number">Mobile number</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="update_details">Update details</string>
-    <string name="search_results" translatable="false">Search results</string>
-    <string name="your_rides" translatable="false">Your rides</string>
+    <string name="search_results">Search results</string>
+    <string name="your_rides">Your rides</string>
     <string name="notifications">Notifications</string>
     <string name="create_account">Create account</string>
     <string name="update_profile">Update profile</string>
@@ -286,7 +285,18 @@
     <string name="pay_and_book">Pay and book</string>
     <string name="pickup">Pickup:</string>
     <string name="update_car">Update Car</string>
-    <string name="radio_button_1" translatable="false">Participant</string>
-    <string name="radio_button_2" translatable="false">Passenger</string>
-    <string name="radio_button_3" translatable="false">Diver</string>
+    <string name="radio_button_1">Participant</string>
+    <string name="radio_button_2">Passenger</string>
+    <string name="radio_button_3">Diver</string>
+    <string name="accept">Accept</string>
+    <string name="inject">Inject</string>
+    <string name="start_share">Start share</string>
+    <string name="end_share">End share</string>
+    <string name="share_route">Share route</string>
+    <string name="share">Share</string>
+    <string name="cancel_sharing">cancel sharing</string>
+    <string name="you_would_to_be">You would to be:</string>
+    <string name="pickup_1_hour_14_mins">Pickup: 1 hour 14 mins</string>
+    <string name="duration_1_hour_14_mins">Duration: 1 hour 14 mins</string>
+    <string name="seats_left">\" Seats left!\"</string>
 </resources>

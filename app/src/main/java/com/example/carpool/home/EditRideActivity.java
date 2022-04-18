@@ -70,7 +70,8 @@ public class EditRideActivity extends AppCompatActivity {
     private User mUserSettings;
     private String destinationId, locationId, profile_photo, username, pickupTimeID, costID, dateOfJourneyID, lengthOfJourneyID,
             extraTimeID, licencePlateID, carID, luggageID, destinationId2, locationId2, duration, pickupLocation;
-    private int userRating, seatsID;
+    private float userRating;
+    private int seatsID;
     private int completeRides;
     private double currentLatitude, currentLongtitude;
     private LatLng currentLocation;
@@ -88,7 +89,6 @@ public class EditRideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_ride);
 
-        //Disables focused keyboard on view startup
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
@@ -157,45 +157,42 @@ public class EditRideActivity extends AppCompatActivity {
         });
 
         mSnippetOfferRideButton = (Button) findViewById(R.id.snippetOfferRideButton);
-        mSnippetOfferRideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cost = Integer.parseInt(mCostEditText.getText().toString());
-                String dateOfJourney = mDateOfJourneyEditText.getText().toString();
-                int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
-                int seatsAvailable = seatsID;
-                int luggageAllowance = Integer.parseInt(mLuggageEditText.getText().toString());
+        mSnippetOfferRideButton.setOnClickListener(v -> {
+            int cost = Integer.parseInt(mCostEditText.getText().toString());
+            String dateOfJourney = mDateOfJourneyEditText.getText().toString();
+            int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
+            int seatsAvailable = seatsID;
+            int luggageAllowance = Integer.parseInt(mLuggageEditText.getText().toString());
 
-                String licencePlate = mLicencePlateEditText.getText().toString();
-                String pickupLocation = mPickupLocationEditText.getText().toString();
-                String pickupTime = mPickupEditText.getText().toString();
-                String car = mCarEditText.getText().toString();
-                String destination = mDestinationEditText.getText().toString();
-                String from = mFromEditText.getText().toString();
-                String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
+            String licencePlate = mLicencePlateEditText.getText().toString();
+            String pickupLocation = mPickupLocationEditText.getText().toString();
+            String pickupTime = mPickupEditText.getText().toString();
+            String car = mCarEditText.getText().toString();
+            String destination = mDestinationEditText.getText().toString();
+            String from = mFromEditText.getText().toString();
+            String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
-                if(!isStringNull(pickupTime) && pickupTime != null &&
-                        !isIntNull(cost) && cost != 0 &&
-                        !isStringNull(dateOfJourney) && dateOfJourney != null
-                        && !isIntNull(extraTime)){
+            if(!isStringNull(pickupTime) && pickupTime != null &&
+                    !isIntNull(cost) && cost != 0 &&
+                    !isStringNull(dateOfJourney) && dateOfJourney != null
+                    && !isIntNull(extraTime)){
 
-                    //Creates the ride information and adds it to the database
-                    mFirebaseMethods.offerRide(userID , username, from, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
-                            sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
+                //Creates the ride information and adds it to the database
+                mFirebaseMethods.offerRide(userID , username, from, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
+                        sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
 
-                    //Adds a notification to firebase
-                    mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
+                //Adds a notification to firebase
+                mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
 
-                    //Shows the ride has been created successfully
-                    OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
+                //Shows the ride has been created successfully
+                OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
 
-                    finish();
+                finish();
 
-                } else {
-                    Toast.makeText(EditRideActivity.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
-                }
+            } else {
+                Toast.makeText(EditRideActivity.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
             }
         });
     }

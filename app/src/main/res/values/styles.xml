@@ -16,7 +16,6 @@
     </style>
 
     <style name="Pref" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -24,11 +23,9 @@
 
 
     <style name="DatPicker">
-        <!-- Customize your theme here. -->
         <item name="android:textSize">2sp</item>
     </style>
 
-    <!-- Stripe card widget -->
     <style name="CardWidgetStyle" parent="@android:style/Theme.DeviceDefault">
         <item name="editTextStyle">@style/EditTextOverride</item>
         <item name="android:editTextStyle">@style/EditTextOverride</item>

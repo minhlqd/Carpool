@@ -97,7 +97,8 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private String luggageID;
     private String destinationId2;
     private String locationId2;
-    private int userRating, seatsID;
+    private float userRating;
+    private int seatsID;
     private int completeRides;
     private double currentLatitude, currentLongtitude;
     private LatLng currentLocation;
@@ -106,8 +107,6 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     //GeoFire
     private DatabaseReference mRef;
     private GeoFire mGeoFire;
-
-
 
 
     @Override
@@ -215,7 +214,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
             String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
             if(!isStringNull(pickupTime) && !isIntNull(cost) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
-                mFirebaseMethods.offerRide(driverID, username, location.toLowerCase(), destination.toLowerCase(), dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
+                mFirebaseMethods.offerRide(driverID, username, location, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
                         sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
 
                 mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
@@ -277,7 +276,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
         mUserSettings = user;
 
-        UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
+        UniversalImageLoader.setImage(info.getProfilePhoto(), mCarPhoto, null,"");
 
         username = user.getUsername();
         userRating = info.getUserRating();
@@ -292,7 +291,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mDestinationEditText.setText(destinationId);
         mFromEditText.setText(locationId);
         mCarEditText.setText(carID);
-        mSeatsEditText.setText(seatsID + " Seats left!");
+        mSeatsEditText.setText(seatsID + " " +getString(R.string.seats_left));
         durationTxt.setText("Duration: "+ ApplicationContext.getDuration());
 
         mCalendar = Calendar.getInstance();

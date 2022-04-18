@@ -87,7 +87,7 @@ public class LeaveRideDialog extends Dialog implements
     }
 
     private void leaveRide(){
-        mRef.child("requestRide").child(rideID).child(currentUserID).removeValue(new DatabaseReference.CompletionListener() {
+        mRef.child("request_ride").child(rideID).child(currentUserID).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 Toast.makeText(c, "Left ride successfully!", Toast.LENGTH_SHORT).show();
@@ -96,7 +96,7 @@ public class LeaveRideDialog extends Dialog implements
     }
 
     private void getsSeatsRemaining(){
-        mRef.child("availableRide").child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
+        mRef.child("available_ride").child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 seatsAvailable = dataSnapshot.getValue(Integer.class);
@@ -110,7 +110,7 @@ public class LeaveRideDialog extends Dialog implements
     }
 
     private void updateSeatsRemaining(){
-        mRef.child("availableRide").child(rideID).child("seatsAvailable").setValue(seatsAvailable + 1);
+        mRef.child("available_ride").child(rideID).child("seatsAvailable").setValue(seatsAvailable + 1);
     }
 
 }

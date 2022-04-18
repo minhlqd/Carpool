@@ -109,7 +109,6 @@ public class EmailUpdateFragment extends Fragment implements ConfirmPasswordDial
 
         mChangeEmailButton.setOnClickListener(v -> saveEmailSettings());
 
-        //Setup back arrow for navigating back to 'ProfileActivity'
         ImageView backArrow = (ImageView) view.findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
             requireActivity().onBackPressed();

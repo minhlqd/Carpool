@@ -21,14 +21,14 @@ public class OfferRide {
     private String profile_picture;
     private int cost;
     private int completeRides;
-    private int userRating;
+    private float userRating;
     private String duration;
 
     public OfferRide() { }
 
     public OfferRide(String rideID, String driverID, String username, String currentLocation, String destination, String dateOfJourney, int seatsAvailable, String licencePlate,
                      double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car, String pickupTime, int extraTime, String profile_picture, int cost,
-                     int completeRides, int userRating, String duration, String pickupLocation) {
+                     int completeRides, float userRating, String duration, String pickupLocation) {
         this.rideID = rideID;
         this.driverID = driverID;
         this.username = username;
@@ -84,11 +84,11 @@ public class OfferRide {
         this.profile_picture = profile_picture;
     }
 
-    public int getUserRating() {
+    public float getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(int userRating) {
+    public void setUserRating(float userRating) {
         this.userRating = userRating;
     }
 

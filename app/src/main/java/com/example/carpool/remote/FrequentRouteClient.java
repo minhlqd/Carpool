@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FrequentRouteClient {
 
-    public static String BASE_URI = "http://localhost:8081/";
+    public static String BASE_URI = "http://192.168.25.9:8081/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient(String baseURL){

@@ -20,15 +20,14 @@ import com.braintreepayments.api.dropin.DropInActivity;
 import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
-import com.example.carpool.common.Common;
 import com.example.carpool.R;
-import com.example.carpool.models.User;
-import com.example.carpool.utils.FirebaseMethods;
+import com.example.carpool.common.Common;
 import com.example.carpool.models.FCMResponse;
 import com.example.carpool.models.Notification;
 import com.example.carpool.models.RequestUser;
 import com.example.carpool.models.Sender;
 import com.example.carpool.remote.IFCMService;
+import com.example.carpool.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,10 +39,11 @@ import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaymentActivity extends AppCompatActivity {
 
-    private static final String TAG = "PaymentActivity";
+    private static final String TAG = "FirebaseFCM";
     private static final int REQUEST_CODE = 1234;
 
     private final Context mContext = PaymentActivity.this;
@@ -107,9 +107,9 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void submitPayment() {
         if (!mEditAmount.getText().toString().isEmpty()) {
-            amount = getCurrentAmount();
+            /*amount = getCurrentAmount();
             paramsHash = new HashMap<>();
-            paramsHash.put("amount", amount);
+            paramsHash.put("amount", amount);*/
             //paramsHash.put("nonce", strNonce);
 
             sendPayments();
@@ -259,40 +259,37 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void requestPickupHere() {
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("user");
-        Log.d(TAG, "requestPickupHere: " + tokens.getKey());
-        tokens.orderByKey().equalTo(driverID).addListenerForSingleValueEvent(new ValueEventListener() {
+        /*DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("user");
+        Log.d(TAG, "requestPickupHere: " + tokens.getKey());*/
+        myRef.child("Tokens").child(driverID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    User user = dataSnapshot1.getValue(User.class);
-                    String extraData = username + "," + profile_photo + "," + currentLocation;
-                    Notification data = new Notification(passengerID, driverID, rideID, extraData, destination);
-                    Sender content = new Sender(data, user.getUsername());
+                String token = dataSnapshot.getValue(String.class);
+                String extraData = username + "," + profile_photo + "," + currentLocation;
+                Notification data = new Notification(passengerID, driverID, rideID, extraData, destination);
+                Sender content = new Sender(data, token);
 
-                    Log.d("MinhMX", "onDataChange: " + content);
-                    mService.sendMessage(content).enqueue(new Callback<FCMResponse>() {
-                        @Override
-                        public void onResponse(@NonNull Call<FCMResponse> call, @NonNull retrofit2.Response<FCMResponse> response) {
-                            assert response.body() != null;
-
-                            Log.i("MinhMX", "onResponse: " + response.body());
-                            if (response.body().success == 1 || response.code() == 200){
+                Log.d(TAG, "onDataChange: " + content);
+                mService.sendMessage(content).enqueue(new Callback<FCMResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<FCMResponse> call, @NonNull Response<FCMResponse> response) {
+                        assert response.body() != null;
+                        Log.i(TAG, "onResponse: " + response.body());
+                        if (response.body().success == 1 || response.code() == 200){
                                 Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
-                                updateSeatsRemaining();
+                                //updateSeatsRemaining();
                                 mFirebaseMethods.addPoints(driverID, 200);
-                            } else {
-                                Toast.makeText(mContext, "Booking request failed!", Toast.LENGTH_SHORT).show();
-                            }
-                            finish();
+                        } else {
+                            Toast.makeText(mContext, "Booking request failed!", Toast.LENGTH_SHORT).show();
                         }
+                        finish();
+                    }
 
-                        @Override
-                        public void onFailure(@NonNull Call<FCMResponse> call, @NonNull Throwable t) {
-                            Log.e("MinhMX", "onFailure: "+ t.getMessage());
-                        }
-                    });
-                }
+                    @Override
+                    public void onFailure(@NonNull Call<FCMResponse> call, @NonNull Throwable t) {
+                        Log.e("MinhMX", "onFailure: "+ t.getMessage());
+                    }
+                });
             }
 
             @Override

@@ -19,6 +19,7 @@ import com.example.carpool.R;
 import com.example.carpool.dialogs.BookRideDialog;
 import com.example.carpool.models.OfferRide;
 import com.example.carpool.models.Ride;
+import com.example.carpool.utils.UniversalImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -59,7 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         String to = "To: " + ride.get(position).getDestination();
         final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
         final String dateOnly = parseDateToddMMyyyy(ride.get(position).getDateOfJourney());
-        final String cost = "£ " + ride.get(position).getCost() + ".00";
+        final String cost =  String.valueOf(ride.get(position).getCost());
         final Float rating = (float) ride.get(position).getUserRating();
         final String pickupTime = ride.get(position).getPickupTime() + " PM";
         final String extraTime = ride.get(position).getExtraTime() + " mins";
@@ -99,7 +100,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.date.setText(date);
         holder.costs.setText(cost);
         holder.ratingBar.setRating(rating);
-        Picasso.get().load(ride.get(position).getProfile_picture()).into(holder.profile_photo);
+        /*UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");*/
 
         final String finalSeats = seats;
         holder.view.setOnClickListener(view -> {

@@ -192,7 +192,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.dob = mRegisterStepThreeFragment.getDob();
         this.mobileNumber = mRegisterStepThreeFragment.getMobileNumber();
         this.gender = mRegisterStepThreeFragment.getGender();
-        this.profile_photo = mRegisterStepThreeFragment.getRegistrationPicture();
+        this.profile_photo = mRegisterStepThreeFragment.getUserImgURL();
         this.education = mRegisterStepThreeFragment.getEducation();
         this.work = mRegisterStepThreeFragment.getWork();
         this.bio = mRegisterStepThreeFragment.getBio();
@@ -220,15 +220,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                /*for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-                    if (singleSnapshot.exists()){
-                        append = myRef.push().getKey().substring(3,10);
-                    }
-                }
-
-                String mUsername;
-                mUsername = username + append;*/
-
                 mFirebaseMethods.addNewUser(
                         email, fullName, username, profile_photo, mobileNumber
                         , dob, licence_number, car, registration_plate, seats

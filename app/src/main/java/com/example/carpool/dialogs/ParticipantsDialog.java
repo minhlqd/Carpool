@@ -3,6 +3,7 @@ package com.example.carpool.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -15,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ParticipantsAdapter;
 import com.example.carpool.R;
+import com.example.carpool.models.BookingResults;
 import com.example.carpool.models.Info;
+import com.example.carpool.models.RequestUser;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.Participants;
@@ -55,7 +58,7 @@ public class ParticipantsDialog extends Dialog implements
     //Firebase
     private FirebaseMethods mFirebaseMethods;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabse;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRef;
 
     @Override
@@ -66,8 +69,8 @@ public class ParticipantsDialog extends Dialog implements
 
         mFirebaseMethods = new FirebaseMethods(c);
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabse = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabse.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
 
         setupWidgets();
 
@@ -82,7 +85,6 @@ public class ParticipantsDialog extends Dialog implements
 
     public ParticipantsDialog(Context a, String userID, String rideID) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
         this.userID = userID;
         this.rideID = rideID;
@@ -138,23 +140,20 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void findParticipantDetails(){
-        mRef.child("requestRide").child(rideID).addValueEventListener(new ValueEventListener() {
+        Log.d(TAG, "findParticipantDetails: " + userID);
+        mRef.child("request_ride").child(userID).child(rideID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Participants r = dataSnapshot1.getValue(Participants.class);
-                        if (r.getAccepted().equals(true)){
-                            participants.add(r);
-                        }
+                        RequestUser requestUser = dataSnapshot.getValue(RequestUser.class);
+                        if (requestUser.getAccepted().equals(true)){
+                            participants.add(new Participants(requestUser.getUsername(),requestUser.getAccepted()));
                     }
                 }
 
                 myAdapter = new ParticipantsAdapter(c, participants);
                 mRecyclerView.setAdapter(myAdapter);
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

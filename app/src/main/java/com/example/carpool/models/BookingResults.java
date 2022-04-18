@@ -1,7 +1,7 @@
 package com.example.carpool.models;
 
 public class BookingResults {
-    private String user_id;
+    private String passengerID;
     private String profile_photo;
     private String username;
     private int seats;
@@ -19,8 +19,8 @@ public class BookingResults {
     public BookingResults() {
     }
 
-    public BookingResults(String user_id, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, int cost, String pickupLocation) {
-        this.user_id = user_id;
+    public BookingResults(String passengerID, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, int cost, String pickupLocation) {
+        this.passengerID = passengerID;
         this.profile_photo = profile_photo;
         this.username = username;
         this.seats = seats;
@@ -36,12 +36,12 @@ public class BookingResults {
         this.dateOfJourney = dateOfJourney;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getPassengerID() {
+        return passengerID;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setPassengerID(String passengerID) {
+        this.passengerID = passengerID;
     }
 
     public String getProfile_photo() {
@@ -151,7 +151,7 @@ public class BookingResults {
     @Override
     public String toString() {
         return "BookingResults{" +
-                "user_id='" + user_id + '\'' +
+                "passengerID='" + passengerID + '\'' +
                 ", profile_photo='" + profile_photo + '\'' +
                 ", username='" + username + '\'' +
                 ", seats=" + seats +

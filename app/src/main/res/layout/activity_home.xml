@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.HomeActivity">
+    tools:context=".home.HomeActivity">
 
     <include layout="@layout/layout_center_viewpager"/>
 
@@ -14,13 +14,11 @@
         android:id="@+id/homeRelativeLayout"
         android:layout_height="match_parent">
 
-        <!-- Middle section (body) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mainRelativeLayout"
             android:layout_marginBottom="50dp">
-            <!-- Map -->
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -60,20 +58,20 @@
                             android:background="@drawable/toggle_widget_background"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="Share route" />
+                            android:text="@string/share_route" />
 
                         <RadioButton
                             android:id="@+id/findButton"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="1dp"
+                            android:layout_marginStart="1dp"
                             android:layout_marginTop="1dp"
                             android:layout_marginBottom="1dp"
                             android:layout_weight="1"
                             android:background="@drawable/toggle_widget_background"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="Find a ride" />
+                            android:text="@string/find_a_ride" />
 
                         <RadioButton
                             android:id="@+id/offerButton"
@@ -86,7 +84,7 @@
                             android:background="@drawable/toggle_widget_background"
                             android:button="@null"
                             android:gravity="center"
-                            android:text="Offer ride" />
+                            android:text="@string/offer_ride" />
                     </RadioGroup>
                 </RelativeLayout>
             </LinearLayout>
@@ -110,14 +108,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:id="@+id/locationLayout">
+
                         <ImageView
-                            android:layout_width="wrap_content"
                             android:id="@+id/locationImage"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_gps"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"/>
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/ic_gps" />
 
                         <AutoCompleteTextView
                             android:id="@+id/location"
@@ -125,7 +124,7 @@
                             android:maxWidth="250dp"
                             android:layout_height="wrap_content"
                             android:layout_alignStart="@id/locationImage"
-                            android:hint="Location"
+                            android:hint="@string/location"
                             android:layout_marginTop="14dp"
                             android:layout_marginStart="35dp"
                             android:textSize="18sp"
@@ -151,14 +150,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="50dp">
+
                         <ImageView
                             android:id="@+id/destinationImageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_location"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"/>
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/ic_location" />
 
                         <AutoCompleteTextView
                             android:id="@+id/destination"
@@ -169,20 +169,20 @@
                             android:layout_marginStart="35dp"
                             android:layout_marginTop="14dp"
                             android:background="@android:color/transparent"
-                            android:hint="Destination"
+                            android:hint="@string/destination"
                             android:imeOptions="actionSearch"
                             android:maxWidth="250dp"
                             android:singleLine="true"
                             android:textSize="18sp" />
 
                         <Button
-                            android:background="@drawable/ic_chevron_right_black_24dp"
                             android:id="@+id/searchBtn"
                             android:layout_width="35dp"
-                            android:layout_alignParentEnd="true"
                             android:layout_height="35dp"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="9dp"
-                            android:layout_marginEnd="8dp"/>
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/ic_baseline_search_24" />
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -191,7 +191,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height= "40dp"
-                    android:text="Get directions"
+                    android:text="@string/get_directions"
+                    android:textAllCaps="false"
                     android:layout_gravity="bottom"
                     android:id="@+id/directionsBtn"/>
             </LinearLayout>
@@ -209,39 +210,40 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/light_grey"
                     android:src="@android:drawable/ic_menu_mylocation"
                     app:borderWidth="0dp"
                     app:elevation="6dp"
                     app:pressedTranslationZ="12dp"
-                    app:fabSize="normal" />
+                    app:fabSize="normal"
+                    tools:ignore="RtlHardcoded" />
                 <Button
                     android:id="@+id/btn_start_trip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:text="start share"
+                    android:text="@string/start_share"
                     android:clickable="false"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="13dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/btn_style_green" />
+                    android:background="@drawable/background_btn_login" />
                 <Button
                     android:id="@+id/btn_end_trip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:text="End share"
+                    android:text="@string/end_share"
                     android:clickable="false"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="13dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/btn_style_2" />
+                    android:background="@drawable/background_btn_register" />
             </LinearLayout>
 
 
