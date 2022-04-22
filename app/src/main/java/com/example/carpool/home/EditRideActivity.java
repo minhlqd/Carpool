@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -56,7 +57,12 @@ public class EditRideActivity extends AppCompatActivity {
     private String userID;
 
     //Widgets
-    private EditText mDateOfJourneyEditText, mCostEditText, mPickupEditText, mExtraTimeEditText, mLuggageEditText, mPickupLocationEditText;
+    private EditText mDateOfJourneyEditText;
+    private EditText mCostEditText;
+    private EditText mPickupEditText;
+    private EditText mExtraTimeEditText;
+    private EditText mLuggageEditText;
+    private TextView mPickupLocationEditText;
     private MaterialAnimatedSwitch mSameGender;
     private Button mSnippetOfferRideButton;
     private Boolean sameGenderBoolean = false;
@@ -107,45 +113,32 @@ public class EditRideActivity extends AppCompatActivity {
         mLuggageEditText = (EditText) findViewById(R.id.luggageEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.DateOfJourneyEditText);
         mPickupEditText = (EditText) findViewById(R.id.pickupEditText);
-        mPickupLocationEditText = (EditText) findViewById(R.id.pickupLocationEditText);
+        mPickupLocationEditText = (TextView) findViewById(R.id.pickupLocationEditText);
         mCarPhoto = (CircleImageView) findViewById(R.id.car_image);
         durationTxt = (TextView) findViewById(R.id.durationTxt);
-        mDateOfJourneyEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
+        mDateOfJourneyEditText.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 0);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(EditRideActivity.this, date, mCalandar
-                        .get(Calendar.YEAR), mCalandar.get(Calendar.MONTH),
-                        mCalandar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                datePickerDialog.show();
-            }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(EditRideActivity.this, date, mCalandar
+                    .get(Calendar.YEAR), mCalandar.get(Calendar.MONTH),
+                    mCalandar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
         });
 
-        mFromEditText.setText(locationId2);
-        mDestinationEditText.setText(destinationId2);
+        mFromEditText.setText(locationId);
+        mDestinationEditText.setText(destinationId);
         mCostEditText.setText(costID);
         mExtraTimeEditText.setText(extraTimeID);
 //        mSeatsEditText.setText(seatsID);
         mDateOfJourneyEditText.setText(dateOfJourneyID);
-        //mPickupLocationEditText.setText(pick);
         mPickupEditText.setText(pickupTimeID);
         durationTxt.setText(duration);
         mPickupLocationEditText.setText(pickupLocation);
+        Log.d(TAG, "onCreate: " + pickupLocation +" "  + mPickupLocationEditText.getText().toString());
 
         mSameGender = (MaterialAnimatedSwitch) findViewById(R.id.genderSwitch);
-//        mSameGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    sameGenderBoolean = true;
-//                } else {
-//                    sameGenderBoolean = false;
-//                }
-//            }
-//        });
 
 
         ImageView backArrow = (ImageView) findViewById(R.id.backArrow);
@@ -185,9 +178,9 @@ public class EditRideActivity extends AppCompatActivity {
                 mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
 
                 //Shows the ride has been created successfully
-                OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
+                /*OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                dialog.show();*/
 
                 finish();
 
@@ -234,8 +227,8 @@ public class EditRideActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-                locationId = getIntent().getStringExtra("DESTINATION");
-                destinationId = getIntent().getStringExtra("LOCATION");
+                destinationId = getIntent().getStringExtra("DESTINATION");
+                locationId = getIntent().getStringExtra("LOCATION");
                 pickupTimeID = getIntent().getStringExtra("PICKUPTIME");
                 costID = getIntent().getStringExtra("COST");
                 dateOfJourneyID = getIntent().getStringExtra("DATE");
@@ -245,7 +238,6 @@ public class EditRideActivity extends AppCompatActivity {
                 licencePlateID = getIntent().getStringExtra("LICENCE");
                 carID = getIntent().getStringExtra("CAR");
                 luggageID = getIntent().getStringExtra("LUGGAGE");
-                destinationId2 = getIntent().getStringExtra("DESTINATION2");
                 locationId2 = getIntent().getStringExtra("FROM2");
                 duration = getIntent().getStringExtra("LENGTH");
                 pickupLocation = getIntent().getStringExtra("PICKUPLOCATION");

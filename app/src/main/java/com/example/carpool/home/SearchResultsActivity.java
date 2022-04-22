@@ -92,7 +92,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         rides = new ArrayList<OfferRide>();
         Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("available_ride").orderByChild("destination").toString());
 
-        mRef.child("available_ride").orderByChild("destination").equalTo(destination.toLowerCase()).limitToFirst(20)
+        mRef.child("available_ride").orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -102,24 +102,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                                 OfferRide ride = dataSnapshot1.getValue(OfferRide.class);
                                 rides.add(ride);
                                 mNoResultsFoundLayout.setVisibility(View.GONE);
-                                /* if (ride.getSeatsAvailable() > 0) {
-                                    Date aParsed = null;
-                                    Date bParsed = null;
-                                    try {
-                                        aParsed = parseDate(ride.getDateOfJourney());
-                                        bParsed = parseDate(date);
-                                        Log.i(TAG, "onDataChange: " + aParsed + bParsed);
-                                        if (aParsed.after(bParsed) || aParsed.equals(bParsed)) {
-                                            Log.d(TAG, "onDataChange: " + ride.getUser_id() + " " + user_id);
-                                            if (!(ride.getUser_id().contains(user_id))) {
-                                                rides.add(ride);
-                                                mNoResultsFoundLayout.setVisibility(View.GONE);
-                                            }
-                                        }
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }*/
                             }
                             myAdapter = new SearchAdapter(SearchResultsActivity.this, rides);
                             mRecyclerView.setAdapter(myAdapter);

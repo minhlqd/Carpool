@@ -22,16 +22,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".account.CarUpdateActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.ForgotPasswordActivity"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api" />
-
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".payment.PaymentActivity"
             android:label="@string/title_activity_payment" />
@@ -50,10 +53,11 @@
             android:required="false" />
 
         <activity android:name=".account.AccountActivity" />
-        <activity android:name=".FrequentRoute.FrequentRouteActivity"/>
-        <activity android:name=".FrequentRoute.MapFrequentRouteActivity"/>
-        <activity android:name=".login.RegisterActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".FrequentRoute.FrequentRouteActivity" />
+        <activity android:name=".FrequentRoute.MapFrequentRouteActivity" />
+        <activity
+            android:name=".login.RegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".rides.RidesActivity" />
         <activity android:name=".home.OfferRideFragment" />
@@ -68,8 +72,8 @@
         <activity android:name=".account.HelpFragment" />
         <activity android:name=".account.ProfileActivity" />
         <activity
-            android:configChanges="locale|orientation"
             android:name=".settings.SettingsActivity"
+            android:configChanges="locale|orientation"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".settings.SettingsActivity"
             android:theme="@style/Pref">

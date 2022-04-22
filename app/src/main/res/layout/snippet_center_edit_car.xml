@@ -169,21 +169,20 @@
                 android:hint="@string/seats" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-            <Button
-                android:id="@+id/snippetCarDetailsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/seatsLayout"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="25dp"
-                android:background="@drawable/background_btn_login"
-                android:text="@string/update"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
     </RelativeLayout>
+
+        <Button
+            android:id="@+id/snippetCarDetailsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/background_btn_login"
+            android:text="@string/update"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
     </RelativeLayout>
 </merge>

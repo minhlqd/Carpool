@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.carpool.account.ProfileActivity;
 import com.example.carpool.home.EditRideActivity;
 import com.example.carpool.R;
+import com.example.carpool.utils.UniversalImageLoader;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -43,6 +45,7 @@ public class ViewRideCreatedDialog extends Dialog implements
     private TextView durationTextView;
     private TextView mPickupLocation;
     private RatingBar mRatingBar;
+    private ImageView photoView;
     private Button mEditRideBtn;
     private FloatingActionButton mDeleteRideBtn;
     private FloatingActionButton mPaticipantsRideBtn;
@@ -62,6 +65,8 @@ public class ViewRideCreatedDialog extends Dialog implements
     private final String ridesCompleted;
     private final String pickupLocation;
     private final Float rating;
+    private final String photo;
+    private final String driverID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,7 @@ public class ViewRideCreatedDialog extends Dialog implements
     }
 
     public ViewRideCreatedDialog(Context a, String rideID, String username, String rides, String seats, String from, String to, String date, String cost, Float rating, String dateOnly, String extraTime,
-                                 String duration, String ridesCompleted, String pickupLocation, String userID) {
+                                 String duration, String ridesCompleted, String pickupLocation, String userID, String photo, String driverID) {
         super(a);
         this.c = a;
         this.rideID = rideID;
@@ -97,6 +102,8 @@ public class ViewRideCreatedDialog extends Dialog implements
         this.ridesCompleted = ridesCompleted;
         this.pickupLocation = pickupLocation;
         this.userID = userID;
+        this.photo = photo;
+        this.driverID = driverID;
         Log.d(TAG, "ViewRideCreatedDialog: " + userID);
     }
 
@@ -105,14 +112,14 @@ public class ViewRideCreatedDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_and_book:
-                dismiss();
+                Log.d(TAG, "onClick: " + pickupLocation);
                 Intent intent1 = new Intent(c, EditRideActivity.class);
                 intent1.putExtra("COST", cost);
                 intent1.putExtra("EXTRATIME", extraTime);
                 intent1.putExtra("DATE", date);
                 intent1.putExtra("SEATS", seats);
-                intent1.putExtra("DESTINATION2", to);
-                intent1.putExtra("FROM2", from);
+                intent1.putExtra("DESTINATION", to);
+                intent1.putExtra("LOCATION", from);
                 intent1.putExtra("PICKUPTIME", dateOnly);
                 intent1.putExtra("LENGTH", duration);
                 intent1.putExtra("PICKUPLOCATION", pickupLocation);
@@ -138,7 +145,7 @@ public class ViewRideCreatedDialog extends Dialog implements
 
     private void showDialog(){
         //Confirmation to delete the ride dialog
-        DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(c, rideID);
+        DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(c, rideID, driverID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
@@ -155,26 +162,29 @@ public class ViewRideCreatedDialog extends Dialog implements
         c.startActivity(intent);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setupWidgets(){
         //Setup widgets
-        mUsername = (TextView) findViewById(R.id.usernameTxt);
-        mRidesCompleted = (TextView) findViewById(R.id.completedRidesTxt);
-        mCost = (TextView) findViewById(R.id.costTxt);
-        mDepartureTime = (TextView) findViewById(R.id.timeTxt);
-        mExtraTime = (TextView) findViewById(R.id.extraTimeTxt);
-        mFromStreet = (TextView) findViewById(R.id.streetNameTxt);
-        mToStreet = (TextView) findViewById(R.id.streetName2Txt);
-        durationTextView = (TextView) findViewById(R.id.durationNew);
-        mPickupLocation = (TextView) findViewById(R.id.pickupLocationNew);
+        mUsername = findViewById(R.id.usernameTxt);
+        mRidesCompleted = findViewById(R.id.completedRidesTxt);
+        mCost = findViewById(R.id.costTxt);
+        mDepartureTime = findViewById(R.id.timeTxt);
+        mExtraTime = findViewById(R.id.extraTimeTxt);
+        mFromStreet = findViewById(R.id.streetNameTxt);
+        mToStreet = findViewById(R.id.streetName2Txt);
+        durationTextView = findViewById(R.id.durationNew);
+        mPickupLocation = findViewById(R.id.pickupLocationNew);
 
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
+        mRatingBar = findViewById(R.id.ratingBar);
 
 
-        mEditRideBtn = (Button) findViewById(R.id.pay_and_book);
-        mDeleteRideBtn = (FloatingActionButton) findViewById(R.id.deleteRideBtn);
-        mPaticipantsRideBtn = (FloatingActionButton) findViewById(R.id.paticipantsRideBtn);
-        mViewProfileBtn = (FloatingActionButton) findViewById(R.id.viewProfileBtn);
-        mCancelDialogBtn = (TextView) findViewById(R.id.dialogCancel);
+        mEditRideBtn = findViewById(R.id.pay_and_book);
+        mDeleteRideBtn = findViewById(R.id.deleteRideBtn);
+        mPaticipantsRideBtn = findViewById(R.id.paticipantsRideBtn);
+        mViewProfileBtn = findViewById(R.id.viewProfileBtn);
+        mCancelDialogBtn = findViewById(R.id.dialogCancel);
+
+        photoView = findViewById(R.id.profile_logo_1);
 
         mCost.setText(cost);
         mUsername.setText(username);
@@ -186,6 +196,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         durationTextView.setText("Duration: " + duration);
         mRidesCompleted.setText(ridesCompleted + " Rides");
         mPickupLocation.setText("Pickup: " + pickupLocation);
+        UniversalImageLoader.setImage(photo, photoView, null,"");
     }
 
 }

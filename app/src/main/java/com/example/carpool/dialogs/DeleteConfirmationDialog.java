@@ -30,6 +30,7 @@ public class DeleteConfirmationDialog extends Dialog implements
     private Button mDeleteRideBtn;
 
     private String rideID;
+    private String driverID;
 
 
     public interface onConfirmPasswordListener{
@@ -51,10 +52,11 @@ public class DeleteConfirmationDialog extends Dialog implements
         mDeleteRideBtn.setOnClickListener(this);
     }
 
-    public DeleteConfirmationDialog(Context a, String rideID) {
+    public DeleteConfirmationDialog(Context a, String rideID, String driverID) {
         super(a);
         this.context = a;
         this.rideID = rideID;
+        this.driverID = driverID;
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -62,10 +64,7 @@ public class DeleteConfirmationDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_and_book:
-                mFirebaseMethods.deleteRide(rideID);
-                Intent intent1 = new Intent(context, RidesActivity.class);
-                context.startActivity(intent1);
-                dismiss();
+                mFirebaseMethods.deleteRide(driverID, rideID, context);
                 break;
             case R.id.dialogCancel:
                 dismiss();

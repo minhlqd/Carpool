@@ -41,9 +41,11 @@ public class ParticipantsDialog extends Dialog implements
     public Dialog d;
 
     //View variables
-    private RelativeLayout mUserBooked[];
-    private ImageView mProfilePicture[], user_id_1;
-    private TextView mUsernames[], username1;
+    private RelativeLayout[] mUserBooked;
+    private ImageView[] mProfilePicture;
+    private ImageView user_id_1;
+    private TextView[] mUsernames;
+    private TextView username1;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -53,7 +55,8 @@ public class ParticipantsDialog extends Dialog implements
 
     // variables
     private TextView mCancelDialogBtn;
-    private String userID, rideID;
+    private final String userID;
+    private final String rideID;
 
     //Firebase
     private FirebaseMethods mFirebaseMethods;
@@ -78,7 +81,7 @@ public class ParticipantsDialog extends Dialog implements
 
         findParticipantDetails();
 
-        mCancelDialogBtn = (TextView) findViewById(R.id.dialogCancel);
+        mCancelDialogBtn = findViewById(R.id.dialogCancel);
         mCancelDialogBtn.setOnClickListener(this);
 
     }
@@ -103,11 +106,11 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void setupWidgets(){
-        username1 = (TextView) findViewById(R.id.username1);
-        user_id_1 = (ImageView) findViewById(R.id.user_id_1);
+        username1 = findViewById(R.id.username1);
+        user_id_1 = findViewById(R.id.user_id_1);
 
         //Setup recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(c);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(c));

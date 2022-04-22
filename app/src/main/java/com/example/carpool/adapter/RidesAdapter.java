@@ -17,11 +17,15 @@ import com.example.carpool.R;
 import com.example.carpool.dialogs.ViewRideCreatedDialog;
 import com.example.carpool.models.Ride;
 import com.example.carpool.utils.UniversalImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -46,7 +50,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.individual_ride_information, parent, false));
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d("MinhMX", "onBindViewHolder: " + ride.get(position));
@@ -55,11 +59,10 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         final String username = ride.get(position).getUsername();
         final String rides = ride.get(position).getCompleteRides() + " Rides";
         final String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
-        String from = "From: " + ride.get(position).getCurrentLocation();
-        String to = "To: " + ride.get(position).getDestination();
+        String from = mContext.getString(R.string.from) + ride.get(position).getCurrentLocation();
+        String to = mContext.getString(R.string.to) + ride.get(position).getDestination();
         final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
-        final String cost = ride.get(position).getCost() + "";
-        final float rating = (float) ride.get(position).getUserRating();
+        final float rating = ride.get(position).getUserRating();
         final String dateOnly = ride.get(position).getPickupTime() + " PM";
         final String extraTime = ride.get(position).getExtraTime() + " mins";
         final String fromOnly = parseLocation(ride.get(position).getCurrentLocation());
@@ -68,6 +71,13 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         final String duration = ride.get(position).getDuration();
         final String completeRides = String.valueOf(ride.get(position).getCompleteRides());
         final String pickupLocation = ride.get(position).getPickupLocation();
+
+
+        Log.d("MinhMX", "onBindViewHolder: " +ride.get(position).getPickupLocation() );
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+        format.setCurrency(Currency.getInstance("VND"));
+        final String cost = format.format(ride.get(position).getCost());
 
 
         holder.rides.setText(rides);
@@ -87,17 +97,30 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         holder.date.setText(date);
         holder.costs.setText(cost);
         holder.ratingBar.setRating(rating);
-        /*if (ride.get(position).getProfile_picture() != null) {
-            Picasso.get().load(ride.get(position).getProfile_picture()).into(holder.profile_photo);
-        } else {
-            holder.profile_photo.setImageResource(R.drawable.ic_profile);
-        }*/
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext).build();
+        ImageLoader.getInstance().init(config);
 
         UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");
 
+        Log.d("RidesAdapter", "onBindViewHolder: " + ride.get(position).getUserRating() + " " + rating);
+
         holder.view.setOnClickListener(view -> {
             Log.d("MinhMX", "onBindViewHolder: "+ userID);
-            ViewRideCreatedDialog dialog = new ViewRideCreatedDialog(mContext, rideID ,username, rides, seats, fromOnly, toOnly, date, cost, rating, dateOnly, extraTime, duration, completeRides, pickupLocation ,userID);
+            ViewRideCreatedDialog dialog =
+                    new ViewRideCreatedDialog(
+                            mContext,
+                            rideID ,
+                            username,
+                            rides,
+                            seats,
+                            fromOnly,
+                            toOnly,
+                            date,
+                            String.valueOf(ride.get(position).getCost()),
+                            rating,
+                            dateOnly,
+                            String.valueOf(ride.get(position).getExtraTime()), duration, completeRides, pickupLocation ,userID, ride.get(position).getProfile_picture(), ride.get(position).getDriverID());
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
         });

@@ -45,7 +45,8 @@ public class Utils {
         reference.child("info").child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Info info = snapshot.getValue(Info.class);
+                Log.d("MinhMX", "onDataChange: " + snapshot.getValue());
+                /*Info info = snapshot.getValue(Info.class);
                 if (info.getCarOwner()) {
                     reference.child("request_ride").child(id).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -68,7 +69,7 @@ public class Utils {
 
                         }
                     });
-                }
+                }*/
             }
 
             @Override

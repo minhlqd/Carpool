@@ -1,6 +1,8 @@
 package com.example.carpool.account;
 
-import static android.app.Activity.RESULT_OK;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,9 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,10 +18,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.carpool.R;
 import com.example.carpool.models.Info;
@@ -41,7 +37,8 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CarUpdateFragment extends Fragment {
+
+public class CarUpdateActivity extends AppCompatActivity {
 
     private static final String TAG = "CarUpdateFragment";
     private static final int PICK_IMAGE_REQUEST = 29;
@@ -75,28 +72,28 @@ public class CarUpdateFragment extends Fragment {
     private String role;
     private Uri filePath;
 
-    @Nullable
+    private boolean isDriver;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_update_car, container, false);
-        mCarPhoto = view.findViewById(R.id.uploadCarPicture);
-        mCar = view.findViewById(R.id.carEditText);
-        mRegistration = view.findViewById(R.id.registrationEditText);
-        mLicence = view.findViewById(R.id.licenceEditText);
-        mSeats = view.findViewById(R.id.seatsEditText);
-        mCarOwnerRadioGroup = view.findViewById(R.id.carToggle);
-        driver = view.findViewById(R.id.driver);
-        passenger = view.findViewById(R.id.passenger);
-        mCarDetailsLayout = view.findViewById(R.id.carDetailsLayout);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_update_car);
+        mCar = findViewById(R.id.carEditText);
+        mRegistration = findViewById(R.id.registrationEditText);
+        mLicence = findViewById(R.id.licenceEditText);
+        mSeats = findViewById(R.id.seatsEditText);
+        mCarOwnerRadioGroup = findViewById(R.id.carToggle);
+        driver = findViewById(R.id.driver);
+        passenger = findViewById(R.id.passenger);
+        mCarDetailsLayout = findViewById(R.id.carDetailsLayout);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabase.getReference("user").child(firebaseUser.getUid());
-        mFirebaseMethods = new FirebaseMethods(getActivity());
+        mRef = mFirebaseDatabase.getReference("info").child(firebaseUser.getUid());
+        mFirebaseMethods = new FirebaseMethods(this);
 
 
-        mSnippetCarBtn = view.findViewById(R.id.snippetCarDetailsBtn);
+        mSnippetCarBtn = findViewById(R.id.snippetCarDetailsBtn);
         mSnippetCarBtn.setOnClickListener(v -> saveProfileSettings());
 
         setupFirebaseAuth();
@@ -105,21 +102,23 @@ public class CarUpdateFragment extends Fragment {
 
 
         //Setup back arrow for navigating back to 'ProfileActivity'
-        ImageView backArrow = view.findViewById(R.id.backArrow);
+        ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
-            Intent intent = new Intent(view.getContext(), AccountActivity.class);
+            Intent intent = new Intent(this, AccountActivity.class);
             startActivity(intent);
         });
 
         mCarOwnerRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.driver:
+                    isDriver = true;
                     driver.setChecked(true);
                     driver.setTextColor(Color.WHITE);
                     passenger.setTextColor(Color.BLACK);
                     mCarDetailsLayout.setVisibility(View.VISIBLE);
                     break;
                 case R.id.passenger:
+                    isDriver = false;
                     passenger.setChecked(true);
                     driver.setTextColor(Color.BLACK);
                     passenger.setTextColor(Color.WHITE);
@@ -128,8 +127,8 @@ public class CarUpdateFragment extends Fragment {
             }
         });
 
-        return view;
     }
+    
 
     private void saveProfileSettings(){
         final String car = mCar.getText().toString();
@@ -137,50 +136,37 @@ public class CarUpdateFragment extends Fragment {
         final String licence = mLicence.getText().toString();
         final int seats = Integer.parseInt(mSeats.getText().toString());
 
-        if (car.length() > 0 && registration.length() > 0 && licence.length() > 0 && mSeats.getText().toString().length() > 0) {
+        if(isDriver) {
+
+            if (car.length() > 0 && registration.length() > 0 && licence.length() > 0 && mSeats.getText().toString().length() > 0) {
             /*mRef.child("car").setValue(car);
             mRef.child("registration").setValue(registration);
             mRef.child("licence").setValue(licence);
             mRef.child("seats").setValue(seats);*/
-            HashMap<String, Object> hashMapCarInfo = new HashMap<>();
-            hashMapCarInfo.put("carOwner", true);
-            hashMapCarInfo.put("car", car);
-            hashMapCarInfo.put("registration", registration);
-            hashMapCarInfo.put("licence",licence);
-            hashMapCarInfo.put("seats", seats);
-            mRef.updateChildren(hashMapCarInfo);
-            requireActivity().onBackPressed();
+                HashMap<String, Object> hashMapCarInfo = new HashMap<>();
+                hashMapCarInfo.put("carOwner", true);
+                hashMapCarInfo.put("car", car);
+                hashMapCarInfo.put("registration", registration);
+                hashMapCarInfo.put("licence", licence);
+                hashMapCarInfo.put("seats", seats);
+                mRef.updateChildren(hashMapCarInfo);
+                onBackPressed();
+            } else {
+                Toast.makeText(this, "Fill", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(requireContext(), "Fill", Toast.LENGTH_SHORT).show();
+            HashMap<String, Object> hashMapCarInfo = new HashMap<>();
+            hashMapCarInfo.put("carOwner", false);
+            hashMapCarInfo.put("car", "");
+            hashMapCarInfo.put("registration", "");
+            hashMapCarInfo.put("licence", "");
+            hashMapCarInfo.put("seats", "");
+            mRef.updateChildren(hashMapCarInfo);
+            onBackPressed();
         }
 
 
-//        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//
-//
-//
-//                //If the user is the current one then no changes have been made
-//                if (!mUserSettings.getUsername().equals(username)){
-//
-//                    checkIfUsernameExists(username);
-//                }
-//                //user changed there username, checking for uniquness
-//                else {
-//
-//                }
-//
-//                //user did not change there username and email
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+        
     }
 
     private void checkIfUsernameExists(final String username) {
@@ -197,12 +183,12 @@ public class CarUpdateFragment extends Fragment {
                 if (!dataSnapshot.exists()){
                     //add the username
                     mFirebaseMethods.updateUsername(username);
-                    Toast.makeText(getActivity(), "Username changed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CarUpdateActivity.this, "Username changed", Toast.LENGTH_SHORT).show();
 
                 }
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()) {
                     if (singleSnapshot.exists()){
-                        Toast.makeText(getActivity(), "Username already exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CarUpdateActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -219,19 +205,19 @@ public class CarUpdateFragment extends Fragment {
 
         this.mInfo = info;
 
-        UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
+        //UniversalImageLoader.setImage(info.getCarPhoto(), mCarPhoto, null,"");
 
         mCar.setText(info.getCar());
         mRegistration.setText(info.getRegistrationPlate());
         mLicence.setText(info.getLicenceNumber());
         mSeats.setText(String.valueOf(info.getSeats()));
 
-        mCarPhoto.setOnClickListener(v -> {
+        /*mCarPhoto.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-        });
+        });*/
     }
 
     @Override
@@ -239,15 +225,13 @@ public class CarUpdateFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             filePath = data.getData();
-            try {
-                if (getActivity() != null) {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                    mCarPhoto.setImageBitmap(bitmap);
+            /*try {
+                    *//*Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
+                    mCarPhoto.setImageBitmap(bitmap);*//*
                     //uploadImage();
-                }
             } catch (IOException e){
                 e.printStackTrace();
-            }
+            }*/
 
         }
     }
@@ -298,12 +282,11 @@ public class CarUpdateFragment extends Fragment {
                 role = dataSnapshot.getValue(String.class);
                 if (role != null && role.equals("passenger")) {
                     driver.setChecked(true);
-                    mCarDetailsLayout.setVisibility(View.GONE);
                     mCar.setText("");
                     mRegistration.setText("");
                     mLicence.setText("");
                     mSeats.setText("");
-                    mCarPhoto.setImageDrawable(null);
+                    mCarDetailsLayout.setVisibility(View.VISIBLE);
                 }
             }
 

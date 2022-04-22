@@ -115,5 +115,6 @@
     <string name="hi_i_m_username_and_would_like_to_request_a_seat_on_your_journey">Xin chào, Tôi là {Username} và muốn yêu cầu một chỗ ngồi trên chuyến xe của bạn!</string>
     <string name="from_hanoi_vn">From: HaNoi, VN</string>
     <string name="to_nam_dinh_vn">To: NamDinh, VN</string>
-
+    <string name="from">Đi:</string>
+    <string name="to" >Đến:</string>
 </resources>

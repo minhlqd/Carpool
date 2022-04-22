@@ -169,9 +169,9 @@
     <string name="_5_00_5_30_pm" translatable="false">5:00 – 5:30 PM</string>
     <string name="extra_time_added">Extra time added</string>
     <string name="_5_min" translatable="false">5 min</string>
-    <string name="from" translatable="false">From:</string>
+    <string name="from">From:</string>
     <string name="_18_bishop_street" translatable="false">18 Bishop Street</string>
-    <string name="to" translatable="false">To:</string>
+    <string name="to">To:</string>
     <string name="extra_time" translatable="false">Extra time</string>
     <string name="welcome" translatable="false">Welcome</string>
     <string name="welcome_to_carpool_get_started_viewing_the_help_guide" translatable="false">Welcome to Carpool, get started viewing the help guide.</string>

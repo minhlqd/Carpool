@@ -71,21 +71,20 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/_23th_november_12_55_am"
                     android:textColor="@color/light_black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
 
                 <TextView
                     android:id="@+id/priceTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/toTxt"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="6dp"
                     android:text="@string/_6_00"
                     android:textColor="@color/black"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <RatingBar
                     android:id="@+id/individualRatingBar"

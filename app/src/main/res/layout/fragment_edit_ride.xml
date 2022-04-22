@@ -17,12 +17,12 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relLayout2_fragment_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relLayout1_fragment_details"
-            android:id="@+id/relLayout2_fragment_details">
+            android:layout_below="@id/relLayout1_fragment_details">
 
-            <include layout="@layout/snippet_center_edit_ride"/>
+            <include layout="@layout/snippet_center_edit_ride" />
 
         </RelativeLayout>
 

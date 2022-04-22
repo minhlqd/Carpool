@@ -234,12 +234,10 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     }
 
     private boolean isStringNull(String string){
-        Toast.makeText(this, "All fields must be filled in!", Toast.LENGTH_LONG).show();
         return string.equals("");
     }
 
     private boolean isIntNull(int integer){
-        Toast.makeText(this, "All fields must be filled in!", Toast.LENGTH_LONG).show();
         return integer < 0 || integer == 0;
     }
 

@@ -23,7 +23,9 @@ import com.example.carpool.models.BookingResults;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,9 +66,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         final String pickupTime = ride.get(position).getPickupTime();
         String from = ride.get(position).getLocation().replaceAll("\n", ", ");
         String to =ride.get(position).getDestination().replaceAll("\n", ", ");
-        final String cost = String.valueOf(ride.get(position).getCost());
         final String pickupLocation = ride.get(position).getPickupLocation();
         final String date = ride.get(position).getDateOfJourney() + " - " + ride.get(position).getPickupTime();
+
+
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+        format.setCurrency(Currency.getInstance("VND"));
+        final String cost = format.format(ride.get(position).getCost());
 
         if (isDriver) {
             holder.bookingStatusTextview.setVisibility(View.GONE);
@@ -116,7 +123,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return ride.size();

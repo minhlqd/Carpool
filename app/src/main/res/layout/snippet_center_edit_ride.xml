@@ -148,17 +148,15 @@
                         android:id="@+id/pickupLocationTxt"
                         android:text="@string/pick_up_location" />
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/pickupLocationEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:id="@+id/pickupLocationEditText"
+                        android:layout_marginTop="20dp"
                         android:background="@android:color/transparent"
-                        android:focusedByDefault="false"
-                        android:hint="@string/tap_for_location"
-                        android:focusable="false"
+                        android:singleLine="true"
                         android:textColor="@color/black"
-                        android:layout_marginTop="20dp" />
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -237,13 +235,14 @@
                         android:text="@string/from" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_below="@id/locationTxt"
                         android:id="@+id/destinationEditText"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locationTxt"
                         android:layout_marginStart="30dp"
-                        android:text="@string/location" />
+                        android:singleLine="true"
+                        android:text="@string/location"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,13 +254,14 @@
                         android:text="@string/to" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_below="@id/locationTxt"
                         android:id="@+id/fromEditText"
+                        android:layout_width="100dp"
+                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locationTxt"
                         android:layout_marginStart="180dp"
-                        android:text="@string/location" />
+                        android:text="@string/location"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"

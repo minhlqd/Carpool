@@ -136,6 +136,7 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
         intent.putExtra("pickupTime", pickupTime);
         intent.putExtra("licencePlate", licencePlate);
         intent.putExtra("cost", cost);
+        intent.putExtra("username", username);
         context.startActivity(intent);
     }
 

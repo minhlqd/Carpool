@@ -148,9 +148,8 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         mCarUpdate.setOnClickListener(v -> {
-            mRelativeLayout.setVisibility(View.GONE);
-            bottomNavigationView.setVisibility(View.GONE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new CarUpdateFragment()).commit();
+            Intent intent = new Intent(mContext, CarUpdateActivity.class);
+            startActivity(intent);
         });
 
         profilePhoto.setOnClickListener(v -> {

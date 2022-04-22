@@ -35,11 +35,10 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="5dp">
 
-                        <ImageView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profile_logo_1"
-                            android:background="@drawable/carpool_ride_details" />
+                            android:layout_width="64dp"
+                            android:layout_height="64dp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -203,13 +202,14 @@
                             android:text="From:" />
 
                         <TextView
+                            android:id="@+id/streetNameTxt"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
+                            android:singleLine="true"
                             android:layout_below="@id/locationTxt"
-                            android:id="@+id/streetNameTxt"
                             android:layout_marginLeft="30dp"
-                            android:text="18 Bishop Street" />
+                            android:text="18 Bishop Street"
+                            android:textSize="14sp" />
 
 
 
@@ -223,14 +223,14 @@
                             android:text="To:" />
 
                         <TextView
+                            android:id="@+id/streetName2Txt"
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
                             android:layout_below="@id/locationTxt"
-                            android:id="@+id/streetName2Txt"
                             android:layout_marginLeft="180dp"
                             android:singleLine="true"
-                            android:text="37 Belgrave Gate" />
+                            android:text="37 Belgrave Gate"
+                            android:textSize="14sp" />
 
 
                         <TextView

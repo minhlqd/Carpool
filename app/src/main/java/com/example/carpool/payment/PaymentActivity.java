@@ -171,39 +171,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void sendPayments() {
         requestPickupHere();
-        /*RequestQueue queue = Volley.newRequestQueue(mContext);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECK_OUT, response -> {
-            if (response.contains("Successful")) {
-                Toast.makeText(mContext, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                requestPickupHere();
-            } else {
-                Toast.makeText(mContext, "Transaction failed!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            Log.d(TAG, "onResponse: " + response); }
-        , error -> Log.d(TAG, "onResponse: " + error.getMessage())) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                if (paramsHash == null)
-                    return null;
-                Map<String, String> params = new HashMap<>();
-                for (String key : paramsHash.keySet()) {
-                    params.put(key, paramsHash.get(key));
-                }
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                return params;
-            }
-        };
-
-        queue.add(stringRequest);*/
     }
 
     private class getToken extends AsyncTask{
@@ -224,25 +191,6 @@ public class PaymentActivity extends AppCompatActivity {
             mGroupWaiting.setVisibility(View.GONE);
             mGroupPayment.setVisibility(View.VISIBLE);
             HttpClient client = new HttpClient();
-            /*client.get(API_GET_TOKEN, new HttpResponseCallback() {
-                @Override
-                public void success(final String responseBody) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mGroupWaiting.setVisibility(View.GONE);
-                            mGroupPayment.setVisibility(View.VISIBLE);
-
-                            token = responseBody;
-                        }
-                    });
-                }
-
-                @Override
-                public void failure(Exception exception) {
-                    Log.d(TAG, "failure: " + exception.getMessage());
-                }
-            });*/
             return null;
         }
 
@@ -259,14 +207,13 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void requestPickupHere() {
-        /*DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("user");
-        Log.d(TAG, "requestPickupHere: " + tokens.getKey());*/
         myRef.child("Tokens").child(driverID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String token = dataSnapshot.getValue(String.class);
                 String extraData = username + "," + profile_photo + "," + currentLocation;
-                Notification data = new Notification(passengerID, driverID, rideID, extraData, destination);
+                Notification data =
+                        new Notification("Carpool", "Hi, i'm " + username +" and would like to request a seat on your journey!", rideID, extraData, destination);
                 Sender content = new Sender(data, token);
 
                 Log.d(TAG, "onDataChange: " + content);

@@ -11,19 +11,18 @@
         android:layout_margin="5dp"
         android:layout_height="50dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="50dp"
             android:id="@+id/user_id_2"
             android:layout_height="50dp"
-            android:background="@drawable/ic_carpool_members"
-            android:backgroundTint="@color/pink"/>
+            android:src="@drawable/profile_background"/>
 
         <TextView
+            android:id="@+id/user_id_2_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/user_id_2_username"
-            android:text="User 3"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="User 3" />
     </RelativeLayout>
 
 </LinearLayout>

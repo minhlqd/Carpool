@@ -1,6 +1,7 @@
 package com.example.carpool.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.example.carpool.models.OfferRide;
 import com.example.carpool.models.Reminder;
 import com.example.carpool.models.User;
 import com.example.carpool.models.UserReview;
+import com.example.carpool.rides.RidesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +25,7 @@ import java.util.Objects;
 
 public class FirebaseMethods {
 
-    private static final String TAG = "MinhMX";
+    private static final String TAG = "FirebaseMethods";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -74,22 +76,28 @@ public class FirebaseMethods {
         String rideKey = mFirebaseDatabase.getReference().push().getKey();
 
 
-        OfferRide offerRide = new OfferRide(rideKey, driverID, username,destination, currentLocation, dateOfJourney, seatsAvailable, licencePlate,
+        OfferRide offerRide = new OfferRide(rideKey, driverID, username, currentLocation, destination, dateOfJourney, seatsAvailable, licencePlate,
                                             currentlongitude, currentlatitude, sameGender, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost,
                                             completeRides, userRating, duration, pickupLocation);
 
         Log.d(TAG, "offerRide: " + true);
         myRef.child(mContext.getString(R.string.dbName_availableRide))
+                .child(driverID)
                 .child(rideKey)
                 .setValue(offerRide);
     }
 
 
-    public void deleteRide(String rideID){
+    public void deleteRide(String driverID, String rideID, Context context){
 
+        Log.d(TAG, "deleteRide: " + driverID + " " + rideID);
         myRef.child("available_ride")
-            .child(rideID)
-            .removeValue();
+                .child(driverID)
+                .child(rideID)
+                .removeValue();
+
+        Intent intent1 = new Intent(context, RidesActivity.class);
+        context.startActivity(intent1);
 
     }
 

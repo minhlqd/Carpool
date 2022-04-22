@@ -64,9 +64,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            view = (LinearLayout) itemView.findViewById(R.id.view);
-            username = (TextView) itemView.findViewById(R.id.user_id_2_username);
-            profile_photo = (ImageView) itemView.findViewById(R.id.user_id_2);
+            view = itemView.findViewById(R.id.view);
+            username = itemView.findViewById(R.id.user_id_2_username);
+            profile_photo = itemView.findViewById(R.id.user_id_2);
 
         }
     }
