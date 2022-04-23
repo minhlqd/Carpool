@@ -90,13 +90,14 @@ public class SearchResultsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<OfferRide>();
-        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("available_ride").orderByChild("destination").toString());
+        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("available_ride").orderByChild("destination").equalTo(destination).toString());
+
 
         mRef.child("available_ride").orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "onDataChange: " + true);
+                        Log.d(TAG, "onDataChange: " + dataSnapshot.getValue());
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                 OfferRide ride = dataSnapshot1.getValue(OfferRide.class);

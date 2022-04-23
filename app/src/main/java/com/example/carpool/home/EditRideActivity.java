@@ -1,8 +1,8 @@
 package com.example.carpool.home;
 
+import static com.example.carpool.utils.Utils.formatValue;
+
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +23,6 @@ import com.example.carpool.R;
 import com.example.carpool.models.Info;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
-import com.example.carpool.dialogs.OfferRideCreatedDialog;
 import com.example.carpool.models.User;
 import com.firebase.geofire.GeoFire;
 //import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch;
@@ -66,16 +65,36 @@ public class EditRideActivity extends AppCompatActivity {
     private MaterialAnimatedSwitch mSameGender;
     private Button mSnippetOfferRideButton;
     private Boolean sameGenderBoolean = false;
-    private Calendar mCalandar;
+    private Calendar mCalendar;
     private DatePickerDialog.OnDateSetListener date;
     private CircleImageView mCarPhoto;
-    private TextView mLicencePlateEditText, mCarEditText, mSeatsEditText, mDestinationEditText, mFromEditText, mUsername, durationTxt;
+    private TextView mLicencePlateEditText;
+    private TextView mCarEditText;
+    private TextView mSeatsEditText;
+    private TextView mDestinationEditText;
+    private TextView mFromEditText;
+    private TextView mUsername;
+    private TextView durationTxt;
 
 
     //vars
     private User mUserSettings;
-    private String destinationId, locationId, profile_photo, username, pickupTimeID, costID, dateOfJourneyID, lengthOfJourneyID,
-            extraTimeID, licencePlateID, carID, luggageID, destinationId2, locationId2, duration, pickupLocation;
+    private String destination;
+    private String location;
+    private String profile_photo;
+    private String username;
+    private String pickupTime;
+    private Long cost;
+    private String dateOfJourney;
+    private String lengthOfJourneyID;
+    private String extraTime;
+    private String licencePlate;
+    private String car;
+    private String luggageID;
+    private String destinationId2;
+    private String locationId2;
+    private String duration;
+    private String pickupLocation;
     private float userRating;
     private int seatsID;
     private int completeRides;
@@ -103,8 +122,8 @@ public class EditRideActivity extends AppCompatActivity {
         setupFirebaseAuth();
 
         mUsername = (TextView) findViewById(R.id.usernameTxt);
-        mDestinationEditText = (TextView) findViewById(R.id.destinationEditText);
-        mFromEditText = (TextView) findViewById(R.id.fromEditText);
+        mDestinationEditText = (TextView) findViewById(R.id.destination);
+        mFromEditText = (TextView) findViewById(R.id.location);
         mCostEditText = (EditText) findViewById(R.id.costEditText);
         mLicencePlateEditText = (TextView) findViewById(R.id.licencePlateEditText);
         mExtraTimeEditText = (EditText) findViewById(R.id.extraTimeEditText);
@@ -120,20 +139,20 @@ public class EditRideActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, 0);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(EditRideActivity.this, date, mCalandar
-                    .get(Calendar.YEAR), mCalandar.get(Calendar.MONTH),
-                    mCalandar.get(Calendar.DAY_OF_MONTH));
+            DatePickerDialog datePickerDialog = new DatePickerDialog(EditRideActivity.this, date, mCalendar
+                    .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
             datePickerDialog.show();
         });
 
-        mFromEditText.setText(locationId);
-        mDestinationEditText.setText(destinationId);
-        mCostEditText.setText(costID);
-        mExtraTimeEditText.setText(extraTimeID);
+        mFromEditText.setText(location);
+        mDestinationEditText.setText(destination);
+        mCostEditText.setText(formatValue(cost));
+        mExtraTimeEditText.setText(extraTime);
 //        mSeatsEditText.setText(seatsID);
-        mDateOfJourneyEditText.setText(dateOfJourneyID);
-        mPickupEditText.setText(pickupTimeID);
+        mDateOfJourneyEditText.setText(dateOfJourney);
+        mPickupEditText.setText(pickupTime);
         durationTxt.setText(duration);
         mPickupLocationEditText.setText(pickupLocation);
         Log.d(TAG, "onCreate: " + pickupLocation +" "  + mPickupLocationEditText.getText().toString());
@@ -151,7 +170,7 @@ public class EditRideActivity extends AppCompatActivity {
 
         mSnippetOfferRideButton = (Button) findViewById(R.id.snippetOfferRideButton);
         mSnippetOfferRideButton.setOnClickListener(v -> {
-            int cost = Integer.parseInt(mCostEditText.getText().toString());
+            //int cost = Integer.parseInt(mCostEditText.getText().toString());
             String dateOfJourney = mDateOfJourneyEditText.getText().toString();
             int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
             int seatsAvailable = seatsID;
@@ -165,8 +184,7 @@ public class EditRideActivity extends AppCompatActivity {
             String from = mFromEditText.getText().toString();
             String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
-            if(!isStringNull(pickupTime) && pickupTime != null &&
-                    !isIntNull(cost) && cost != 0 &&
+            if(!isStringNull(pickupTime) && pickupTime != null && cost != 0 &&
                     !isStringNull(dateOfJourney) && dateOfJourney != null
                     && !isIntNull(extraTime)){
 
@@ -221,22 +239,22 @@ public class EditRideActivity extends AppCompatActivity {
         String dateFormat = "dd/MM/yy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.UK);
 
-        mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalandar.getTime()));
+        mDateOfJourneyEditText.setText(simpleDateFormat.format(mCalendar.getTime()));
     }
 
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-                destinationId = getIntent().getStringExtra("DESTINATION");
-                locationId = getIntent().getStringExtra("LOCATION");
-                pickupTimeID = getIntent().getStringExtra("PICKUPTIME");
-                costID = getIntent().getStringExtra("COST");
-                dateOfJourneyID = getIntent().getStringExtra("DATE");
+                destination = getIntent().getStringExtra("DESTINATION");
+                location = getIntent().getStringExtra("LOCATION");
+                pickupTime = getIntent().getStringExtra("PICKUPTIME");
+                cost = getIntent().getLongExtra("COST", 0);
+                dateOfJourney = getIntent().getStringExtra("DATE");
                 lengthOfJourneyID = getIntent().getStringExtra("LENGTH");
-                extraTimeID = getIntent().getStringExtra("EXTRATIME");
+                extraTime = getIntent().getStringExtra("EXTRATIME");
                // seatsID = getIntent().getStringExtra("SEATS");
-                licencePlateID = getIntent().getStringExtra("LICENCE");
-                carID = getIntent().getStringExtra("CAR");
+                licencePlate = getIntent().getStringExtra("LICENCE");
+                car = getIntent().getStringExtra("CAR");
                 luggageID = getIntent().getStringExtra("LUGGAGE");
                 locationId2 = getIntent().getStringExtra("FROM2");
                 duration = getIntent().getStringExtra("LENGTH");
@@ -255,25 +273,25 @@ public class EditRideActivity extends AppCompatActivity {
         userRating = info.getUserRating();
         completeRides = info.getCompletedRides();
         profile_photo = info.getProfilePhoto();
-        carID = info.getCar();
+        car = info.getCar();
         seatsID = info.getSeats() - 1;
-        licencePlateID = info.getRegistrationPlate();
+        licencePlate = info.getRegistrationPlate();
 
         mUsername.setText(username);
-        mLicencePlateEditText.setText(licencePlateID);
-        mDestinationEditText.setText(destinationId);
-        mFromEditText.setText(locationId);
-        mCarEditText.setText(carID);
+        mLicencePlateEditText.setText(licencePlate);
+        mDestinationEditText.setText(destination);
+        mFromEditText.setText(location);
+        mCarEditText.setText(car);
         mSeatsEditText.setText(String.valueOf(seatsID) + " Seats left!");
         durationTxt.setText("Duration: "+ ApplicationContext.getDuration());
 
-        mCalandar = Calendar.getInstance();
+        mCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mCalandar.set(Calendar.YEAR, year);
-                mCalandar.set(Calendar.MONTH, month);
-                mCalandar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, month);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
             }
         };

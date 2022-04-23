@@ -16,7 +16,7 @@ public class Ride {
     private int completeRides;
     private int seatsAvailable;
     private int extraTime;
-    private int cost;
+    private long cost;
     private float userRating;
     private String duration;
     private String driverID;
@@ -102,11 +102,11 @@ public class Ride {
         this.dateOfJourney = dateOfJourney;
     }
 
-    public int getCost() {
+    public long getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 

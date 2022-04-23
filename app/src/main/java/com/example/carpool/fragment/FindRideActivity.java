@@ -2,7 +2,6 @@ package com.example.carpool.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,8 +63,8 @@ public class FindRideActivity extends AppCompatActivity {
     }
 
     private void setupWidgets() {
-        mDestinationEditText = (EditText) findViewById(R.id.destinationEditText);
-        mFromEditText = (EditText) findViewById(R.id.fromEditText);
+        mDestinationEditText = (EditText) findViewById(R.id.destination);
+        mFromEditText = (EditText) findViewById(R.id.location);
     }
 
     private void getActivityData() {

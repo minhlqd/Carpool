@@ -45,18 +45,6 @@
         app:layout_constraintTop_toBottomOf="@+id/displayUsername" />
 
 
-    <TextView
-        android:id="@+id/rides_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="5dp"
-        android:text=""
-        android:textColor="@color/email_heading"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayUsername" />
-
     <ImageView
         android:id="@+id/leaderboards"
         android:layout_width="25dp"

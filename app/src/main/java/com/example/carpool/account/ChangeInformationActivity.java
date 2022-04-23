@@ -66,7 +66,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_update_details);
+        setContentView(R.layout.activity_change_information);
         mProfilePhoto = findViewById(R.id.profile_change);
         mUsername = findViewById(R.id.usernameEditText);
         mFullName = findViewById(R.id.fullnameEditText);

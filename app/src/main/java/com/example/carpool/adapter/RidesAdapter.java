@@ -1,5 +1,7 @@
 package com.example.carpool.adapter;
 
+import static com.example.carpool.utils.Utils.formatValue;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -57,14 +59,14 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         final String userID = ride.get(position).getUserId();
 
         final String username = ride.get(position).getUsername();
-        final String rides = ride.get(position).getCompleteRides() + " Rides";
-        final String seats = ride.get(position).getSeatsAvailable() + " Seats Left!";
+        //final String rides = ride.get(position).getCompleteRides();
+        final String seats = ride.get(position).getSeatsAvailable() + " " + mContext.getString(R.string.seats_left);
         String from = mContext.getString(R.string.from) + ride.get(position).getCurrentLocation();
         String to = mContext.getString(R.string.to) + ride.get(position).getDestination();
-        final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime() + " PM";
+        final String date = parseDateToddMMyyyy(ride.get(position).getDateOfJourney()) + " - " + ride.get(position).getPickupTime();
         final float rating = ride.get(position).getUserRating();
-        final String dateOnly = ride.get(position).getPickupTime() + " PM";
-        final String extraTime = ride.get(position).getExtraTime() + " mins";
+        final String dateOnly = ride.get(position).getPickupTime();
+        final String extraTime = String.valueOf(ride.get(position).getExtraTime());
         final String fromOnly = parseLocation(ride.get(position).getCurrentLocation());
         final String toOnly = parseLocation(ride.get(position).getDestination());
         final String rideID = ride.get(position).getRideID();
@@ -74,13 +76,10 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
 
 
         Log.d("MinhMX", "onBindViewHolder: " +ride.get(position).getPickupLocation() );
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        format.setMaximumFractionDigits(0);
-        format.setCurrency(Currency.getInstance("VND"));
-        final String cost = format.format(ride.get(position).getCost());
+        final String cost = formatValue(ride.get(position).getCost());
 
 
-        holder.rides.setText(rides);
+        //holder.rides.setText(rides);
         holder.seats.setText(seats);
         if (to.length() > 20){
             to = to.substring(0 , 19);
@@ -103,7 +102,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
 
         UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");
 
-        Log.d("RidesAdapter", "onBindViewHolder: " + ride.get(position).getUserRating() + " " + rating);
+        Log.d("RidesAdapter", "onBindViewHolder: " + ride.get(position).getProfile_picture() + " " + rating);
 
         holder.view.setOnClickListener(view -> {
             Log.d("MinhMX", "onBindViewHolder: "+ userID);
@@ -112,12 +111,12 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
                             mContext,
                             rideID ,
                             username,
-                            rides,
+                            "",
                             seats,
                             fromOnly,
                             toOnly,
                             date,
-                            String.valueOf(ride.get(position).getCost()),
+                            ride.get(position).getCost(),
                             rating,
                             dateOnly,
                             String.valueOf(ride.get(position).getExtraTime()), duration, completeRides, pickupLocation ,userID, ride.get(position).getProfile_picture(), ride.get(position).getDriverID());

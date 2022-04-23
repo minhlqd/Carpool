@@ -39,14 +39,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity {
+
+    int COST_2KM_1ST = 12000;
+    int COST_PER_KM = 3800;
+    double p = 0.3;
 
     private static final String TAG = "OfferRideFragment";
     private OfferRideFragment mContext;
@@ -61,7 +67,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
     //Widgets
     private EditText mDateOfJourneyEditText;
-    private EditText mCostEditText;
+    private TextView mCost;
     private EditText mPickupEditText;
     private EditText mExtraTimeEditText;
     private EditText mLuggageEditText;
@@ -75,20 +81,20 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private TextView mLicencePlateEditText;
     private TextView mCarEditText;
     private TextView mSeatsEditText;
-    private TextView mDestinationEditText;
-    private TextView mFromEditText;
+    private TextView mDestinationTv;
+    private TextView mLocationTv;
     private TextView mUsername;
     private TextView durationTxt;
 
 
     //vars
     private User mUserSettings;
-    private String destinationId;
-    private String locationId;
+    private String destination;
+    private String location;
     private String profile_photo;
     private String username;
     private String pickupTimeID;
-    private String costID;
+    private long cost;
     private String dateOfJourneyID;
     private String lengthOfJourneyID;
     private String extraTimeID;
@@ -102,6 +108,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     private int completeRides;
     private double currentLatitude, currentLongtitude;
     private LatLng currentLocation;
+    private double distance;
 
 
     //GeoFire
@@ -124,9 +131,9 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         setupFirebaseAuth();
 
         mUsername = findViewById(R.id.usernameTxt);
-        mDestinationEditText = findViewById(R.id.destinationEditText);
-        mFromEditText = findViewById(R.id.fromEditText);
-        mCostEditText = findViewById(R.id.costEditText);
+        mDestinationTv = findViewById(R.id.destination);
+        mLocationTv = findViewById(R.id.location);
+        mCost = findViewById(R.id.costEditText);
         mLicencePlateEditText = findViewById(R.id.licencePlateEditText);
         mExtraTimeEditText = findViewById(R.id.extraTimeEditText);
         mSeatsEditText = findViewById(R.id.seatsEditText);
@@ -199,7 +206,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
         mSnippetOfferRideButton = findViewById(R.id.snippetOfferRideButton);
         mSnippetOfferRideButton.setOnClickListener(v -> {
-            int cost = Integer.parseInt(mCostEditText.getText().toString());
+
             String dateOfJourney = mDateOfJourneyEditText.getText().toString();
             int extraTime = Integer.parseInt(mExtraTimeEditText.getText().toString());
             int seatsAvailable = seatsID;
@@ -209,11 +216,11 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
             String pickupLocation = mPickupLocationEditText.getText().toString();
             String pickupTime = mPickupEditText.getText().toString();
             String car = mCarEditText.getText().toString();
-            String destination = mDestinationEditText.getText().toString();
-            String location = mFromEditText.getText().toString();
+            String destination = mDestinationTv.getText().toString();
+            String location = mLocationTv.getText().toString();
             String duration = durationTxt.getText().toString().replaceAll("Duration: " , "");
 
-            if(!isStringNull(pickupTime) && !isIntNull(cost) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
+            if(!isStringNull(pickupTime) && cost != 0 && !isStringNull(dateOfJourney) && !isIntNull(extraTime)){
                 mFirebaseMethods.offerRide(driverID, username, location, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
                         sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
 
@@ -262,8 +269,10 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         if (extras != null) {
           //  if (extras.containsKey("DESTINATION")){
                 //from Home view passed to this class
-                locationId = getIntent().getStringExtra("LOCATION");
-                destinationId = getIntent().getStringExtra("DESTINATION");
+                location = getIntent().getStringExtra("LOCATION");
+                destination = getIntent().getStringExtra("DESTINATION");
+                distance = getIntent().getDoubleExtra("distance", 0);
+                Log.d(TAG, "getActivityData: " + distance + " " + location + " " + destination);
                 Bundle b = getIntent().getExtras();
                 currentLocation = b.getParcelable("LatLng");
         }
@@ -286,8 +295,8 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
         mUsername.setText(username);
         mLicencePlateEditText.setText(licencePlateID);
-        mDestinationEditText.setText(destinationId);
-        mFromEditText.setText(locationId);
+        mDestinationTv.setText(destination);
+        mLocationTv.setText(location);
         mCarEditText.setText(carID);
         mSeatsEditText.setText(seatsID + " " +getString(R.string.seats_left));
         durationTxt.setText("Duration: "+ ApplicationContext.getDuration());
@@ -299,6 +308,18 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
             mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateLabel();
         };
+
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+        format.setCurrency(Currency.getInstance("VND"));
+        distance = Math.floor(distance);
+        if (distance < 2) {
+            cost = COST_2KM_1ST;
+        } else {
+            cost = (long) (COST_2KM_1ST + Math.round(COST_PER_KM * (distance - 2)));
+        }
+        mCost.setText(format.format(cost + cost*2 * (1-p)));
+        cost = (long) Math.round(cost + cost*2 * (1-p));
     }
 
 

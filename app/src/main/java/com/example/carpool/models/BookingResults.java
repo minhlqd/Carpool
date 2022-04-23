@@ -14,12 +14,12 @@ public class BookingResults {
     private String pickupTime;
     private String dateOfJourney;
     private String licencePlate;
-    private int cost;
+    private long cost;
 
     public BookingResults() {
     }
 
-    public BookingResults(String passengerID, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, int cost, String pickupLocation) {
+    public BookingResults(String passengerID, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, long cost, String pickupLocation) {
         this.passengerID = passengerID;
         this.profile_photo = profile_photo;
         this.username = username;
@@ -116,11 +116,11 @@ public class BookingResults {
         this.licencePlate = licencePlate;
     }
 
-    public int getCost() {
+    public long getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 

@@ -16,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
+import java.util.Currency;
+
 public class Utils {
     public static final String KEY_LOCATION = "location";
 
@@ -90,5 +93,12 @@ public class Utils {
         if (request > 0){
             BottomNavigationViewHelper.addBadgeRequest(context, bottomNavigationView, request);
         }
+    }
+
+    public static String formatValue(long value) {
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+        format.setCurrency(Currency.getInstance("VND"));
+        return format.format(value);
     }
 }

@@ -90,7 +90,7 @@ public class RidesActivity extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference().child("available_ride");
 
-        mRef.child(driverID)
+        mRef.orderByChild(driverID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

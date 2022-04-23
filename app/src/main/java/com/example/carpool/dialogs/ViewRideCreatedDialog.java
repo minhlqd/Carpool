@@ -1,5 +1,7 @@
 package com.example.carpool.dialogs;
 
+import static com.example.carpool.utils.Utils.formatValue;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -56,7 +58,7 @@ public class ViewRideCreatedDialog extends Dialog implements
     private final String from;
     private final String to;
     private final String date;
-    private final String cost;
+    private final long cost;
     private final String username;
     private final String dateOnly;
     private final String extraTime;
@@ -83,7 +85,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         mViewProfileBtn.setOnClickListener(this);
     }
 
-    public ViewRideCreatedDialog(Context a, String rideID, String username, String rides, String seats, String from, String to, String date, String cost, Float rating, String dateOnly, String extraTime,
+    public ViewRideCreatedDialog(Context a, String rideID, String username, String rides, String seats, String from, String to, String date, long cost, Float rating, String dateOnly, String extraTime,
                                  String duration, String ridesCompleted, String pickupLocation, String userID, String photo, String driverID) {
         super(a);
         this.c = a;
@@ -186,7 +188,7 @@ public class ViewRideCreatedDialog extends Dialog implements
 
         photoView = findViewById(R.id.profile_logo_1);
 
-        mCost.setText(cost);
+        mCost.setText(formatValue(cost));
         mUsername.setText(username);
         mRatingBar.setRating(rating);
         mDepartureTime.setText(dateOnly);

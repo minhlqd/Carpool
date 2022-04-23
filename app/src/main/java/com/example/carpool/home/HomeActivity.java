@@ -139,6 +139,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polyline currentPolyline;
     private MarkerOptions location, destination;
     private LatLng currentLocation, preLocation;
+    private LatLng currLocation;
 
     private String directionsRequestUrl;
     private String userID;
@@ -165,6 +166,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Boolean carOwner;
     private String typeOfAction;
+
+    private double distance;
 
     @SuppressLint({"ClickableViewAccessibility", "MissingPermission"})
     @Override
@@ -239,8 +242,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 offerRideActivity.putExtra("DESTINATION", destinationTextview.getText().toString());
                 offerRideActivity.putExtra("currentLatitue", currentLatitude);
                 offerRideActivity.putExtra("currentLongtitude", currentLongtitude);
+                offerRideActivity.putExtra("distance", distance);
+                Log.d(TAG, "onCreate: " + locationTextView.getText().toString() + "\n" + destinationTextview.getText().toString());
                 Bundle b = new Bundle();
-                b.putParcelable("LatLng", currentLocation);
+                b.putParcelable("LatLng", currLocation);
                 offerRideActivity.putExtras(b);
                 startActivity(offerRideActivity);
             } else if (whichIndex == R.id.findButton && destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
@@ -622,7 +627,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private LatLng fromLatlng;
 
     private void moveCamera(LatLng latLng, float zoom, PlaceInfo placeInfo, String typeOfAction) {
         Log.d(TAG, "moveCamera: moving the camera to place: lat:" + latLng.latitude + ", lng: " + latLng.longitude);
@@ -646,7 +650,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .title(placeInfo.getName())
                             .snippet(snippet);
 
-                    fromLatlng = latLng;
+                    //fromLatlng = latLng;
 
                     Log.d(TAG, "moveCamera: place1: " + location);
 
@@ -667,7 +671,24 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     directionsRequestUrl = getUrl(location.getPosition(), destination.getPosition());
 
                     //findDirections(fromLatlng.latitude, fromLatlng.longitude, latLng.latitude, latLng.longitude, MODE_DRIVING);
-                    Log.d("MinhMX", "moveCamera: " + directionsRequestUrl);
+
+                    float [] results = new float[10000];
+                    Location.distanceBetween(
+                            location.getPosition().latitude,
+                            location.getPosition().longitude,
+                            destination.getPosition().latitude,
+                            destination.getPosition().longitude,
+                            results);
+
+                    // tinh khoang cach
+                    Location l = new Location("location");
+                    l.setLatitude(location.getPosition().latitude);
+                    l.setLongitude(location.getPosition().longitude);
+                    Location d = new Location("destination");
+                    d.setLatitude(destination.getPosition().latitude);
+                    d.setLongitude(destination.getPosition().longitude);
+                    distance = l.distanceTo(d)/1000;
+
                     new FetchURL(HomeActivity.this, mMap).execute(getUrl(location.getPosition(), destination.getPosition()), "driving");
                 }
 
@@ -922,59 +943,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-
-
-    /*private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(@NonNull PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                Log.d(TAG, "onResult: Place query did not complete successfully: " + places.getStatus().toString());
-                places.release();
-                return;
-            }
-            final Place place = places.get(0);
-
-            try {
-
-                mPlace = new PlaceInfo();
-                mPlace.setName(place.getName().toString());
-                Log.d(TAG, "onResult: name: " + place.getName());
-                mPlace.setAddress(place.getAddress().toString());
-                Log.d(TAG, "onResult: address: " + place.getAddress());
-                // mPlace.setAttributions(place.getAttributions().toString());
-                //Log.d(TAG, "onResult: attributions: " + place.getAttributions());
-                mPlace.setId(place.getId());
-                Log.d(TAG, "onResult: id: " + place.getId());
-                mPlace.setLatLng(place.getLatLng());
-                Log.d(TAG, "onResult: latLng: " + place.getLatLng());
-                mPlace.setRating(place.getRating());
-                Log.d(TAG, "onResult: rating: " + place.getRating());
-                mPlace.setPhoneNumber(place.getPhoneNumber().toString());
-                Log.d(TAG, "onResult: phoneNumber: " + place.getPhoneNumber());
-                mPlace.setWebsiteUri(place.getWebsiteUri());
-                Log.d(TAG, "onResult: websiteUri: " + place.getWebsiteUri());
-                Log.d(TAG, "onResult: place: " + mPlace.toString());
-
-                if (destinationTextview.isFocused()) {
-                    currentLocation = mPlace.getLatLng();
-                }
-
-            } catch (NullPointerException e) {
-                Log.e(TAG, "onResult: NullPointerException: " + e.getMessage());
-            }
-
-            moveCamera(new LatLng(place.getViewport().getCenter().latitude,
-                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM, mPlace);
-
-            places.release();
-
-        }
-    };*/
-
-    /*
-     * Permission locations
-     * */
-
     private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: get location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
@@ -1178,6 +1146,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
             if (location != null) {
                 currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                currLocation = new LatLng(location.getLatitude(), location.getLongitude());
             }
         });
     }

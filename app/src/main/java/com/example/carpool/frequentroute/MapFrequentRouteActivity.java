@@ -1,4 +1,4 @@
-package com.example.carpool.FrequentRoute;
+package com.example.carpool.frequentroute;
 
 import android.os.Bundle;
 import android.view.View;

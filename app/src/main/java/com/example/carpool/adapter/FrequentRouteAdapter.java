@@ -15,7 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.carpool.FrequentRoute.MapFrequentRouteActivity;
+import com.example.carpool.frequentroute.MapFrequentRouteActivity;
 import com.example.carpool.R;
 import com.example.carpool.models.FrequentRouteResults;
 

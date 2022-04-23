@@ -94,17 +94,15 @@
                         android:id="@+id/costHeadingTxt"
                         android:text="@string/cost" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/costEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@android:color/transparent"
                         android:hint="@string/money"
-                        android:inputType="number"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/ridersHeadingTxt"
@@ -237,12 +235,12 @@
                         android:text="@string/from" />
 
                     <TextView
-                        android:id="@+id/destinationEditText"
+                        android:id="@+id/location"
                         android:layout_width="100dp"
-                        android:singleLine="true"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/locationTxt"
                         android:layout_marginStart="30dp"
+                        android:singleLine="true"
                         android:text="@string/location"
                         android:textSize="14sp" />
 
@@ -256,12 +254,12 @@
                         android:text="@string/to" />
 
                     <TextView
-                        android:id="@+id/fromEditText"
+                        android:id="@+id/destination"
                         android:layout_width="100dp"
-                        android:singleLine="true"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/locationTxt"
                         android:layout_marginStart="180dp"
+                        android:singleLine="true"
                         android:text="@string/location"
                         android:textSize="14sp" />
 

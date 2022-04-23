@@ -200,10 +200,6 @@ public class AccountActivity extends AppCompatActivity {
 
     private void setupFragments() {
         pageAdapter = new SectionsStatePageAdapter(getSupportFragmentManager());
-        pageAdapter.addFragment(new EmailUpdateFragment(), getString(R.string.edit_email));
-        pageAdapter.addFragment(new PasswordUpdateFragment(), getString(R.string.edit_password));
-        pageAdapter.addFragment(new DetailsUpdateFragment(),  getString(R.string.edit_details));
-        pageAdapter.addFragment(new CarUpdateFragment(),  getString(R.string.car_information));
     }
 
     private void setViewPager(int fragmentNumber) {
@@ -224,7 +220,6 @@ public class AccountActivity extends AppCompatActivity {
         profilePhoto = findViewById(R.id.profile_image);
         mDisplayUsername = findViewById(R.id.displayUsername);
         mEmail = findViewById(R.id.email_textview);
-        mCompleteRides = findViewById(R.id.rides_textview);
         mSettingsBtn = findViewById(R.id.settingsBtn);
         mHelpBtn = findViewById(R.id.helpBtn);
         mRatingBar = findViewById(R.id.ratingBar);
@@ -238,7 +233,6 @@ public class AccountActivity extends AppCompatActivity {
         UniversalImageLoader.setImage(info.getProfilePhoto(), profilePhoto, null,"");
 
         mDisplayUsername.setText(user.getUsername());
-        mCompleteRides.setText(info.getCompletedRides() + " rides");
         mEmail.setText(user.getEmail());
         mRatingBar.setRating(info.getUserRating());
     }

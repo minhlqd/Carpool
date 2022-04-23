@@ -71,7 +71,7 @@ public class FirebaseMethods {
 
     public void offerRide(String driverID, String username, String currentLocation, String destination, String dateOfJourney,
                           int seatsAvailable, String licencePlate, double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car,
-                          String pickupTime, int extraTime, String profile_photo, int cost, int completeRides, float userRating, String duration, String pickupLocation){
+                          String pickupTime, int extraTime, String profile_photo, long cost, int completeRides, float userRating, String duration, String pickupLocation){
 
         String rideKey = mFirebaseDatabase.getReference().push().getKey();
 
@@ -82,7 +82,6 @@ public class FirebaseMethods {
 
         Log.d(TAG, "offerRide: " + true);
         myRef.child(mContext.getString(R.string.dbName_availableRide))
-                .child(driverID)
                 .child(rideKey)
                 .setValue(offerRide);
     }

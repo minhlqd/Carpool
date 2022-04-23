@@ -63,8 +63,8 @@
             android:required="false" />
 
         <activity android:name=".account.AccountActivity" />
-        <activity android:name=".FrequentRoute.FrequentRouteActivity" />
-        <activity android:name=".FrequentRoute.MapFrequentRouteActivity" />
+        <activity android:name=".frequentroute.FrequentRouteActivity" />
+        <activity android:name=".frequentroute.MapFrequentRouteActivity" />
         <activity
             android:name=".login.RegisterActivity"
             android:windowSoftInputMode="adjustResize" />

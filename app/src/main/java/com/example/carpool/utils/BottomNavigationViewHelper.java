@@ -2,7 +2,6 @@ package com.example.carpool.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,12 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.carpool.FrequentRoute.FrequentRouteActivity;
+import com.example.carpool.frequentroute.FrequentRouteActivity;
 import com.example.carpool.account.AccountActivity;
 import com.example.carpool.booked.BookedActivity;
 import com.example.carpool.home.HomeActivity;
 import com.example.carpool.R;
-import com.example.carpool.reminder.ReminderActivity;
 import com.example.carpool.rides.RidesActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;

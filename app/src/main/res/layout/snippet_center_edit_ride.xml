@@ -235,7 +235,7 @@
                         android:text="@string/from" />
 
                     <TextView
-                        android:id="@+id/destinationEditText"
+                        android:id="@+id/destination"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/locationTxt"
@@ -254,7 +254,7 @@
                         android:text="@string/to" />
 
                     <TextView
-                        android:id="@+id/fromEditText"
+                        android:id="@+id/location"
                         android:layout_width="100dp"
                         android:singleLine="true"
                         android:layout_height="wrap_content"

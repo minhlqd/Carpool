@@ -123,7 +123,7 @@ public class SearchRideActivity extends AppCompatActivity {
         mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(this);
 
-        mDestinationEditText = (EditText) findViewById(R.id.destinationEditText);
+        mDestinationEditText = (EditText) findViewById(R.id.destination);
         mLocationEditText = (EditText) findViewById(R.id.locationEditText);
         mDateOfJourneyEditText = (EditText) findViewById(R.id.dateEditText);
         mSameGenderSearchLinearLayout = (LinearLayout) findViewById(R.id.linear);
