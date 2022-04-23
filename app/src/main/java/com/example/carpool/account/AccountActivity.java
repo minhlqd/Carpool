@@ -113,9 +113,10 @@ public class AccountActivity extends AppCompatActivity {
 
         checkNotifications(mRef, userID, mContext, bottomNavigationView);
 
-        mEmailUpdate.setOnClickListener(v ->
-            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new EmailUpdateFragment()).commit()
-        );
+        mEmailUpdate.setOnClickListener(v ->{
+            Intent intent = new Intent(mContext, ChangeEmailActivity.class);
+            startActivity(intent);
+        });
 
         mSettingsBtn.setOnClickListener(v -> {
             Intent intent = new Intent(AccountActivity.this, SettingsActivity.class);
@@ -134,12 +135,14 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        mPasswordUpdate.setOnClickListener(v ->
-            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new PasswordUpdateFragment()).commit()
-        );
+        mPasswordUpdate.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ChangePasswordActivity.class);
+            startActivity(intent);
+        });
 
         mDetailsUpdate.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction().replace(R.id.account_content, new DetailsUpdateFragment()).commit();
+            Intent intent = new Intent(mContext, ChangeInformationActivity.class);
+            startActivity(intent);
         });
 
         mInformation.setOnClickListener(v -> {

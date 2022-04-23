@@ -28,6 +28,16 @@
             android:name=".login.ForgotPasswordActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".account.ChangeInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.ChangeEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.ChangePasswordActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_api" />

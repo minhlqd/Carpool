@@ -20,12 +20,11 @@
         android:layout_gravity="center">
 
         <ImageView
+            android:id="@+id/notFoundIcon"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:id="@+id/notFoundIcon"
-            android:src="@drawable/ic_no_booked"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/sad" />
 
         <TextView
             android:layout_width="match_parent"

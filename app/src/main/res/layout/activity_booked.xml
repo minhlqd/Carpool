@@ -12,10 +12,11 @@
 
 
         <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relativeLayout2">
-            <include layout="@layout/layout_center_booked"/>
+            android:layout_height="match_parent">
+
+            <include layout="@layout/layout_center_booked" />
         </RelativeLayout>
 
         <include layout="@layout/layout_bottom_navigation_view"/>
