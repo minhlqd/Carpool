@@ -63,7 +63,6 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: started.");
         setContentView(R.layout.activity_pickup);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -138,7 +137,6 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
      * sets up map from the view
      */
     private void initMap() {
-        Log.d(TAG, "initMap: initializing map");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.pickupMap);
         mapFragment.getMapAsync(PickupActivity.this);

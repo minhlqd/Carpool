@@ -1,5 +1,7 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.USER;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -173,7 +175,7 @@ public class CarUpdateActivity extends AppCompatActivity {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child("user")
+                .child(USER)
                 .orderByChild(getString(R.string.field_username))
                 .equalTo(username);
 

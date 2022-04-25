@@ -155,7 +155,6 @@ public class EditRideActivity extends AppCompatActivity {
         mPickupEditText.setText(pickupTime);
         durationTxt.setText(duration);
         mPickupLocationEditText.setText(pickupLocation);
-        Log.d(TAG, "onCreate: " + pickupLocation +" "  + mPickupLocationEditText.getText().toString());
 
         mSameGender = (MaterialAnimatedSwitch) findViewById(R.id.genderSwitch);
 

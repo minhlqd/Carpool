@@ -1,5 +1,12 @@
 package com.example.carpool.home;
 
+import static com.example.carpool.utils.Utils.INFO;
+import static com.example.carpool.utils.Utils.KEY_DESTINATION;
+import static com.example.carpool.utils.Utils.KEY_DISTANCE;
+import static com.example.carpool.utils.Utils.KEY_LAT;
+import static com.example.carpool.utils.Utils.KEY_LNG;
+import static com.example.carpool.utils.Utils.KEY_LOCATION;
+import static com.example.carpool.utils.Utils.LAT_LNG;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
 import android.Manifest;
@@ -174,7 +181,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Log.d(TAG, "onCreate: starting.");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -235,25 +241,26 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         mSearchBtn.setOnClickListener(v -> {
+            String txtLocation = locationTextView.getText().toString();
+            String txtDestination = destinationTextview.getText().toString();
             int whichIndex = mRideSelectionRadioGroup.getCheckedRadioButtonId();
             if (whichIndex == R.id.offerButton && destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
-                Intent offerRideActivity = new Intent(mContext, OfferRideFragment.class);
-                offerRideActivity.putExtra("LOCATION", locationTextView.getText().toString());
-                offerRideActivity.putExtra("DESTINATION", destinationTextview.getText().toString());
-                offerRideActivity.putExtra("currentLatitue", currentLatitude);
-                offerRideActivity.putExtra("currentLongtitude", currentLongtitude);
-                offerRideActivity.putExtra("distance", distance);
-                Log.d(TAG, "onCreate: " + locationTextView.getText().toString() + "\n" + destinationTextview.getText().toString());
+                Intent offerRideActivity = new Intent(mContext, CreateRideActivity.class);
+                offerRideActivity.putExtra(KEY_LOCATION, txtLocation);
+                offerRideActivity.putExtra(KEY_DESTINATION, txtDestination);
+                offerRideActivity.putExtra(KEY_LAT, currentLatitude);
+                offerRideActivity.putExtra(KEY_LNG, currentLongtitude);
+                offerRideActivity.putExtra(KEY_DISTANCE, distance);
                 Bundle b = new Bundle();
-                b.putParcelable("LatLng", currLocation);
+                b.putParcelable(LAT_LNG, currLocation);
                 offerRideActivity.putExtras(b);
                 startActivity(offerRideActivity);
             } else if (whichIndex == R.id.findButton && destinationTextview.getText().toString().trim().length() > 0 && locationTextView.getText().toString().trim().length() > 0) {
                 Intent findRideActivity = new Intent(mContext, SearchRideActivity.class);
-                findRideActivity.putExtra("LOCATION", locationTextView.getText().toString());
-                findRideActivity.putExtra("DESTINATION", destinationTextview.getText().toString());
-                findRideActivity.putExtra("currentLatitue", currentLatitude);
-                findRideActivity.putExtra("currentLongtitude", currentLongtitude);
+                findRideActivity.putExtra(KEY_LOCATION, txtLocation);
+                findRideActivity.putExtra(KEY_DESTINATION, txtDestination);
+                findRideActivity.putExtra(KEY_LAT, currentLatitude);
+                findRideActivity.putExtra(KEY_LNG, currentLongtitude);
                 startActivity(findRideActivity);
             } else if (whichIndex == R.id.shareButton) {
 
@@ -349,9 +356,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         boolean firstrun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("firstrun", true);
         if (firstrun) {
-            //... Display the dialog message here ...
             setupDialog();
-            // Save the state
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .edit()
                     .putBoolean("firstrun", false)
@@ -364,10 +369,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mDirectionsBtn.setOnClickListener(v -> {
             if (location != null && destination != null) {
-                Log.d(TAG, "onCreate: " + location + " " + destination);
                 directionsRequestUrl = getUrl(location.getPosition(), destination.getPosition());
-
-                Log.d("MinhMX", "moveCamera: " + directionsRequestUrl);
                 new FetchURL(HomeActivity.this, mMap).execute(getUrl(location.getPosition(), destination.getPosition()), "driving");
             }
         });
@@ -1004,7 +1006,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getUserInformation(String uid) {
-        mRef.child("info").child(uid).child("carOwner").addValueEventListener(new ValueEventListener() {
+        mRef.child(INFO).child(uid).child("carOwner").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 carOwner = dataSnapshot.getValue(Boolean.class);

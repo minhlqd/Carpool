@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,6 +28,7 @@ import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.dialogs.OfferRideCreatedDialog;
 import com.example.carpool.models.User;
+import com.example.carpool.utils.Utils;
 import com.firebase.geofire.GeoFire;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,14 +48,14 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity {
+public class CreateRideActivity<MaterialAnimatedSwitch> extends AppCompatActivity {
 
     int COST_2KM_1ST = 12000;
     int COST_PER_KM = 3800;
     double p = 0.3;
 
     private static final String TAG = "OfferRideFragment";
-    private OfferRideFragment mContext;
+    private CreateRideActivity mContext;
     private ApplicationContext applicationContext;
 
     //Firebase
@@ -120,8 +120,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_offer_ride);
-        Log.d(TAG, "onCreate: starting.");
-        mContext = OfferRideFragment.this;
+        mContext = CreateRideActivity.this;
 
         //Disables focused keyboard on view startup
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -146,7 +145,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mDateOfJourneyEditText.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, 0);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(OfferRideFragment.this, date, mCalendar
+            DatePickerDialog datePickerDialog = new DatePickerDialog(CreateRideActivity.this, date, mCalendar
                     .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -154,16 +153,16 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         });
 
         mSameGender = (MaterialAnimatedSwitch) findViewById(R.id.genderSwitch);
-//        mSameGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if(isChecked){
-//                    sameGenderBoolean = true;
-//                } else {
-//                    sameGenderBoolean = false;
-//                }
-//            }
-//        });
+        /*mSameGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sameGenderBoolean = true;
+                } else {
+                    sameGenderBoolean = false;
+                }
+            }
+        });*/
 
        mPickupEditText = findViewById(R.id.pickupEditText);
        mPickupEditText.setOnClickListener(v -> {
@@ -171,7 +170,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
            int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
            int minute = mCurrentTime.get(Calendar.MINUTE);
            TimePickerDialog mTimePicker;
-           mTimePicker = new TimePickerDialog(OfferRideFragment.this, new TimePickerDialog.OnTimeSetListener() {
+           mTimePicker = new TimePickerDialog(CreateRideActivity.this, new TimePickerDialog.OnTimeSetListener() {
                @SuppressLint("SetTextI18n")
                @Override
                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -184,7 +183,6 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: navigating back to HomeActivity");
             finish();
         });
 
@@ -195,7 +193,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
 
                 Bundle b = new Bundle();
 
-                b.putParcelable("LatLng", currentLocation);
+                b.putParcelable(Utils.LAT_LNG, currentLocation);
 
                 intent.putExtras(b);
 
@@ -224,7 +222,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
                 mFirebaseMethods.offerRide(driverID, username, location, destination, dateOfJourney, seatsAvailable, licencePlate,  currentLongtitude, currentLatitude,
                         sameGenderBoolean, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost, completeRides, userRating, duration, pickupLocation);
 
-                mFirebaseMethods.checkNotifications(getCurrentDate(), "You have created a ride!");
+                mFirebaseMethods.checkNotifications(getCurrentDate(), getString(R.string.created_a_ride));
 
                 mFirebaseMethods.addPoints(driverID, 100);
 
@@ -235,7 +233,7 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
                 /*finish();*/
 
             } else {
-                Toast.makeText(OfferRideFragment.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRideActivity.this, "You must fill in empty fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -269,12 +267,11 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         if (extras != null) {
           //  if (extras.containsKey("DESTINATION")){
                 //from Home view passed to this class
-                location = getIntent().getStringExtra("LOCATION");
-                destination = getIntent().getStringExtra("DESTINATION");
-                distance = getIntent().getDoubleExtra("distance", 0);
-                Log.d(TAG, "getActivityData: " + distance + " " + location + " " + destination);
+                location = getIntent().getStringExtra(Utils.KEY_LOCATION);
+                destination = getIntent().getStringExtra(Utils.KEY_DESTINATION);
+                distance = getIntent().getDoubleExtra(Utils.KEY_DISTANCE, 0);
                 Bundle b = getIntent().getExtras();
-                currentLocation = b.getParcelable("LatLng");
+                currentLocation = b.getParcelable(Utils.LAT_LNG);
         }
     }
 
@@ -353,19 +350,6 @@ public class OfferRideFragment<MaterialAnimatedSwitch> extends AppCompatActivity
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(this);
-
-//        mGeoFire = new GeoFire(mRef);
-//
-//        mGeoFire.setLocation("availableRides", new GeoLocation(37.7853889, -122.4056973), new GeoFire.CompletionListener() {
-//            @Override
-//            public void onComplete(String key, DatabaseError error) {
-//                if (error != null) {
-//                    System.err.println("There was an error saving the location to GeoFire: " + error);
-//                } else {
-//                    System.out.println("Location saved on server successfully!");
-//                }
-//            }
-//        });
 
     }
 }

@@ -23,6 +23,7 @@ import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.Participants;
 import com.example.carpool.models.User;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -143,8 +144,7 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void findParticipantDetails(){
-        Log.d(TAG, "findParticipantDetails: " + userID);
-        mRef.child("request_ride").child(userID).child(rideID).addValueEventListener(new ValueEventListener() {
+        mRef.child(Utils.REQUEST_RIDE).child(userID).child(rideID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

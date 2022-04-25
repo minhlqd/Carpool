@@ -21,7 +21,6 @@ import com.example.carpool.pickup.PickupActivity;
 import com.example.carpool.R;
 import com.example.carpool.models.BookingResults;
 import com.example.carpool.utils.UniversalImageLoader;
-import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,13 +31,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;
-    private ArrayList<BookingResults> ride;
+    private ArrayList<BookingResults> mBookingResults;
     private Boolean isDriver;
     private ResponseBooked responseBooked;
 
-    public BookingAdapter(Context c, ArrayList<BookingResults> o, Boolean isDriver, ResponseBooked responseBooked){
-        this.mContext = c;
-        this.ride = o;
+    public BookingAdapter(Context context, ArrayList<BookingResults> mBookingResults, Boolean isDriver, ResponseBooked responseBooked){
+        this.mContext = context;
+        this.mBookingResults = mBookingResults;
         this.isDriver = isDriver;
         this.responseBooked = responseBooked;
     }
@@ -49,7 +48,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("BookedActivity", "onCreateViewHolder: " + true);
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.individual_booking_information, parent, false));
     }
 
@@ -57,23 +55,22 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
     @SuppressLint("RestrictedApi")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.d("BookedActivity", "onBindViewHolder: " + position + " " + ride.get(position));
-        final boolean accepted = ride.get(position).getAccepted();
-        final String username = ride.get(position).getUsername();
-        final String userID = ride.get(position).getPassengerID();
-        final String rideID = ride.get(position).getRide_id();
-        final String licencePlate = ride.get(position).getLicencePlate();
-        final String pickupTime = ride.get(position).getPickupTime();
-        String from = ride.get(position).getLocation().replaceAll("\n", ", ");
-        String to =ride.get(position).getDestination().replaceAll("\n", ", ");
-        final String pickupLocation = ride.get(position).getPickupLocation();
-        final String date = ride.get(position).getDateOfJourney() + " - " + ride.get(position).getPickupTime();
+        final boolean accepted = mBookingResults.get(position).getAccepted();
+        final String username = mBookingResults.get(position).getUsername();
+        final String userID = mBookingResults.get(position).getPassengerID();
+        final String rideID = mBookingResults.get(position).getRide_id();
+        final String licencePlate = mBookingResults.get(position).getLicencePlate();
+        final String pickupTime = mBookingResults.get(position).getPickupTime();
+        String from = mBookingResults.get(position).getLocation().replaceAll("\n", ", ");
+        String to = mBookingResults.get(position).getDestination().replaceAll("\n", ", ");
+        final String pickupLocation = mBookingResults.get(position).getPickupLocation();
+        final String date = mBookingResults.get(position).getDateOfJourney() + " - " + mBookingResults.get(position).getPickupTime();
 
 
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
         format.setCurrency(Currency.getInstance("VND"));
-        final String cost = format.format(ride.get(position).getCost());
+        final String cost = format.format(mBookingResults.get(position).getCost());
 
         if (isDriver) {
             holder.bookingStatusTextview.setVisibility(View.GONE);
@@ -92,7 +89,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
 
                 holder.view.setOnClickListener(view -> {
                     Intent intent = new Intent(mContext, PickupActivity.class);
-                    Log.d("BookedActivity", "onBindViewHolder: " + pickupLocation);
                     intent.putExtra("pickupLocation", pickupLocation);
                     intent.putExtra("rideID", rideID);
                     intent.putExtra("userID", userID);
@@ -117,7 +113,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
 
         holder.costs.setText(cost);
 
-        UniversalImageLoader.setImage(ride.get(position).getProfile_photo(), holder.profile_photo, null,"");
+        UniversalImageLoader.setImage(mBookingResults.get(position).getProfile_photo(), holder.profile_photo, null,"");
 
         holder.date.setText(date);
 
@@ -125,7 +121,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return ride.size();
+        return mBookingResults.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder

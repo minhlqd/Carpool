@@ -36,7 +36,6 @@ public class DirectionAsyncTask extends
 
     @Override
     public void onPostExecute(ArrayList result) {
-        // progressDialog.dismiss();
         try {
             if (exception == null && result != null && result.size() > 0
                     && activity != null) {

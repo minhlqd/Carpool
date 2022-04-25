@@ -14,7 +14,6 @@ public class Common {
     public static String statusTrip = null;
 
     public static IFCMService getFCMService(){
-        Log.d("FirebaseFCM", "getFCMService: " + fcmURL);
         return FCMClient.getClient(fcmURL).create(IFCMService.class);
     }
 

@@ -1,5 +1,7 @@
 package com.example.carpool.booked;
 
+import static com.example.carpool.utils.Utils.AVAILABLE_RIDE;
+import static com.example.carpool.utils.Utils.REQUEST_RIDE;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
 import android.content.Context;
@@ -94,7 +96,6 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Info info = snapshot.getValue(Info.class);
                     isDriver = info.getCarOwner();
-                    Log.d(TAG, "onDataChange: " + isDriver);
                     if (isDriver) {
                         mRef.child("request_ride").child(user_id).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -189,12 +190,12 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
     public void responseBooked(Boolean isAccept, String rideId, int pos) {
         Log.d(TAG, "responseBooked: " + isAccept + " " +  rideId);
         if (isAccept) {
-            mRef.child("request_ride").child(user_id).child(rideId).child("accepted").setValue(true);
-            mRef.child("available_ride").child(rideId).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
+            mRef.child(REQUEST_RIDE).child(user_id).child(rideId).child("accepted").setValue(true);
+            mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     int seatsAvailable = dataSnapshot.getValue(Integer.class);
-                    mRef.child("available_ride").child(rideId).child("seatsAvailable").setValue(seatsAvailable - 1);
+                    mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").setValue(seatsAvailable - 1);
                 }
 
                 @Override
@@ -202,19 +203,8 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
 
                 }
             });
-            mRef.child("participant").child(rideId).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         } else {
-            mRef.child("request_ride").child(user_id).child(rideId).removeValue();
+            mRef.child(REQUEST_RIDE).child(user_id).child(rideId).removeValue();
         }
         rides.remove(pos);
         myAdapter.notifyDataSetChanged();

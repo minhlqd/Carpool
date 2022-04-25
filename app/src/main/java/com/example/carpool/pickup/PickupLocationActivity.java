@@ -118,7 +118,6 @@ public class PickupLocationActivity extends AppCompatActivity implements OnMapRe
         int height = 120;
         int width = 120;
 
-        Log.d("MinhMX", "onMapReady: "  + currentLocation);
         if (currentLocation != null) {
             @SuppressLint("UseCompatLoadingForDrawables")
             BitmapDrawable bitmapDraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_pickup_location);

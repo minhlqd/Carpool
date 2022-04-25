@@ -28,6 +28,7 @@ import com.example.carpool.models.RequestUser;
 import com.example.carpool.models.Sender;
 import com.example.carpool.remote.IFCMService;
 import com.example.carpool.utils.FirebaseMethods;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -107,10 +108,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void submitPayment() {
         if (!mEditAmount.getText().toString().isEmpty()) {
-            /*amount = getCurrentAmount();
-            paramsHash = new HashMap<>();
-            paramsHash.put("amount", amount);*/
-            //paramsHash.put("nonce", strNonce);
 
             sendPayments();
         } else {
@@ -142,7 +139,6 @@ public class PaymentActivity extends AppCompatActivity {
             licencePlate = intent.getStringExtra("licencePlate");
             dateOnly = intent.getStringExtra("dateOnly");
             pickupTime = intent.getStringExtra("pickupTime");
-            Log.d(TAG, "getActivityData: " + driverID);
         }
     }
 
@@ -165,7 +161,6 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             } else {
                 Exception exception = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-                Log.d(TAG, "onActivityResult: true " + exception.getMessage());
             }
     }
 
@@ -207,7 +202,7 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void requestPickupHere() {
-        myRef.child("Tokens").child(driverID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(Utils.TOKENS).child(driverID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String token = dataSnapshot.getValue(String.class);
@@ -216,14 +211,21 @@ public class PaymentActivity extends AppCompatActivity {
                         new Notification("Carpool", "Hi, i'm " + username +" and would like to request a seat on your journey!", rideID, extraData, destination);
                 Sender content = new Sender(data, token);
 
-                Log.d(TAG, "onDataChange: " + content);
                 mService.sendMessage(content).enqueue(new Callback<FCMResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<FCMResponse> call, @NonNull Response<FCMResponse> response) {
                         assert response.body() != null;
-                        Log.i(TAG, "onResponse: " + response.body());
                         if (response.body().success == 1 || response.code() == 200){
-                                Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
+                            RequestUser request = new RequestUser(driverID, passengerID, profile_photo2, profile_photo,
+                                    username, 1, destination, currentLocation, 1, false,
+                                    rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation,
+                                    licencePlate);
+
+                            myRef.child(Utils.REQUEST_RIDE)
+                                    .child(driverID)
+                                    .child(rideID)
+                                    .setValue(request);
                                 //updateSeatsRemaining();
                                 mFirebaseMethods.addPoints(driverID, 200);
                         } else {
@@ -244,20 +246,10 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
-
-        RequestUser request = new RequestUser(driverID, passengerID, profile_photo2, profile_photo,
-                username, 1, destination, currentLocation, 1, false,
-                rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation,
-                licencePlate);
-
-        myRef.child("request_ride")
-                .child(driverID)
-                .child(rideID)
-                .setValue(request);
     }
 
     public void getUserInformation(){
-        myRef.child("user").child(passengerID).child("username").addValueEventListener(new ValueEventListener() {
+        myRef.child(Utils.USER).child(passengerID).child("username").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 username = dataSnapshot.getValue(String.class);
@@ -268,7 +260,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
-        myRef.child("info").child(passengerID).child("profile_photo").addValueEventListener(new ValueEventListener() {
+        myRef.child(Utils.INFO).child(passengerID).child("profile_photo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 profile_photo = dataSnapshot.getValue(String.class);
@@ -282,10 +274,9 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void getsSeatsRemaining(){
-        myRef.child("available_ride").child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
+        myRef.child(Utils.AVAILABLE_RIDE).child(rideID).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: " + dataSnapshot);
                 seatsAvailable = dataSnapshot.getValue(Integer.class);
             }
 

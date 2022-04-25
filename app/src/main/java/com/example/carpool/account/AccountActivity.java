@@ -1,5 +1,6 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.INFO;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
 import android.annotation.SuppressLint;
@@ -189,7 +190,7 @@ public class AccountActivity extends AppCompatActivity {
             final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        mRef.child("info").child(userID).child("profilePhoto").setValue(uri.toString());
+                        mRef.child(INFO).child(userID).child("profilePhoto").setValue(uri.toString());
                         Log.d(TAG, "uploadImage: "  + uri);
                     }))
                     .addOnFailureListener(e -> {

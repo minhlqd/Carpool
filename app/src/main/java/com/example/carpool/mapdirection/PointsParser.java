@@ -41,7 +41,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
         try {
             jObject = new JSONObject(jsonData[0]);
-            Log.d("MinhMX", jsonData[0].toString());
 
             //All these
             JSONArray routesNew = jObject.getJSONArray("routes");
@@ -59,14 +58,11 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             ApplicationContext.setDuration(duration);
 
             DataParser parser = new DataParser();
-            Log.d(TAG, parser.toString());
 
             // Starts parsing data
             routes = parser.parse(jObject);
-            Log.d(TAG, String.valueOf(routes));
 
         } catch (Exception e) {
-            Log.d("MinhMX", e.toString());
             e.printStackTrace();
         }
         return routes;
@@ -78,7 +74,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
         ArrayList<LatLng> points;
         PolylineOptions lineOptions = null;
         // Traversing through all the routes
-        Log.d(TAG, "onPostExecute: " + result);
         if (result!= null) {
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<>();
@@ -102,7 +97,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
                     lineOptions.width(10);
                     lineOptions.color(Color.rgb(0, 197, 154));
                 }
-                Log.d("MinhMX", "onPostExecute lineoptions decoded");
             }
 
             // Drawing polyline in the Google Map for the i-th route

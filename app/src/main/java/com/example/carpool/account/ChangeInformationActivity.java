@@ -20,6 +20,7 @@ import com.example.carpool.models.Info;
 import com.example.carpool.models.User;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -143,7 +144,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
     private void checkIfUsernameExists(final String username) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child("user")
+                .child(Utils.USER)
                 .orderByChild(getString(R.string.field_username))
                 .equalTo(username);
 
@@ -222,7 +223,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
             final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        mRef.child("info").child(userID).child("profilePhoto").setValue(uri.toString());
+                        mRef.child(Utils.INFO).child(userID).child("profilePhoto").setValue(uri.toString());
                     }))
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to upload", Toast.LENGTH_SHORT).show();

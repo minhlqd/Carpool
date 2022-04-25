@@ -100,11 +100,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.date.setText(date);
         holder.costs.setText(cost);
         holder.ratingBar.setRating(rating);
-        /*UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");*/
+
+        UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");
 
         final String finalSeats = seats;
         holder.view.setOnClickListener(view -> {
-            Log.d("MinhMX", "onBindViewHolder: " + driverID);
             BookRideDialog dialog =
                     new BookRideDialog(mContext, rideID, username, licencePlate, rides, finalSeats, location, destination, date,
                             dateOnly, cost, rating, pickupTime, extraTime, duration, driverID,

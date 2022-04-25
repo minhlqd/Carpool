@@ -1,5 +1,6 @@
 package com.example.carpool.home;
 
+import static com.example.carpool.utils.Utils.AVAILABLE_RIDE;
 import static com.example.carpool.utils.Utils.KEY_DESTINATION;
 import static com.example.carpool.utils.Utils.KEY_LOCATION;
 import static com.example.carpool.utils.Utils.KEY_SAME_GENDER;
@@ -90,14 +91,11 @@ public class SearchResultsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<OfferRide>();
-        Log.d(TAG, "onCreate: " + destination  + " "+  mRef.child("available_ride").orderByChild("destination").equalTo(destination).toString());
 
-
-        mRef.child("available_ride").orderByChild("destination").equalTo(destination).limitToFirst(20)
+        mRef.child(AVAILABLE_RIDE).orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "onDataChange: " + dataSnapshot.getValue());
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                 OfferRide ride = dataSnapshot1.getValue(OfferRide.class);

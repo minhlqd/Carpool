@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Stack;
 
 public class Utils {
     public static final String KEY_LOCATION = "location";
@@ -26,8 +27,32 @@ public class Utils {
 
     public static final String KEY_SAME_GENDER = "same_gender";
 
+    public static final String KEY_DISTANCE = "distance";
+
+    public static final String KEY_LAT = "lat";
+
+    public static final String KEY_LNG = "lng";
+
+    public static final String KEY_PICKUP_LOCATION = "pickup_location";
+
+    public static final String KEY_PICKUP_TIME = "pickup_time";
+
+    public static final String LAT_LNG = "LatLng";
+
+    public static final String REMINDER = "reminder";
+
+    public static final String INFO = "info";
+
+    public static final String REQUEST_RIDE = "request_ride";
+
+    public static final String AVAILABLE_RIDE = "available_ride";
+
+    public static final String USER = "user";
+
+    public static final String TOKENS = "Tokens";
+
     public static void checkNotifications(DatabaseReference reference, String id, Context context, BottomNavigationView bottomNavigationView){
-        reference.child("reminder").child(id).addValueEventListener(new ValueEventListener() {
+        reference.child(REMINDER).child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int reminderLength = 0;
@@ -45,13 +70,12 @@ public class Utils {
             }
         });
 
-        reference.child("info").child(id).addValueEventListener(new ValueEventListener() {
+        reference.child(INFO).child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("MinhMX", "onDataChange: " + snapshot.getValue());
-                /*Info info = snapshot.getValue(Info.class);
+                Info info = snapshot.getValue(Info.class);
                 if (info.getCarOwner()) {
-                    reference.child("request_ride").child(id).addValueEventListener(new ValueEventListener() {
+                    reference.child(REQUEST_RIDE).child(id).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             int countRequest = 0;
@@ -72,7 +96,7 @@ public class Utils {
 
                         }
                     });
-                }*/
+                }
             }
 
             @Override

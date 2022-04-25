@@ -51,8 +51,6 @@ public class Direction {
                 + "&destination=" + end.latitude + "," + end.longitude
                 + "&sensor=false&units=metric&mode=" + mode;*/ getUrl(start, end);
 
-        Log.d("MinhMX", "getDocument: " + url);
-
         try {
             HttpClient httpClient = new DefaultHttpClient();
             HttpContext localContext = new BasicHttpContext();

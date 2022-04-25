@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         //Initialize the button for logging in
         Button mBtn_login = findViewById(R.id.btn_login);
         mBtn_login.setOnClickListener(v -> {
-            Log.d(TAG, "onClick: attempting to login in.");
 
             String email = mEmail.getText().toString();
             String password = mPassword.getText().toString();
@@ -136,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 if (task.getResult().getAdditionalUserInfo() != null) {
                                     boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                                    Log.d("MyTAG", "onComplete: " + (isNew ? "new user" : "old user"));
                                     Log.d(TAG, "onComplete: success. email is verified");
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(intent);

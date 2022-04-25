@@ -148,7 +148,6 @@ public class RegisterStepFourFragment extends Fragment {
         });
 
         finish.setOnClickListener(v -> {
-            Log.d("MinhMX", "onCreateView: " + mSeats.getText().toString());
             switch (mCarToggle.getCheckedRadioButtonId())
             {
                 case R.id.driver:
@@ -233,7 +232,6 @@ public class RegisterStepFourFragment extends Fragment {
     }
 
     public int getSeats() {
-        Log.d("MinhMX", "getSeats: " + mSeats.getText());
         if (mSeats.getText().length() > 0){
             return Integer.parseInt(mSeats.getText().toString());
         }

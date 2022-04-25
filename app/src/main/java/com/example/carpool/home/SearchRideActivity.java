@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.User;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -112,8 +113,8 @@ public class SearchRideActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mLocationEditText.setText(getIntent().getStringExtra(getString(R.string.intent_location)));
-            mDestinationEditText.setText(getIntent().getStringExtra(getString(R.string.intent_destination)));
+            mLocationEditText.setText(getIntent().getStringExtra(KEY_LOCATION));
+            mDestinationEditText.setText(getIntent().getStringExtra(KEY_DESTINATION));
         }
     }
 

@@ -70,7 +70,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".rides.RidesActivity" />
-        <activity android:name=".home.OfferRideFragment" />
+        <activity android:name=".home.CreateRideActivity" />
         <activity android:name=".home.SearchRideActivity" />
         <activity android:name=".reminder.ReminderActivity" />
         <activity android:name=".pickup.PickupActivity" />

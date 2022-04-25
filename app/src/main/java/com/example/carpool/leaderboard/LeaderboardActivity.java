@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carpool.adapter.LeaderboardsAdapter;
 import com.example.carpool.R;
 import com.example.carpool.models.Leaderboards;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +71,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         final List<Leaderboards> model = new ArrayList<>();
 
 
-        mRef = FirebaseDatabase.getInstance().getReference().child("user");
+        mRef = FirebaseDatabase.getInstance().getReference().child(Utils.INFO);
         mRef.orderByChild("points").limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)

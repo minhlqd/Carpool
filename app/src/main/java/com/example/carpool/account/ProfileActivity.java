@@ -22,6 +22,7 @@ import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.User;
 import com.example.carpool.models.UserReview;
+import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -126,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         final UserReview userReview = new UserReview();
 
-        mRef.child("user").child(userID).child("userReviews").limitToFirst(3).addValueEventListener(new ValueEventListener() {
+        mRef.child(Utils.INFO).child(userID).child("userReviews").limitToFirst(3).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){

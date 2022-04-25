@@ -1,5 +1,7 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.USER;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -71,7 +73,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
         user.updateEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                mRef.child("user").child(userID).child("email").setValue(email);
+                mRef.child(USER).child(userID).child("email").setValue(email);
                 Toast.makeText(ChangeEmailActivity.this, "The email updated.", Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
                 Intent intent = new Intent(this, LoginActivity.class);

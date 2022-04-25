@@ -55,7 +55,6 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.d("MinhMX", "onBindViewHolder: " + ride.get(position));
         final String userID = ride.get(position).getUserId();
 
         final String username = ride.get(position).getUsername();
