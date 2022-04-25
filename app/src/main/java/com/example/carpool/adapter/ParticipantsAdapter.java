@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
 import com.example.carpool.models.Participants;
+import com.example.carpool.utils.UniversalImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -46,7 +47,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
 
         holder.username.setText(username);
-        Picasso.get().load(participants.get(position).getUserProfilePhoto()).into(holder.profile_photo);
+        UniversalImageLoader.setImage(participants.get(position).getUserProfilePhoto(), holder.profile_photo, null,"");
 
     }
 

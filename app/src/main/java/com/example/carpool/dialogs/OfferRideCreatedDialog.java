@@ -41,7 +41,6 @@ public class OfferRideCreatedDialog extends Dialog implements
         cancelDialog.setOnClickListener(this);
         confirmDialog.setOnClickListener(v -> {
             //Shows the ride has been created successfully
-
             Intent intent = new Intent(context, HomeActivity.class);
             context.startActivity(intent);
             dismiss();
@@ -57,7 +56,6 @@ public class OfferRideCreatedDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_and_book:
-                dismiss();
                 Intent intent1 = new Intent(context, HelpFragment.class);
                 context.startActivity(intent1);
                 break;

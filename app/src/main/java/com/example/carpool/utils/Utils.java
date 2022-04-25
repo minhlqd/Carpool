@@ -74,28 +74,30 @@ public class Utils {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Info info = snapshot.getValue(Info.class);
-                if (info.getCarOwner()) {
-                    reference.child(REQUEST_RIDE).child(id).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            int countRequest = 0;
-                            if (dataSnapshot.exists()) {
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    BookingResults r = dataSnapshot1.getValue(BookingResults.class);
-                                    if (!r.getAccepted()) {
-                                        countRequest++;
+                if (info != null) {
+                    if (info.getCarOwner()) {
+                        reference.child(REQUEST_RIDE).child(id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int countRequest = 0;
+                                if (dataSnapshot.exists()) {
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                        BookingResults r = dataSnapshot1.getValue(BookingResults.class);
+                                        if (!r.getAccepted()) {
+                                            countRequest++;
+                                        }
                                     }
                                 }
+                                setupBadgeRequest(countRequest, context, bottomNavigationView);
+
                             }
-                            setupBadgeRequest(countRequest, context, bottomNavigationView);
 
-                        }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
             }
 

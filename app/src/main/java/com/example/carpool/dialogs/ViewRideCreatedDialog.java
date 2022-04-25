@@ -135,7 +135,7 @@ public class ViewRideCreatedDialog extends Dialog implements
                 dismiss();
                 break;
             case R.id.paticipantsRideBtn:
-                showDialogParticpants();
+                showDialogParticipants();
                 break;
             case R.id.viewProfileBtn:
                 showIntentProfile();
@@ -151,7 +151,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
-    private void showDialogParticpants(){
+    private void showDialogParticipants(){
         //Confirmation to delete the ride dialog
         ParticipantsDialog dialog = new ParticipantsDialog(c, userID, rideID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

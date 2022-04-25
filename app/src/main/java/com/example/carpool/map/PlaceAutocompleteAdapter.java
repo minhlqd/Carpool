@@ -88,8 +88,6 @@ public class PlaceAutocompleteAdapter
 
                 ArrayList<AutocompletePrediction> filterData = new ArrayList<>();
 
-                Log.d(TAG, "performFiltering: " + filterData);
-
                 if (constraint != null) {
                     filterData = getAutocomplete(constraint);
                 }

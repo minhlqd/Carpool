@@ -161,7 +161,7 @@
     <string name="you_have_successfully_created_a_carpool_ride">You have successfully created a carpool ride.</string>
     <string name="complete">Complete</string>
     <string name="user_1" translatable="false">User 1</string>
-    <string name="participants" translatable="false">Participants</string>
+    <string name="participants">Participants</string>
     <string name="_0_rides" translatable="false">0 Rides</string>
     <string name="cost">Cost</string>
     <string name="_6_00" translatable="false">£6.00</string>

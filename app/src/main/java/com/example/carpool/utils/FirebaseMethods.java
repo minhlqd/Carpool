@@ -73,25 +73,26 @@ public class FirebaseMethods {
                           int seatsAvailable, String licencePlate, double currentlongitude, double currentlatitude, boolean sameGender, int luggageAllowance, String car,
                           String pickupTime, int extraTime, String profile_photo, long cost, int completeRides, float userRating, String duration, String pickupLocation){
 
-        String rideKey = mFirebaseDatabase.getReference().push().getKey();
+        String rideId = mFirebaseDatabase.getReference().push().getKey();
 
 
-        OfferRide offerRide = new OfferRide(rideKey, driverID, username, currentLocation, destination, dateOfJourney, seatsAvailable, licencePlate,
+        OfferRide offerRide = new OfferRide(rideId, driverID, username, currentLocation, destination, dateOfJourney, seatsAvailable, licencePlate,
                                             currentlongitude, currentlatitude, sameGender, luggageAllowance, car, pickupTime, extraTime, profile_photo, cost,
                                             completeRides, userRating, duration, pickupLocation);
 
-        Log.d(TAG, "offerRide: " + true);
-        myRef.child(mContext.getString(R.string.dbName_availableRide))
-                .child(rideKey)
+        myRef.child(Utils.AVAILABLE_RIDE)
+                .child(rideId)
                 .setValue(offerRide);
+
+        myRef.child("participant")
+                .child(rideId)
+                .child("driver")
+                .setValue(driverID);
     }
 
 
     public void deleteRide(String driverID, String rideID, Context context){
-
-        Log.d(TAG, "deleteRide: " + driverID + " " + rideID);
-        myRef.child("available_ride")
-                .child(driverID)
+        myRef.child(Utils.AVAILABLE_RIDE)
                 .child(rideID)
                 .removeValue();
 

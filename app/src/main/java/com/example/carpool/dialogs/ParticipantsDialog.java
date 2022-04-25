@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ParticipantsAdapter;
 import com.example.carpool.R;
-import com.example.carpool.models.BookingResults;
 import com.example.carpool.models.Info;
 import com.example.carpool.models.RequestUser;
 import com.example.carpool.utils.FirebaseMethods;
@@ -38,14 +37,9 @@ public class ParticipantsDialog extends Dialog implements
         View.OnClickListener  {
 
     private static final String TAG = "ParticipantsDialog";
-    public Context c;
+    public Context context;
     public Dialog d;
-
-    //View variables
-    private RelativeLayout[] mUserBooked;
-    private ImageView[] mProfilePicture;
     private ImageView user_id_1;
-    private TextView[] mUsernames;
     private TextView username1;
 
     private RecyclerView mRecyclerView;
@@ -58,6 +52,8 @@ public class ParticipantsDialog extends Dialog implements
     private TextView mCancelDialogBtn;
     private final String userID;
     private final String rideID;
+    private String profilePhoto;
+    private String username;
 
     //Firebase
     private FirebaseMethods mFirebaseMethods;
@@ -71,14 +67,12 @@ public class ParticipantsDialog extends Dialog implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_participants);
 
-        mFirebaseMethods = new FirebaseMethods(c);
+        mFirebaseMethods = new FirebaseMethods(context);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabase.getReference();
 
         setupWidgets();
-
-        findDriverInformation();
 
         findParticipantDetails();
 
@@ -87,11 +81,12 @@ public class ParticipantsDialog extends Dialog implements
 
     }
 
-    public ParticipantsDialog(Context a, String userID, String rideID) {
-        super(a);
-        this.c = a;
+    public ParticipantsDialog(Context context, String userID, String rideID) {
+        super(context);
+        this.context = context;
         this.userID = userID;
         this.rideID = rideID;
+        Log.d(TAG, "ParticipantsDialog: " + rideID);
     }
 
     @Override
@@ -107,63 +102,55 @@ public class ParticipantsDialog extends Dialog implements
     }
 
     private void setupWidgets(){
-        username1 = findViewById(R.id.username1);
-        user_id_1 = findViewById(R.id.user_id_1);
 
         //Setup recycler view
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(c);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(c));
+        mLayoutManager = new LinearLayoutManager(context);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setAdapter(mRecycleAdapter);
         participants = new ArrayList<Participants>();
     }
 
-    private void findDriverInformation(){
-
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //retrieve user information from the database
-                setDriverWidgets(mFirebaseMethods.getSpecificUser(dataSnapshot, userID),
-                        mFirebaseMethods.getInfo(dataSnapshot));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void setDriverWidgets(User user, Info info){
-        UniversalImageLoader.setImage(info.getProfilePhoto(), user_id_1, null,"");
-
-        username1.setText(user.getUsername());
-    }
-
     private void findParticipantDetails(){
-        mRef.child(Utils.REQUEST_RIDE).child(userID).child(rideID).addValueEventListener(new ValueEventListener() {
+        mRef.child("participant").child(rideID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                        RequestUser requestUser = dataSnapshot.getValue(RequestUser.class);
-                        if (requestUser.getAccepted().equals(true)){
-                            participants.add(new Participants(requestUser.getUsername(),requestUser.getAccepted()));
-                    }
-                }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    String userId =  snapshot1.getValue(String.class);
+                    mRef.child("info").child(userId).child("profilePhoto").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            profilePhoto = snapshot.getValue(String.class);
+                        }
 
-                myAdapter = new ParticipantsAdapter(c, participants);
-                mRecyclerView.setAdapter(myAdapter);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    mRef.child("user").child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            username = snapshot.getValue(String.class);
+                            participants.add(new Participants(username,profilePhoto, true));
+                            myAdapter = new ParticipantsAdapter(context, participants);
+                            mRecyclerView.setAdapter(myAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-
     }
 
 

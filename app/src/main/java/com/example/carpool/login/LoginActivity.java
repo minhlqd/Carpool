@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 if (task.getResult().getAdditionalUserInfo() != null) {
                                     boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                                    Log.d(TAG, "onComplete: success. email is verified");
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                 }

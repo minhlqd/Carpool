@@ -105,7 +105,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
                 taskCallback.onTaskDone(lineOptions);
 
             } else {
-                Log.d("MinhMX", "without Polylines drawn");
+
             }
         }
     }

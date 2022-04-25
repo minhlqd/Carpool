@@ -426,17 +426,14 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public boolean isServicesOk() {
-        Log.d(TAG, "isServicesOK: checking google services version");
 
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(HomeActivity.this);
 
         if (available == ConnectionResult.SUCCESS) {
             //everything is ok and user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
             return true;
         } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
             //an error occurred but it can be resolved
-            Log.d(TAG, "isServicesOK: an error occurred but it can be fixed");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(HomeActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
         } else {
@@ -448,7 +445,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d(TAG, "onRequestPermissionsResult: called");
         mLocationPermissionsGranted = false;
 
         switch (requestCode) {
@@ -457,11 +453,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     for (int i = 0; i < grantResults.length; i++) {
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
-                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
                             return;
                         }
                     }
-                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
                     mLocationPermissionsGranted = true;
                     //initialize our map
                     initMap();
@@ -474,7 +468,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
      * sets up map from the view
      */
     private void initMap() {
-        Log.d(TAG, "initMap: initializing map");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(HomeActivity.this);
@@ -483,7 +476,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionsGranted) {
@@ -502,7 +494,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -511,7 +502,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
-                        Log.d(TAG, "onComplete: getting found location!");
                         Location currentLocation = (Location) task.getResult();
                         placeInfoTo = new PlaceInfo();
                         placeInfoTo.setName("My Location");
@@ -521,7 +511,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         currentLatitude = currentLocation.getLatitude();
                         currentLongtitude = currentLocation.getLongitude();
                     } else {
-                        Log.d(TAG, "onComplete: current location is null");
                         Toast.makeText(HomeActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -532,7 +521,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocationAndAddMarker() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 

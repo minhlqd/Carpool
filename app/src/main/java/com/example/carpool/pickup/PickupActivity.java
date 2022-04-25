@@ -93,7 +93,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
         mParticipantsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogParticpants();
+                showDialogParticipants();
             }
         });
 
@@ -105,7 +105,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
         mLicencePlate = (TextView) findViewById(R.id.licencePlate);
         mPickupTime = (TextView) findViewById(R.id.pickupTimeText);
         mParticipantsBtn = (FloatingActionButton) findViewById(R.id.paticipantsRideBtn);
-        mUnjoinBtn = (FloatingActionButton) findViewById(R.id.unjoinBtn);
+        mUnjoinBtn = findViewById(R.id.unjoinBtn);
     }
 
     private void getActivityData() {
@@ -119,7 +119,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
-    private void showDialogParticpants() {
+    private void showDialogParticipants() {
         //Confirmation to delete the ride dialog
         ParticipantsDialog dialog = new ParticipantsDialog(mContext, userID, rideID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

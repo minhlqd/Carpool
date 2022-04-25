@@ -1,6 +1,7 @@
 package com.example.carpool.booked;
 
 import static com.example.carpool.utils.Utils.AVAILABLE_RIDE;
+import static com.example.carpool.utils.Utils.INFO;
 import static com.example.carpool.utils.Utils.REQUEST_RIDE;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
@@ -27,6 +28,7 @@ import com.example.carpool.models.Info;
 import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.BookingResults;
+import com.example.carpool.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -91,29 +93,28 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         mRef = mFirebaseDatabase.getReference();
         if (mAuth.getCurrentUser() != null){
             user_id = mAuth.getCurrentUser().getUid();
-            mRef.child("info").child(user_id).addValueEventListener(new ValueEventListener() {
+            mRef.child(INFO).child(user_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Info info = snapshot.getValue(Info.class);
                     isDriver = info.getCarOwner();
                     if (isDriver) {
-                        mRef.child("request_ride").child(user_id).addValueEventListener(new ValueEventListener() {
+                        mRef.child(REQUEST_RIDE).child(user_id).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        BookingResults r = dataSnapshot1.getValue(BookingResults.class);
-                                        if (!r.getAccepted()) {
-                                            rides.add(r);
+                                        BookingResults booking = dataSnapshot1.getValue(BookingResults.class);
+                                        if (!booking.getAccepted()) {
+                                            rides.add(booking);
                                         }
-                                        Log.d(TAG, "onDataChange: " + r);
                                         notFoundBooked.setVisibility(View.INVISIBLE);
                                         notFoundIcon.setVisibility(View.INVISIBLE);
                                     }
                                 }
                                 Log.d(TAG, "onDataChange: " + rides.size());
 
-                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this);
+                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
                                 mRecyclerView.setAdapter(myAdapter);
 
                             }
@@ -124,7 +125,7 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                             }
                         });
                     } else {
-                        mRef.child("request_ride").addValueEventListener(new ValueEventListener() {
+                        mRef.child(REQUEST_RIDE).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
@@ -144,7 +145,7 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                                 }
                                 Log.d(TAG, "onDataChange: " + rides.size());
 
-                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this);
+                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
                                 mRecyclerView.setAdapter(myAdapter);
 
                             }
@@ -185,24 +186,15 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         super.onStart();
     }
 
+    int seatsAvailable = 0;
 
     @Override
-    public void responseBooked(Boolean isAccept, String rideId, int pos) {
-        Log.d(TAG, "responseBooked: " + isAccept + " " +  rideId);
+    public void responseBooked(Boolean isAccept, String rideId, int pos, String passengerId, int seat) {
         if (isAccept) {
             mRef.child(REQUEST_RIDE).child(user_id).child(rideId).child("accepted").setValue(true);
-            mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    int seatsAvailable = dataSnapshot.getValue(Integer.class);
-                    mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").setValue(seatsAvailable - 1);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").setValue(seat - 1);
+            String user = "passenger_" + (4-seat);
+            mRef.child("participant").child(rideId).child(user).setValue(passengerId);
         } else {
             mRef.child(REQUEST_RIDE).child(user_id).child(rideId).removeValue();
         }
@@ -210,5 +202,4 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         myAdapter.notifyDataSetChanged();
         checkNotifications(mRef, user_id, mContext, bottomNavigationView);
     }
-
 }

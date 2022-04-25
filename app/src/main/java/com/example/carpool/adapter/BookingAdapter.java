@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,11 @@ import com.example.carpool.pickup.PickupActivity;
 import com.example.carpool.R;
 import com.example.carpool.models.BookingResults;
 import com.example.carpool.utils.UniversalImageLoader;
+import com.example.carpool.utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -34,12 +40,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
     private ArrayList<BookingResults> mBookingResults;
     private Boolean isDriver;
     private ResponseBooked responseBooked;
+    private DatabaseReference mRef;
 
-    public BookingAdapter(Context context, ArrayList<BookingResults> mBookingResults, Boolean isDriver, ResponseBooked responseBooked){
+    public BookingAdapter(Context context, ArrayList<BookingResults> mBookingResults, Boolean isDriver, ResponseBooked responseBooked, DatabaseReference databaseReference){
         this.mContext = context;
         this.mBookingResults = mBookingResults;
         this.isDriver = isDriver;
         this.responseBooked = responseBooked;
+        this.mRef = databaseReference;
     }
 
     public BookingAdapter(String[] myDataset) {
@@ -57,7 +65,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final boolean accepted = mBookingResults.get(position).getAccepted();
         final String username = mBookingResults.get(position).getUsername();
-        final String userID = mBookingResults.get(position).getPassengerID();
+        final String passengerID = mBookingResults.get(position).getPassengerID();
         final String rideID = mBookingResults.get(position).getRide_id();
         final String licencePlate = mBookingResults.get(position).getLicencePlate();
         final String pickupTime = mBookingResults.get(position).getPickupTime();
@@ -66,7 +74,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         final String pickupLocation = mBookingResults.get(position).getPickupLocation();
         final String date = mBookingResults.get(position).getDateOfJourney() + " - " + mBookingResults.get(position).getPickupTime();
 
-
+        Log.d("MinhMX", "onBindViewHolder: " + mBookingResults.get(position).getPassengerID() + " " +  username);
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
         format.setCurrency(Currency.getInstance("VND"));
@@ -75,10 +83,21 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         if (isDriver) {
             holder.bookingStatusTextview.setVisibility(View.GONE);
             holder.accept.setOnClickListener(v -> {
-                responseBooked.responseBooked(true, rideID, position);
+                mRef.child(Utils.AVAILABLE_RIDE).child(rideID).child("seatsAvailable").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int seat = snapshot.getValue(Integer.class);
+                        responseBooked.responseBooked(true, rideID, position, passengerID, seat);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             });
             holder.inject.setOnClickListener(v -> {
-                responseBooked.responseBooked(false, rideID, position);
+                responseBooked.responseBooked(false, rideID, position, passengerID, 0);
             });
         } else {
             holder.inject.setVisibility(View.GONE);
@@ -91,7 +110,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
                     Intent intent = new Intent(mContext, PickupActivity.class);
                     intent.putExtra("pickupLocation", pickupLocation);
                     intent.putExtra("rideID", rideID);
-                    intent.putExtra("userID", userID);
+                    intent.putExtra("userID", passengerID);
                     intent.putExtra("licencePlate", licencePlate);
                     intent.putExtra("pickupTime", pickupTime);
                     mContext.startActivity(intent);
