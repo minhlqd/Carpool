@@ -1,6 +1,7 @@
 package com.example.carpool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.R;
+import com.example.carpool.account.ProfileActivity;
 import com.example.carpool.models.Participants;
 import com.example.carpool.utils.UniversalImageLoader;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,14 +26,11 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     private String[] mDataset;
     private Context mContext;
     private ArrayList<Participants> participants;
+    String userId;
 
-    public ParticipantsAdapter(Context c, ArrayList<Participants> o){
-        this.mContext = c;
-        this.participants = o;
-    }
-
-    public ParticipantsAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public ParticipantsAdapter(Context context, ArrayList<Participants> participants){
+        this.mContext = context;
+        this.participants = participants;
     }
 
     @NonNull
@@ -45,9 +43,14 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final String username = participants.get(position).getUsername();
 
-
         holder.username.setText(username);
         UniversalImageLoader.setImage(participants.get(position).getUserProfilePhoto(), holder.profile_photo, null,"");
+
+        holder.username.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("user", participants.get(position).getId());
+            mContext.startActivity(intent);
+        });
 
     }
 

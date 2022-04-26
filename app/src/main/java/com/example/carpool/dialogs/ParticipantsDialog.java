@@ -118,22 +118,12 @@ public class ParticipantsDialog extends Dialog implements
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     String userId =  snapshot1.getValue(String.class);
-                    mRef.child("info").child(userId).child("profilePhoto").addListenerForSingleValueEvent(new ValueEventListener() {
+                    mRef.child("user").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            profilePhoto = snapshot.getValue(String.class);
-                        }
+                            User user = snapshot.getValue(User.class);
+                            participants.add(new Participants(user.getUsername(), user.getProfilePhoto(), true, userId));
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    mRef.child("user").child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            username = snapshot.getValue(String.class);
-                            participants.add(new Participants(username,profilePhoto, true));
                             myAdapter = new ParticipantsAdapter(context, participants);
                             mRecyclerView.setAdapter(myAdapter);
                         }
@@ -143,6 +133,7 @@ public class ParticipantsDialog extends Dialog implements
 
                         }
                     });
+
                 }
             }
 

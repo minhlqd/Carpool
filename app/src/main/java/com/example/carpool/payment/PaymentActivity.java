@@ -217,6 +217,7 @@ public class PaymentActivity extends AppCompatActivity {
                         assert response.body() != null;
                         if (response.body().success == 1 || response.code() == 200){
                             Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
+                            String requestId = FirebaseDatabase.getInstance().getReference().push().getKey();
                             RequestUser request = new RequestUser(driverID, passengerID, profile_photo2, profile_photo,
                                     username, 1, destination, currentLocation, 1, false,
                                     rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation,
@@ -224,7 +225,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                             myRef.child(Utils.REQUEST_RIDE)
                                     .child(driverID)
-                                    .child(rideID)
+                                    .child(requestId)
                                     .setValue(request);
                                 //updateSeatsRemaining();
                                 mFirebaseMethods.addPoints(driverID, 200);

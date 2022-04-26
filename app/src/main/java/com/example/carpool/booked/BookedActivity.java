@@ -107,6 +107,7 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                                         BookingResults booking = dataSnapshot1.getValue(BookingResults.class);
                                         if (!booking.getAccepted()) {
                                             rides.add(booking);
+                                            Log.d(TAG, "onDataChange: ride = " + rides);
                                         }
                                         notFoundBooked.setVisibility(View.INVISIBLE);
                                         notFoundIcon.setVisibility(View.INVISIBLE);

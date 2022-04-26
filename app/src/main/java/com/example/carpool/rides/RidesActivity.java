@@ -90,6 +90,7 @@ public class RidesActivity extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference().child("available_ride");
 
+        Log.d(TAG, "onCreate: " + driverID);
         mRef.orderByChild(driverID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -97,10 +98,11 @@ public class RidesActivity extends AppCompatActivity {
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                 Ride ride = dataSnapshot1.getValue(Ride.class);
-                                Log.d(TAG, "onDataChange: " + dataSnapshot1.getValue());
-                                Log.i(TAG, "rideID: "+ ride);
-                                rides.add(ride);
-                                mNoResultsFoundLayout.setVisibility(View.INVISIBLE);
+                                if (ride.getDriverID().equals(driverID)) {
+                                    Log.i(TAG, "rideID: " + ride.getDriverID().equals(driverID));
+                                    rides.add(ride);
+                                    mNoResultsFoundLayout.setVisibility(View.INVISIBLE);
+                                }
                             }
                             ridesAdapter = new RidesAdapter(RidesActivity.this, rides);
                             mRecyclerView.setAdapter(ridesAdapter);

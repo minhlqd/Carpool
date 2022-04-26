@@ -28,7 +28,7 @@ public class ViewRideCreatedDialog extends Dialog implements
         View.OnClickListener  {
 
     private static final String TAG = "ViewRideCreatedDialog";
-    public Context c;
+    public Context mContext;
     public Dialog d;
 
     // variables
@@ -55,8 +55,8 @@ public class ViewRideCreatedDialog extends Dialog implements
     private final String userID;
     private final String rides;
     private final String seats;
-    private final String from;
-    private final String to;
+    private final String location;
+    private final String destination;
     private final String date;
     private final long cost;
     private final String username;
@@ -85,16 +85,16 @@ public class ViewRideCreatedDialog extends Dialog implements
         mViewProfileBtn.setOnClickListener(this);
     }
 
-    public ViewRideCreatedDialog(Context a, String rideID, String username, String rides, String seats, String from, String to, String date, long cost, Float rating, String dateOnly, String extraTime,
+    public ViewRideCreatedDialog(Context context, String rideID, String username, String rides, String seats, String location, String destination, String date, long cost, Float rating, String dateOnly, String extraTime,
                                  String duration, String ridesCompleted, String pickupLocation, String userID, String photo, String driverID) {
-        super(a);
-        this.c = a;
+        super(context);
+        this.mContext = context;
         this.rideID = rideID;
         this.username = username;
         this.rides = rides;
         this.seats = seats;
-        this.from = from;
-        this.to = to;
+        this.location = location;
+        this.destination = destination;
         this.date = date;
         this.cost = cost;
         this.rating = rating;
@@ -115,17 +115,17 @@ public class ViewRideCreatedDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.pay_and_book:
                 Log.d(TAG, "onClick: " + pickupLocation);
-                Intent intent1 = new Intent(c, EditRideActivity.class);
+                Intent intent1 = new Intent(mContext, EditRideActivity.class);
                 intent1.putExtra("COST", cost);
                 intent1.putExtra("EXTRATIME", extraTime);
                 intent1.putExtra("DATE", date);
                 intent1.putExtra("SEATS", seats);
-                intent1.putExtra("DESTINATION", to);
-                intent1.putExtra("LOCATION", from);
+                intent1.putExtra("DESTINATION", destination);
+                intent1.putExtra("LOCATION", location);
                 intent1.putExtra("PICKUPTIME", dateOnly);
                 intent1.putExtra("LENGTH", duration);
                 intent1.putExtra("PICKUPLOCATION", pickupLocation);
-                c.startActivity(intent1);
+                mContext.startActivity(intent1);
                 break;
             case R.id.dialogCancel:
                 dismiss();
@@ -147,21 +147,21 @@ public class ViewRideCreatedDialog extends Dialog implements
 
     private void showDialog(){
         //Confirmation to delete the ride dialog
-        DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(c, rideID, driverID);
+        DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(mContext, rideID, driverID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
     private void showDialogParticipants(){
         //Confirmation to delete the ride dialog
-        ParticipantsDialog dialog = new ParticipantsDialog(c, userID, rideID);
+        ParticipantsDialog dialog = new ParticipantsDialog(mContext, userID, rideID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
 
     private void showIntentProfile(){
         //Confirmation to delete the ride dialog
-        Intent intent = new Intent(c, ProfileActivity.class);
-        c.startActivity(intent);
+        Intent intent = new Intent(mContext, ProfileActivity.class);
+        mContext.startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
@@ -193,8 +193,8 @@ public class ViewRideCreatedDialog extends Dialog implements
         mRatingBar.setRating(rating);
         mDepartureTime.setText(dateOnly);
         mExtraTime.setText(extraTime);
-        mFromStreet.setText(from);
-        mToStreet.setText(to);
+        mFromStreet.setText(location);
+        mToStreet.setText(destination);
         durationTextView.setText("Duration: " + duration);
         mRidesCompleted.setText(ridesCompleted + " Rides");
         mPickupLocation.setText("Pickup: " + pickupLocation);

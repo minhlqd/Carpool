@@ -136,7 +136,7 @@ public class FirebaseMethods {
     public void addNewUser(String email, String full_name, String username, String profile_photo, long mobile_number, String dob, String licence_number,
                            String car, String registration_plate, int seats, String education, String work, String bio ,Boolean carOwner, String gender, String car_photo, String startPoint, String destination, String role){
 
-        User user = new User(userID ,email, full_name, username);
+        User user = new User(userID ,email, full_name, username, profile_photo);
         Info info = new Info(profile_photo, dob, licence_number, gender, registration_plate, car, car_photo, education, work, bio, mobile_number, 0 , seats, 0, 50, carOwner, startPoint, destination, role);
         myRef.child("user")
                 .child(userID)
@@ -248,7 +248,7 @@ public class FirebaseMethods {
         return user;
     }
 
-    public Info getInfo(@NonNull DataSnapshot dataSnapshot){
+    public Info getInfo(@NonNull DataSnapshot dataSnapshot, String userID){
         Info info = new Info();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             if(Objects.equals(ds.getKey(), "info")){

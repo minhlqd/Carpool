@@ -241,7 +241,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
                 //retrieve user information from the database
                 setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot),
-                        mFirebaseMethods.getInfo(dataSnapshot));
+                        mFirebaseMethods.getInfo(dataSnapshot, userID));
 
             }
 

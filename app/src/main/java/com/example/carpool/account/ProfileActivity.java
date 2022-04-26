@@ -64,12 +64,17 @@ public class ProfileActivity extends AppCompatActivity {
         mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(mContext);
 
-        if(mAuth.getCurrentUser() != null){
+        setupActivityWidgets();
+
+        if (this.getIntent().getStringExtra("user") != null) {
+            userID = this.getIntent().getStringExtra("user");
+            logout.setVisibility(View.GONE);
+        } else if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
+            logout.setVisibility(View.VISIBLE);
         }
 
 
-        setupActivityWidgets();
 
         logout.setOnClickListener(v -> {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(userID);
@@ -79,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        getActivityData();
+        //getActivityData();
         setupFirebaseAuth();
 
         mBackBtn.setOnClickListener(v -> finish());
@@ -89,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getActivityData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userID = getIntent().getStringExtra("userID");
+            userID = getIntent().getStringExtra("user");
         }
     }
 
@@ -113,7 +118,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private void setProfileWidgets(User user, Info info){
-
         UniversalImageLoader.setImage(info.getProfilePhoto(), profilePhoto, null,"");
 
         mDisplayUsername.setText(user.getUsername());
@@ -163,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 setProfileWidgets(mFirebaseMethods.getSpecificUser(dataSnapshot, userID),
-                        mFirebaseMethods.getInfo(dataSnapshot));
+                        mFirebaseMethods.getInfo(dataSnapshot, userID));
 
             }
 

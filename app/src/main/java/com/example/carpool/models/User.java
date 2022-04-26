@@ -8,15 +8,17 @@ public class User {
     private String email;
     private String fullName;
     private String username;
+    private String profilePhoto;
 
 
     public User() { }
 
-    public User(String userId, String email, String fullName, String username) {
+    public User(String userId, String email, String fullName, String username, String profilePhoto) {
         this.userId = userId;
         this.email = email;
         this.fullName = fullName;
         this.username = username;
+        this.profilePhoto = profilePhoto;
     }
 
 
@@ -53,6 +55,14 @@ public class User {
         this.username = username;
     }
 
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -61,6 +71,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", username='" + username + '\'' +
+                ", profilePhoto=" + profilePhoto + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.example.carpool.account;
 
 import static com.example.carpool.utils.Utils.INFO;
+import static com.example.carpool.utils.Utils.USER;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
 import android.annotation.SuppressLint;
@@ -191,6 +192,7 @@ public class AccountActivity extends AppCompatActivity {
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         mRef.child(INFO).child(userID).child("profilePhoto").setValue(uri.toString());
+                        mRef.child(USER).child(userID).child("profilePhoto").setValue(uri.toString());
                         Log.d(TAG, "uploadImage: "  + uri);
                     }))
                     .addOnFailureListener(e -> {
@@ -256,7 +258,7 @@ public class AccountActivity extends AppCompatActivity {
 
                 setProfileWidgets(
                         mFirebaseMethods.getUser(dataSnapshot),
-                        mFirebaseMethods.getInfo(dataSnapshot)
+                        mFirebaseMethods.getInfo(dataSnapshot, userID)
                 );
 
             }

@@ -334,7 +334,7 @@ public class CreateRideActivity<MaterialAnimatedSwitch> extends AppCompatActivit
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot, driverID));
 
             }
 

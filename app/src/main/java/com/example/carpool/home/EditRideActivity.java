@@ -314,7 +314,7 @@ public class EditRideActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot));
+                setProfileWidgets(mFirebaseMethods.getUser(dataSnapshot), mFirebaseMethods.getInfo(dataSnapshot, userID));
 
             }
 

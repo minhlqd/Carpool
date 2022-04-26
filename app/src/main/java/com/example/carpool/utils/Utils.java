@@ -75,29 +75,34 @@ public class Utils {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Info info = snapshot.getValue(Info.class);
                 if (info != null) {
-                    if (info.getCarOwner()) {
-                        reference.child(REQUEST_RIDE).child(id).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int countRequest = 0;
-                                if (dataSnapshot.exists()) {
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        BookingResults r = dataSnapshot1.getValue(BookingResults.class);
-                                        if (!r.getAccepted()) {
-                                            countRequest++;
-                                        }
+                    reference.child(REQUEST_RIDE).child(id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            int countRequest = 0;
+                            int countResponse = 0;
+                            if (dataSnapshot.exists()) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    BookingResults r = dataSnapshot1.getValue(BookingResults.class);
+                                    if (!r.getAccepted() && info.getCarOwner()) {
+                                        countResponse++;
+                                    } else if (!info.getCarOwner()) {
+                                        countRequest++;
                                     }
                                 }
+                                Log.d("Request", "onDataChange:  + " + countRequest + " " + countResponse);
+                            }
+                            if (info.getCarOwner()) {
+                                setupBadgeRequest(countResponse, context, bottomNavigationView);
+                            } else {
                                 setupBadgeRequest(countRequest, context, bottomNavigationView);
-
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            }
-                        });
-                    }
+                        }
+                    });
                 }
             }
 
