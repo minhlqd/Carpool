@@ -1,5 +1,7 @@
 package com.example.carpool.adapter;
 
+import static com.example.carpool.utils.Utils.formatValue;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -98,7 +100,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.rides.setText(rides);
         holder.seats.setText(seats);
         holder.date.setText(date);
-        holder.costs.setText(cost);
+        holder.costs.setText(formatValue(ride.get(position).getCost()));
         holder.ratingBar.setRating(rating);
 
         UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");

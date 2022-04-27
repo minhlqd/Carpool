@@ -22,6 +22,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.app.NavUtils;
 
 import com.example.carpool.R;
+import com.example.carpool.utils.LocaleHelper;
 
 
 /**
@@ -42,17 +43,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
        setupActionBar();
         addPreferencesFromResource(R.xml.pref_general);
-
-        //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        //toolbar.setClickable(true);
-        //toolbar.setTitle("Settings");
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
 
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences
         // to their values. When their values change, their summaries are
@@ -76,6 +66,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
+
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(
@@ -174,15 +165,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-//    @Override
-//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-//    public void onBuildHeaders(List<Header> target) {
-//        loadHeadersFromResource(R.xml.pref_headers, target);
-//    }
 
     /**
      * This method stops fragment injection in malicious applications.
