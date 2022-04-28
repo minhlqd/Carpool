@@ -205,7 +205,6 @@
                 android:layout_alignParentBottom="true">
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/myLocationButton"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
@@ -242,7 +241,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="13dp"
                     android:layout_alignParentBottom="true"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/background_float_action_button"
                     android:background="@drawable/background_btn_register" />
             </LinearLayout>
 

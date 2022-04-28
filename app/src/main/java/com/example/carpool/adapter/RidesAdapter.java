@@ -73,8 +73,6 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
         final String completeRides = String.valueOf(ride.get(position).getCompleteRides());
         final String pickupLocation = ride.get(position).getPickupLocation();
 
-
-        Log.d("MinhMX", "onBindViewHolder: " +ride.get(position).getPickupLocation() );
         final String cost = formatValue(ride.get(position).getCost());
 
 
@@ -101,10 +99,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder
 
         UniversalImageLoader.setImage(ride.get(position).getProfile_picture(), holder.profile_photo, null,"");
 
-        Log.d("RidesAdapter", "onBindViewHolder: " + ride.get(position).getProfile_picture() + " " + rating);
-
         holder.view.setOnClickListener(view -> {
-            Log.d("MinhMX", "onBindViewHolder: "+ userID);
             ViewRideCreatedDialog dialog =
                     new ViewRideCreatedDialog(
                             mContext,

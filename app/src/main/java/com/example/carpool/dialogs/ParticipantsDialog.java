@@ -86,7 +86,6 @@ public class ParticipantsDialog extends Dialog implements
         this.context = context;
         this.userID = userID;
         this.rideID = rideID;
-        Log.d(TAG, "ParticipantsDialog: " + rideID);
     }
 
     @Override

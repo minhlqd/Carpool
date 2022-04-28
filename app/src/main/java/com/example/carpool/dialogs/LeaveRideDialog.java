@@ -28,7 +28,7 @@ public class LeaveRideDialog extends Dialog implements
         View.OnClickListener  {
 
     private static final String TAG = "LeaveRideDialog";
-    public Context c;
+    public Context context;
     public Dialog d;
     private TextView cancelDialog;
     private Button confirmDialog;
@@ -47,7 +47,7 @@ public class LeaveRideDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_leave_ride);
-        cancelDialog = (TextView) findViewById(R.id.dialogCancel);
+        cancelDialog = findViewById(R.id.dialogCancel);
         confirmDialog = (Button) findViewById(R.id.pay_and_book);
         cancelDialog.setOnClickListener(this);
         confirmDialog.setOnClickListener(this);
@@ -58,9 +58,9 @@ public class LeaveRideDialog extends Dialog implements
         getsSeatsRemaining();
     }
 
-    public LeaveRideDialog(Context a, String currentUserID, String rideID) {
-        super(a);
-        this.c = a;
+    public LeaveRideDialog(Context context, String currentUserID, String rideID) {
+        super(context);
+        this.context = context;
         this.currentUserID = currentUserID;
         this.rideID = rideID;
     }
@@ -73,9 +73,9 @@ public class LeaveRideDialog extends Dialog implements
                 leaveRide();
                 dismiss();
                 updateSeatsRemaining();
-                ((Activity) c).finish();
-                Intent intent = new Intent(c, BookedActivity.class);
-                ((Activity) c).startActivity(intent);
+                ((Activity) context).finish();
+                Intent intent = new Intent(context, BookedActivity.class);
+                context.startActivity(intent);
                 break;
             case R.id.dialogCancel:
                 dismiss();
@@ -90,7 +90,7 @@ public class LeaveRideDialog extends Dialog implements
         mRef.child("request_ride").child(rideID).child(currentUserID).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                Toast.makeText(c, "Left ride successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Left ride successfully!", Toast.LENGTH_SHORT).show();
             }
         });
     }

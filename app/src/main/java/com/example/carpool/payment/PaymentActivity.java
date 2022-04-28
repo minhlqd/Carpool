@@ -126,7 +126,6 @@ public class PaymentActivity extends AppCompatActivity {
 
         Long costPassenger = Long.parseLong(cost)/4;
         mEditAmount.setText(formatValue(costPassenger));
-        Log.d(TAG, "init: " + cost);
     }
 
     private void getActivityData(){
@@ -220,7 +219,7 @@ public class PaymentActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<FCMResponse> call, @NonNull Response<FCMResponse> response) {
                         assert response.body() != null;
                         if (response.body().success == 1 || response.code() == 200){
-                            Log.d(TAG, "onResponse: " + response.body().results);
+                            Log.e(TAG, "onResponse: " + response.body().results);
                             Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
                             String requestId = FirebaseDatabase.getInstance().getReference().push().getKey();
                             RequestUser request = new RequestUser(driverID, passengerID, profile_photo2, profile_photo,

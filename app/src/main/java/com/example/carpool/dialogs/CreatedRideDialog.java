@@ -15,7 +15,7 @@ import com.example.carpool.home.HomeActivity;
 import com.example.carpool.utils.SectionsStatePageAdapter;
 
 
-public class OfferRideCreatedDialog extends Dialog implements
+public class CreatedRideDialog extends Dialog implements
         View.OnClickListener  {
 
     private static final String TAG = "OfferRideCreatedDialog";
@@ -47,7 +47,7 @@ public class OfferRideCreatedDialog extends Dialog implements
         });
     }
 
-    public OfferRideCreatedDialog(Context context) {
+    public CreatedRideDialog(Context context) {
         super(context);
         this.context = context;
     }

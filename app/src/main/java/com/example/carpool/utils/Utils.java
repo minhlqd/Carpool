@@ -51,6 +51,22 @@ public class Utils {
 
     public static final String TOKENS = "Tokens";
 
+    public static final String PARTICIPANTS = "participants";
+
+    public static final String PROFILE = "profile/";
+
+    public static final String PROFILE_PHOTO = "profilePhoto";
+
+    public static final String CAR_OWNER = "carOwner";
+
+    public static final String CAR = "car";
+
+    public static final String REGISTRATION = "registration";
+
+    public static final String LICENCE = "licence";
+
+    public static final String SEATS = "seats";
+
     public static void checkNotifications(DatabaseReference reference, String id, Context context, BottomNavigationView bottomNavigationView){
         reference.child(REMINDER).child(id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,7 +105,6 @@ public class Utils {
                                         countRequest++;
                                     }
                                 }
-                                Log.d("Request", "onDataChange:  + " + countRequest + " " + countResponse);
                             }
                             if (info.getCarOwner()) {
                                 setupBadgeRequest(countResponse, context, bottomNavigationView);

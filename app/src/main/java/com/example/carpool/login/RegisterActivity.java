@@ -260,8 +260,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 finish();
 
             } else {
-                // User is signed out
-                Log.d(TAG, "onAuthStateChanged:signed_out");
             }
         };
     }

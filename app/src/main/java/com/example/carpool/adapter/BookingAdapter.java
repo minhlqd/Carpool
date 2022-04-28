@@ -74,7 +74,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         final String pickupLocation = mBookingResults.get(position).getPickupLocation();
         final String date = mBookingResults.get(position).getDateOfJourney() + " - " + mBookingResults.get(position).getPickupTime();
 
-        Log.d("MinhMX", "onBindViewHolder: " + mBookingResults.get(position).getPassengerID() + " " +  username);
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
         format.setCurrency(Currency.getInstance("VND"));

@@ -1,6 +1,9 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.AVAILABLE_RIDE;
 import static com.example.carpool.utils.Utils.INFO;
+import static com.example.carpool.utils.Utils.PROFILE;
+import static com.example.carpool.utils.Utils.PROFILE_PHOTO;
 import static com.example.carpool.utils.Utils.USER;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
@@ -188,12 +191,24 @@ public class AccountActivity extends AppCompatActivity {
 
     private void uploadImage(){
         if (filePath != null){
-            final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child(PROFILE+ UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
                     ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        mRef.child(INFO).child(userID).child("profilePhoto").setValue(uri.toString());
-                        mRef.child(USER).child(userID).child("profilePhoto").setValue(uri.toString());
-                        Log.d(TAG, "uploadImage: "  + uri);
+                        mRef.child(INFO).child(userID).child(PROFILE_PHOTO).setValue(uri.toString());
+                        mRef.child(USER).child(userID).child(PROFILE_PHOTO).setValue(uri.toString());
+                        mRef.child(AVAILABLE_RIDE).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    Log.d(TAG, "onDataChange: " + dataSnapshot.getKey());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }))
                     .addOnFailureListener(e -> {
                         Toast.makeText(this, "Failed to upload", Toast.LENGTH_SHORT).show();

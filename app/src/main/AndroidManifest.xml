@@ -49,6 +49,7 @@
             android:name=".payment.PaymentActivity"
             android:label="@string/title_activity_payment" />
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".home.HomeActivity"
             android:exported="true">
             <intent-filter>

@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.annotations.Until;
 
 import java.util.Objects;
 
@@ -104,7 +105,7 @@ public class FirebaseMethods {
     int totalPoints = 0;
 
     public void addPoints(String userID, int points) {
-        myRef.child("info").child(userID).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(Utils.INFO).child(userID).child("points").addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -138,11 +139,11 @@ public class FirebaseMethods {
 
         User user = new User(userID ,email, full_name, username, profile_photo);
         Info info = new Info(profile_photo, dob, licence_number, gender, registration_plate, car, car_photo, education, work, bio, mobile_number, 0 , seats, 0, 50, carOwner, startPoint, destination, role);
-        myRef.child("user")
+        myRef.child(Utils.USER)
                 .child(userID)
                 .setValue(user);
 
-        myRef.child("info")
+        myRef.child(Utils.INFO)
                 .child(userID)
                 .setValue(info);
     }
@@ -150,12 +151,12 @@ public class FirebaseMethods {
     public void addReminder(String date, String reminder,  long reminderLength){
         Reminder reminder1 = new Reminder(date, reminder);
 
-        myRef.child("reminder").child(userID).child(String.valueOf(reminderLength + 1)).setValue(reminder1);
+        myRef.child(Utils.REMINDER).child(userID).child(String.valueOf(reminderLength + 1)).setValue(reminder1);
 
     }
 
     public String checkAmountOfReviews(final String notificationComment){
-        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(Utils.REMINDER).child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                if (dataSnapshot.exists()){
@@ -178,7 +179,7 @@ public class FirebaseMethods {
     }
 
     public void checkForReminder(final String notificationComment){
-        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(Utils.REMINDER).child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
@@ -200,11 +201,11 @@ public class FirebaseMethods {
     }
 
     public void deleteReminder(String notificationNumber){
-        myRef.child("reminder").child(userID).child(notificationNumber).removeValue();
+        myRef.child(Utils.REMINDER).child(userID).child(notificationNumber).removeValue();
     }
 
     public void checkNotifications(final String date, final String reminder){
-        myRef.child("reminder").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child(Utils.REMINDER).child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long reminderLength = 0;
@@ -226,7 +227,7 @@ public class FirebaseMethods {
 
         User user = new User();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
-            if(Objects.equals(ds.getKey(), "user")){
+            if(Objects.equals(ds.getKey(), Utils.USER)){
 
                 try {
                     user.setUsername(ds.child(userID)
@@ -240,7 +241,7 @@ public class FirebaseMethods {
                             .getValue(User.class)
                             .getEmail());
                 } catch (NullPointerException e){
-                    Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
+                    Log.e(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }
 
             }
@@ -251,7 +252,7 @@ public class FirebaseMethods {
     public Info getInfo(@NonNull DataSnapshot dataSnapshot, String userID){
         Info info = new Info();
         for (DataSnapshot ds : dataSnapshot.getChildren()){
-            if(Objects.equals(ds.getKey(), "info")){
+            if(Objects.equals(ds.getKey(), Utils.INFO)){
                 try {
                     info.setProfilePhoto(ds.child(userID)
                             .getValue(Info.class)
@@ -314,7 +315,7 @@ public class FirebaseMethods {
                             .getBio());
 
                 } catch (NullPointerException e){
-                    Log.d(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
+                    Log.e(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }
 
             }
@@ -335,6 +336,7 @@ public class FirebaseMethods {
                                 .getValue(User.class)
                                 .getEmail());
                 } catch (NullPointerException e){
+                    Log.e(TAG, "getSpecificUser: " + e.getMessage());
                 }
 
             }
@@ -343,14 +345,14 @@ public class FirebaseMethods {
     }
 
     public void updateUsername(String username){
-        myRef.child("user")
+        myRef.child(Utils.USER)
                 .child(userID)
                 .child(mContext.getString(R.string.field_username))
                 .setValue(username);
     }
 
     public void updateEmail(String email){
-        myRef.child("user")
+        myRef.child(Utils.USER)
                 .child(userID)
                 .child(mContext.getString(R.string.field_email))
                 .setValue(email);

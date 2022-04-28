@@ -106,38 +106,10 @@ public class ChangeInformationActivity extends AppCompatActivity {
         updateUser.put("username", username);
         updateUser.put("fullName", fullName);
 
-        //mRef.child("user").child(userID).updateChildren(updateUser);
-
         Map<String, Object> updateInfo = new HashMap<String,Object>();
 
-        //updateInfo.put("dateOfBird", dob);
         updateInfo.put("mobileNumber", mobileNumber);
 
-        //mRef.child("info").child(userID).updateChildren(updateInfo);
-
-        /*mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //If the user is the current one then no changes have been made
-                if (!mUserSettings.getUsername().equals(username)){
-
-                    checkIfUsernameExists(username);
-                }
-                //user changed there username, checking for uniquness
-                else {
-
-                }
-
-                //user did not change there username and email
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
         onBackPressed();
     }
 

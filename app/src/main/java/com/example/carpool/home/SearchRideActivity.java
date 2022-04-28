@@ -76,14 +76,6 @@ public class SearchRideActivity extends AppCompatActivity {
         ImageView backArrow = (ImageView) findViewById(R.id.backArrowFindRide);
         backArrow.setOnClickListener(v -> finish());
 
-        /*mSameGenderSearchLinearLayout.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked){
-                sameGender = true;
-            } else {
-                sameGender = false;
-            }
-        });*/
-
         mDateOfJourneyEditText.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, 0);

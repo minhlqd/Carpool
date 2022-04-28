@@ -26,7 +26,7 @@ import com.example.carpool.pickup.PickupLocationActivity;
 import com.example.carpool.R;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.UniversalImageLoader;
-import com.example.carpool.dialogs.OfferRideCreatedDialog;
+import com.example.carpool.dialogs.CreatedRideDialog;
 import com.example.carpool.models.User;
 import com.example.carpool.utils.Utils;
 import com.firebase.geofire.GeoFire;
@@ -226,7 +226,7 @@ public class CreateRideActivity<MaterialAnimatedSwitch> extends AppCompatActivit
 
                 mFirebaseMethods.addPoints(driverID, 100);
 
-                OfferRideCreatedDialog dialog = new OfferRideCreatedDialog(mContext);
+                CreatedRideDialog dialog = new CreatedRideDialog(mContext);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
 

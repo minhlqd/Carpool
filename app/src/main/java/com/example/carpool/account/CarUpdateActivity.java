@@ -1,5 +1,11 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.CAR;
+import static com.example.carpool.utils.Utils.CAR_OWNER;
+import static com.example.carpool.utils.Utils.INFO;
+import static com.example.carpool.utils.Utils.LICENCE;
+import static com.example.carpool.utils.Utils.REGISTRATION;
+import static com.example.carpool.utils.Utils.SEATS;
 import static com.example.carpool.utils.Utils.USER;
 
 import androidx.annotation.NonNull;
@@ -91,7 +97,7 @@ public class CarUpdateActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabase.getReference("info").child(firebaseUser.getUid());
+        mRef = mFirebaseDatabase.getReference();
         mFirebaseMethods = new FirebaseMethods(this);
 
 
@@ -111,6 +117,7 @@ public class CarUpdateActivity extends AppCompatActivity {
         });
 
         mCarOwnerRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            mSnippetCarBtn.setVisibility(View.VISIBLE);
             switch (checkedId) {
                 case R.id.driver:
                     isDriver = true;
@@ -127,6 +134,7 @@ public class CarUpdateActivity extends AppCompatActivity {
                     mCarDetailsLayout.setVisibility(View.GONE);
                     break;
             }
+
         });
 
     }
@@ -137,20 +145,14 @@ public class CarUpdateActivity extends AppCompatActivity {
         final String registration = mRegistration.getText().toString();
         final String licence = mLicence.getText().toString();
         final int seats = Integer.parseInt(mSeats.getText().toString());
-
         if(isDriver) {
-
             if (car.length() > 0 && registration.length() > 0 && licence.length() > 0 && mSeats.getText().toString().length() > 0) {
-            /*mRef.child("car").setValue(car);
-            mRef.child("registration").setValue(registration);
-            mRef.child("licence").setValue(licence);
-            mRef.child("seats").setValue(seats);*/
                 HashMap<String, Object> hashMapCarInfo = new HashMap<>();
-                hashMapCarInfo.put("carOwner", true);
-                hashMapCarInfo.put("car", car);
-                hashMapCarInfo.put("registration", registration);
-                hashMapCarInfo.put("licence", licence);
-                hashMapCarInfo.put("seats", seats);
+                hashMapCarInfo.put(CAR_OWNER, true);
+                hashMapCarInfo.put(CAR, car);
+                hashMapCarInfo.put(REGISTRATION, registration);
+                hashMapCarInfo.put(LICENCE, licence);
+                hashMapCarInfo.put(SEATS, seats);
                 mRef.updateChildren(hashMapCarInfo);
                 onBackPressed();
             } else {
@@ -158,17 +160,14 @@ public class CarUpdateActivity extends AppCompatActivity {
             }
         } else {
             HashMap<String, Object> hashMapCarInfo = new HashMap<>();
-            hashMapCarInfo.put("carOwner", false);
-            hashMapCarInfo.put("car", "");
-            hashMapCarInfo.put("registration", "");
-            hashMapCarInfo.put("licence", "");
-            hashMapCarInfo.put("seats", "");
+            hashMapCarInfo.put(CAR_OWNER, false);
+            hashMapCarInfo.put(CAR, "");
+            hashMapCarInfo.put(REGISTRATION, "");
+            hashMapCarInfo.put(LICENCE, "");
+            hashMapCarInfo.put(SEATS, "");
             mRef.updateChildren(hashMapCarInfo);
             onBackPressed();
         }
-
-
-        
     }
 
     private void checkIfUsernameExists(final String username) {
@@ -213,13 +212,6 @@ public class CarUpdateActivity extends AppCompatActivity {
         mRegistration.setText(info.getRegistrationPlate());
         mLicence.setText(info.getLicenceNumber());
         mSeats.setText(String.valueOf(info.getSeats()));
-
-        /*mCarPhoto.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-        });*/
     }
 
     @Override
@@ -227,29 +219,9 @@ public class CarUpdateActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
             filePath = data.getData();
-            /*try {
-                    *//*Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
-                    mCarPhoto.setImageBitmap(bitmap);*//*
-                    //uploadImage();
-            } catch (IOException e){
-                e.printStackTrace();
-            }*/
 
         }
     }
-
-    /*private void uploadImage(){
-        if (filePath != null){
-            final StorageReference ref = storageReference.child("profile/"+ UUID.randomUUID().toString());
-            ref.putFile(filePath).addOnSuccessListener(taskSnapshot ->
-                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        imgURL = uri.toString();
-                    }))
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(getActivity(), "Failed to upload", Toast.LENGTH_SHORT).show();
-                    });
-        }
-    }*/
 
     private void setupFirebaseAuth(){
 
@@ -278,18 +250,22 @@ public class CarUpdateActivity extends AppCompatActivity {
     }
 
     public void getUserInformation() {
-        mRef.child("info").child(userID).addValueEventListener(new ValueEventListener() {
+        mRef.child(INFO).child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                role = dataSnapshot.getValue(String.class);
-                if (role != null && role.equals("passenger")) {
+                Info info = dataSnapshot.getValue(Info.class);
+                if (info.getCarOwner()) {
                     driver.setChecked(true);
-                    mCar.setText("");
-                    mRegistration.setText("");
-                    mLicence.setText("");
-                    mSeats.setText("");
+                    mCar.setText(info.getCar());
+                    mRegistration.setText(info.getRegistrationPlate());
+                    mLicence.setText(info.getLicenceNumber());
+                    mSeats.setText(String.valueOf(info.getSeats()));
                     mCarDetailsLayout.setVisibility(View.VISIBLE);
+                } else {
+                    passenger.setChecked(true);
+                    mCarDetailsLayout.setVisibility(View.GONE);
                 }
+                mSnippetCarBtn.setVisibility(View.GONE);
             }
 
             @Override

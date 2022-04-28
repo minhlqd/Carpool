@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +70,8 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
     private String user_id;
     private Boolean isDriver = false;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +90,7 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         rides = new ArrayList<BookingResults>();
 
         mNoResultsFoundLayout = findViewById(R.id.noResultsFoundLayout);
+        toolbar = findViewById(R.id.toolbar_booked_ride);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -99,6 +103,7 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                     Info info = snapshot.getValue(Info.class);
                     isDriver = info.getCarOwner();
                     if (isDriver) {
+                        toolbar.setTitle(R.string.request);
                         mRef.child(REQUEST_RIDE).child(user_id).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,13 +112,11 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                                         BookingResults booking = dataSnapshot1.getValue(BookingResults.class);
                                         if (!booking.getAccepted()) {
                                             rides.add(booking);
-                                            Log.d(TAG, "onDataChange: ride = " + rides);
                                         }
                                         notFoundBooked.setVisibility(View.INVISIBLE);
                                         notFoundIcon.setVisibility(View.INVISIBLE);
                                     }
                                 }
-                                Log.d(TAG, "onDataChange: " + rides.size());
 
                                 myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
                                 mRecyclerView.setAdapter(myAdapter);
@@ -122,10 +125,10 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
                             }
                         });
                     } else {
+                        toolbar.setTitle(R.string.booked_rides);
                         mRef.child(REQUEST_RIDE).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -137,14 +140,12 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                                             if (r.getPassengerID().equals(user_id)) {
                                                 rides.add(r);
                                             }
-                                            Log.d(TAG, "onDataChange: " + r);
                                             notFoundBooked.setVisibility(View.INVISIBLE);
                                             notFoundIcon.setVisibility(View.INVISIBLE);
                                             /*mNoResultsFoundLayout.setVisibility(View.INVISIBLE);*/
                                         }
                                     }
                                 }
-                                Log.d(TAG, "onDataChange: " + rides.size());
 
                                 myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
                                 mRecyclerView.setAdapter(myAdapter);

@@ -90,7 +90,6 @@ public class RidesActivity extends AppCompatActivity {
 
         mRef = FirebaseDatabase.getInstance().getReference().child("available_ride");
 
-        Log.d(TAG, "onCreate: " + driverID);
         mRef.orderByChild(driverID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -119,7 +118,6 @@ public class RidesActivity extends AppCompatActivity {
 
 
     private void setupBottomNavigationView(){
-        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
         bottomNavigationView = findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationView);
 

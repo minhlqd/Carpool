@@ -80,7 +80,7 @@
     <string name="view_profile">Hồ sơ</string>
     <string name="update_my_details" >Cập nhật thông tin</string>
     <string name="pay_and_book">Thanh toán và đặt chỗ</string>
-    <string name="dismiss">Hủy</string>
+    <string name="dismiss">Đóng</string>
     <string name="pickup">Đón:</string>
     <string name="update_car">Cập nhật thông tin xe</string>
     <string name="accept">Đồng ý</string>
@@ -117,9 +117,17 @@
     <string name="to_nam_dinh_vn">To: NamDinh, VN</string>
     <string name="from">Đi:</string>
     <string name="to" >Đến:</string>
-    <string name="you_have_successfully_created_a_carpool_ride">Bạn đã tạo thành công chuyến đi chung xe.</string>
+    <string name="you_have_successfully_created_a_carpool_ride">Bạn có chắc chắn muốn tạo chuyến đi chung xe?</string>
     <string name="complete">Đồng ý</string>
     <string name="ride_created">Tạo chuyến đi</string>
     <string name="created_a_ride">Bạn đã tạo 1 chuyến đi</string>
     <string name="participants">Người tham gia</string>
+    <string name="tap_for_time">Nhấn để chọn thời gian</string>
+    <string name="carpool_journey">Lịch trình chuyến đi</string>
+    <string name="request">Yêu cầu</string>
+    <string name="frequent_route">Chuyến đi thường xuyên</string>
+    <string name="leave_ride">Rời chuyến đi</string>
+    <string name="loading" translatable="false">Đang tải...</string>
+    <string name="delete">Xóa</string>
+    <string name="are_you_sure_you_want_to_leave_this_ride">Bạn có chắc chắn muốn rời khỏi chuyến đi này không?</string>
 </resources>

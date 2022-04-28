@@ -125,7 +125,6 @@ public class BookRideDialog extends Dialog implements View.OnClickListener  {
     private void sendDataToPayment(){
         Intent intent = new Intent(context, PaymentActivity.class);
         intent.putExtra("userID", driverID);
-        Log.d(TAG, "showDialog: " + driverID);
         intent.putExtra("currentLocation", from);
         intent.putExtra("destination", to);
         intent.putExtra("dateOfJourney", date);

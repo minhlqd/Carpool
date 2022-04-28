@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    private static final String TAG = "MinhMX";
+    private static final String TAG = "ChangePasswordActivity";
 
     //Fragment view
     private View view;

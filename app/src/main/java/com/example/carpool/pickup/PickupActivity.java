@@ -38,7 +38,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private static final String TAG = "PickupActivity";
 
-    private Context mContext = PickupActivity.this;
+    private final Context mContext = PickupActivity.this;
 
     //Firebase variables
     private FirebaseUser currentUser;
@@ -49,14 +49,14 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
 
     //Google map variables
     private GoogleMap mMap;
-    private static int DEFAULT_ZOOM = 18;
+    private static final int DEFAULT_ZOOM = 18;
 
     private String pickLocation, rideID, licencePlate, pickupTime;
 
     //Widgets
     private ImageView mBack;
     private TextView mLicencePlate, mPickupTime;
-    private FloatingActionButton mUnjoinBtn, mParticipantsBtn;
+    private FloatingActionButton mUnJoinBtn, mParticipantsBtn;
 
     private String userID, currentUserID;
 
@@ -75,12 +75,7 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
         mLicencePlate.setText(licencePlate);
         mPickupTime.setText(pickupTime);
 
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mBack.setOnClickListener(v -> onBackPressed());
 
         //Setup firebase object
         mAuth = FirebaseAuth.getInstance();
@@ -97,15 +92,15 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
-        mUnjoinBtn.setOnClickListener(v -> showDialogLeave());
+        mUnJoinBtn.setOnClickListener(v -> showDialogLeave());
     }
 
     private void setupWidgets() {
-        mBack = (ImageView) findViewById(R.id.backArrowPickupRide);
-        mLicencePlate = (TextView) findViewById(R.id.licencePlate);
-        mPickupTime = (TextView) findViewById(R.id.pickupTimeText);
-        mParticipantsBtn = (FloatingActionButton) findViewById(R.id.paticipantsRideBtn);
-        mUnjoinBtn = findViewById(R.id.unjoinBtn);
+        mBack = findViewById(R.id.backArrowPickupRide);
+        mLicencePlate = findViewById(R.id.licencePlate);
+        mPickupTime = findViewById(R.id.pickupTimeText);
+        mParticipantsBtn = findViewById(R.id.paticipantsRideBtn);
+        mUnJoinBtn = findViewById(R.id.unjoinBtn);
     }
 
     private void getActivityData() {
@@ -127,7 +122,6 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void showDialogLeave() {
-        //Confirmation to delete the ride dialog
         LeaveRideDialog dialog = new LeaveRideDialog(mContext, currentUserID ,rideID);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
@@ -144,7 +138,6 @@ public class PickupActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
         LatLng pickupLocation = geoLocationFromAddress(pickLocation);

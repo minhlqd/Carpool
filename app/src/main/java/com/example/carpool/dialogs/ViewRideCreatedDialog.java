@@ -106,7 +106,6 @@ public class ViewRideCreatedDialog extends Dialog implements
         this.userID = userID;
         this.photo = photo;
         this.driverID = driverID;
-        Log.d(TAG, "ViewRideCreatedDialog: " + userID);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -114,7 +113,6 @@ public class ViewRideCreatedDialog extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_and_book:
-                Log.d(TAG, "onClick: " + pickupLocation);
                 Intent intent1 = new Intent(mContext, EditRideActivity.class);
                 intent1.putExtra("COST", cost);
                 intent1.putExtra("EXTRATIME", extraTime);

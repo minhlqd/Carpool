@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ChangeEmailActivity extends AppCompatActivity {
-    private static final String TAG = "MinhMX";
+    private static final String TAG = "ChangeEmailActivity";
 
 
     //Firebase

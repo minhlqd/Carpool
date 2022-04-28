@@ -16,7 +16,6 @@ public class FCMClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        Log.d("FirebaseFCM", "getClient: " + retrofit.baseUrl());
         return retrofit;
     }
 }
