@@ -1,6 +1,7 @@
 package com.example.carpool.models;
 
 public class BookingResults {
+    private String requestID;
     private String passengerID;
     private String profile_photo;
     private String username;
@@ -19,7 +20,8 @@ public class BookingResults {
     public BookingResults() {
     }
 
-    public BookingResults(String passengerID, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, long cost, String pickupLocation) {
+    public BookingResults(String requestID, String passengerID, String profile_photo, String username, String licencePlate, int seats, String destination, String dateOfJourney, String pickupTime, String location, int luggage, boolean accepted, String ride_id, long cost, String pickupLocation) {
+        this.requestID = requestID;
         this.passengerID = passengerID;
         this.profile_photo = profile_photo;
         this.username = username;
@@ -34,6 +36,14 @@ public class BookingResults {
         this.pickupLocation = pickupLocation;
         this.pickupTime = pickupTime;
         this.dateOfJourney = dateOfJourney;
+    }
+
+    public String getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
     }
 
     public String getPassengerID() {
@@ -151,6 +161,7 @@ public class BookingResults {
     @Override
     public String toString() {
         return "BookingResults{" +
+                "requestID=" + requestID + '\'' +
                 "passengerID='" + passengerID + '\'' +
                 ", profile_photo='" + profile_photo + '\'' +
                 ", username='" + username + '\'' +

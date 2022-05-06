@@ -1,5 +1,8 @@
 package com.example.carpool.account;
 
+import static com.example.carpool.utils.Utils.INFO;
+import static com.example.carpool.utils.Utils.USER;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -84,9 +87,9 @@ public class ChangeInformationActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
 
         mSnippetDetailsBtn = findViewById(R.id.snippetDetailsBtn);
-        mSnippetDetailsBtn.setOnClickListener(v -> saveProfileSettings());
-
         setupFirebaseAuth();
+
+        mSnippetDetailsBtn.setOnClickListener(v -> saveProfileSettings());
 
 
         //Setup back arrow for navigating back to 'ProfileActivity'
@@ -100,15 +103,13 @@ public class ChangeInformationActivity extends AppCompatActivity {
         final String username = mUsername.getText().toString();
         final String fullName = mFullName.getText().toString();
         final String mobileNumber = mMobileNumber.getText().toString();
-        //final String dob = mDob.getText().toString();
+        final String dob = mDob.getText().toString();
         Map<String, Object> updateUser = new HashMap<String,Object>();
 
-        updateUser.put("username", username);
-        updateUser.put("fullName", fullName);
-
-        Map<String, Object> updateInfo = new HashMap<String,Object>();
-
-        updateInfo.put("mobileNumber", mobileNumber);
+        mRef.child(USER).child(userID).child("username").setValue(username);
+        mRef.child(USER).child(userID).child("fullName").setValue(fullName);
+        mRef.child(INFO).child(userID).child("mobileNumber").setValue(mobileNumber);
+        mRef.child(INFO).child(userID).child("dateOfBird").setValue(dob);
 
         onBackPressed();
     }
@@ -116,7 +117,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
     private void checkIfUsernameExists(final String username) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
-                .child(Utils.USER)
+                .child(USER)
                 .orderByChild(getString(R.string.field_username))
                 .equalTo(username);
 
@@ -145,9 +146,6 @@ public class ChangeInformationActivity extends AppCompatActivity {
     }
 
     private void setProfileWidgets(User user, Info info){
-
-
-        mUserSettings = user;
 
         UniversalImageLoader.setImage(info.getProfilePhoto(), mProfilePhoto, null,"");
 

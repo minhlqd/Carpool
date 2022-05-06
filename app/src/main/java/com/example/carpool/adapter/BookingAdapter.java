@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +77,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         format.setMaximumFractionDigits(0);
         format.setCurrency(Currency.getInstance("VND"));
         final String cost = format.format(mBookingResults.get(position).getCost());
+        final String requestId = mBookingResults.get(position).getRequestID();
 
         if (isDriver) {
             holder.bookingStatusTextview.setVisibility(View.GONE);
@@ -86,7 +86,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int seat = snapshot.getValue(Integer.class);
-                        responseBooked.responseBooked(true, rideID, position, passengerID, seat);
+                        responseBooked.responseBooked(true, requestId, rideID, position, passengerID, seat);
                     }
 
                     @Override
@@ -96,7 +96,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
                 });
             });
             holder.inject.setOnClickListener(v -> {
-                responseBooked.responseBooked(false, rideID, position, passengerID, 0);
+                responseBooked.responseBooked(false, requestId, rideID, position, passengerID, 0);
             });
         } else {
             holder.inject.setVisibility(View.GONE);

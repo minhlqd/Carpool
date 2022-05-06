@@ -29,7 +29,6 @@ import com.example.carpool.models.Info;
 import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.BookingResults;
-import com.example.carpool.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -137,8 +136,10 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
                                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()) {
                                             BookingResults r = dataSnapshot2.getValue(BookingResults.class);
 
-                                            if (r.getPassengerID().equals(user_id)) {
-                                                rides.add(r);
+                                            if (r.getPassengerID() != null) {
+                                                if (r.getPassengerID().equals(user_id)) {
+                                                    rides.add(r);
+                                                }
                                             }
                                             notFoundBooked.setVisibility(View.INVISIBLE);
                                             notFoundIcon.setVisibility(View.INVISIBLE);
@@ -191,14 +192,15 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
     int seatsAvailable = 0;
 
     @Override
-    public void responseBooked(Boolean isAccept, String rideId, int pos, String passengerId, int seat) {
+    public void responseBooked(Boolean isAccept, String requestID, String rideID, int pos, String passengerId, int seat) {
         if (isAccept) {
-            mRef.child(REQUEST_RIDE).child(user_id).child(rideId).child("accepted").setValue(true);
-            mRef.child(AVAILABLE_RIDE).child(rideId).child("seatsAvailable").setValue(seat - 1);
+            Log.d(TAG, "responseBooked: " + user_id + " " + requestID);
+            mRef.child(REQUEST_RIDE).child(user_id).child(requestID).child("accepted").setValue(true);
+            mRef.child(AVAILABLE_RIDE).child(rideID).child("seatsAvailable").setValue(seat - 1);
             String user = "passenger_" + (4-seat);
-            mRef.child("participant").child(rideId).child(user).setValue(passengerId);
+            mRef.child("participant").child(rideID).child(user).setValue(passengerId);
         } else {
-            mRef.child(REQUEST_RIDE).child(user_id).child(rideId).removeValue();
+            mRef.child(REQUEST_RIDE).child(user_id).child(requestID).removeValue();
         }
         rides.remove(pos);
         myAdapter.notifyDataSetChanged();

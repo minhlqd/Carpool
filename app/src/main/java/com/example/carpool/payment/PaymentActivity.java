@@ -222,7 +222,7 @@ public class PaymentActivity extends AppCompatActivity {
                             Log.e(TAG, "onResponse: " + response.body().results);
                             Toast.makeText(mContext, "Booking request sent!", Toast.LENGTH_SHORT).show();
                             String requestId = FirebaseDatabase.getInstance().getReference().push().getKey();
-                            RequestUser request = new RequestUser(driverID, passengerID, profile_photo2, profile_photo,
+                            RequestUser request = new RequestUser(requestId,driverID, passengerID, profile_photo2, profile_photo,
                                     username, 1, destination, currentLocation, 1, false,
                                     rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation,
                                     licencePlate);
