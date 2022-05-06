@@ -239,7 +239,7 @@ public class FirebaseMethods {
                             .getEmail());
                     user.setFullName(ds.child(userID)
                             .getValue(User.class)
-                            .getEmail());
+                            .getFullName());
                 } catch (NullPointerException e){
                     Log.e(TAG, "getUserSettings: NullPointerException: " + e.getMessage());
                 }

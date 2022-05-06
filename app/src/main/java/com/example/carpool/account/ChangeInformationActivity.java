@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,7 +109,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
         mRef.child(USER).child(userID).child("username").setValue(username);
         mRef.child(USER).child(userID).child("fullName").setValue(fullName);
-        mRef.child(INFO).child(userID).child("mobileNumber").setValue(mobileNumber);
+        mRef.child(INFO).child(userID).child("mobileNumber").setValue(Long.parseLong(mobileNumber));
         mRef.child(INFO).child(userID).child("dateOfBird").setValue(dob);
 
         onBackPressed();
@@ -151,6 +152,7 @@ public class ChangeInformationActivity extends AppCompatActivity {
 
         mUsername.setText(user.getUsername());
         mFullName.setText(user.getFullName());
+        Log.d("MinhMX", "setProfileWidgets:  " + user);
         mMobileNumber.setText(String.valueOf(info.getMobileNumber()));
         mDob.setText(String.valueOf(info.getDateOfBird()));
 
