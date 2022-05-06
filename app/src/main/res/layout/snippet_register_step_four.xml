@@ -182,64 +182,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/destinationLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/carToggle"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/startPointLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/background_btn_register">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/start_point"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/journey"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="sans-serif"
-                        android:hint="@string/start_point"
-                        android:inputType="textPersonName"
-                        android:padding="8dp"
-                        android:textSize="16sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/destinationLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/background_btn_register">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/destination"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/journey"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="sans-serif"
-                        android:hint="@string/destination"
-                        android:inputType="textPersonName"
-                        android:padding="8dp"
-                        android:textSize="16sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 

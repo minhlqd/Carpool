@@ -118,8 +118,6 @@ public class RegisterStepFourFragment extends Fragment {
         mRegistrationLayout = mView.findViewById(R.id.registrationLayout);
         mSeatsLayout = mView.findViewById(R.id.seatsLayout);
         mCarPhoto = mView.findViewById(R.id.uploadCarPicture);
-        mStartPoint = mView.findViewById(R.id.start_point);
-        mDestination = mView.findViewById(R.id.destination);
         mVehicle = mView.findViewById(R.id.vehicle);
         mDestinationLinearLayout = mView.findViewById(R.id.destinationLinearLayout);
         mQuestionHeading = mView.findViewById(R.id.questionHeading);

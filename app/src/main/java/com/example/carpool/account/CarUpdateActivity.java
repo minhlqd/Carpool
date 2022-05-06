@@ -153,7 +153,8 @@ public class CarUpdateActivity extends AppCompatActivity {
                 hashMapCarInfo.put(REGISTRATION, registration);
                 hashMapCarInfo.put(LICENCE, licence);
                 hashMapCarInfo.put(SEATS, seats);
-                mRef.updateChildren(hashMapCarInfo);
+                hashMapCarInfo.put("role", "driver");
+                mRef.child(INFO).child(userID).updateChildren(hashMapCarInfo);
                 onBackPressed();
             } else {
                 Toast.makeText(this, "Fill", Toast.LENGTH_SHORT).show();
@@ -161,11 +162,8 @@ public class CarUpdateActivity extends AppCompatActivity {
         } else {
             HashMap<String, Object> hashMapCarInfo = new HashMap<>();
             hashMapCarInfo.put(CAR_OWNER, false);
-            hashMapCarInfo.put(CAR, "");
-            hashMapCarInfo.put(REGISTRATION, "");
-            hashMapCarInfo.put(LICENCE, "");
-            hashMapCarInfo.put(SEATS, "");
-            mRef.updateChildren(hashMapCarInfo);
+            hashMapCarInfo.put("role", "passenger");
+            mRef.child(INFO).child(userID).updateChildren(hashMapCarInfo);
             onBackPressed();
         }
     }
