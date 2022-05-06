@@ -65,6 +65,7 @@ public class FirebaseMethods {
                                 Toast.LENGTH_SHORT).show();
                     }
                     else if(task.isSuccessful()){
+                        Toast.makeText(mContext, "Authenticated successfully", Toast.LENGTH_SHORT).show();
                         userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     }
                 });
