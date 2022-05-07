@@ -15,12 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.carpool.R;
+import com.example.carpool.register.DepthPageTransformer;
+import com.example.carpool.register.RegisterViewPagerAdapter;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.utils.SectionsStatePageAdapter;
 import com.example.carpool.register.RegisterStepFourFragment;
 import com.example.carpool.register.RegisterStepOneFragment;
 import com.example.carpool.register.RegisterStepThreeFragment;
 import com.example.carpool.register.RegisterStepTwoFragment;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +39,7 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                                                                     RegisterStepThreeFragment.OnButtonClickListener,
                                                                     RegisterStepFourFragment.OnButtonClickListener  {
 
-    private static final String TAG = "MinhMX";
+    private static final String TAG = "RegisterActivity";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -78,6 +81,8 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     private RegisterStepThreeFragment mRegisterStepThreeFragment;
     private RegisterStepFourFragment mRegisterStepFourFragment;
 
+    private TabLayout mTabLayout;
+
 
     private Context mContext;
 
@@ -92,10 +97,17 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         setupFragments();
 
         //instantiate objects
-        mViewPager = findViewById(R.id.container);
+        //mViewPager = findViewById(R.id.container);
         mRelativeLayout = findViewById(R.id.removeableLayout);
 
+        mTabLayout = findViewById(R.id.tabs);
+        mViewPager = findViewById(R.id.viewpager);
+
+        /*setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("TabLayout ViewPager");*/
+
         setViewPager();
+        mTabLayout.setupWithViewPager(mViewPager);
 
         setupFirebaseAuth();
     }
@@ -114,20 +126,26 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
 
     private void setViewPager() {
         mRelativeLayout.setVisibility(View.GONE);
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
-        /*
+        //getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
+        RegisterViewPagerAdapter adapter = new RegisterViewPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-        if (mViewPager.getAdapter() != null) {
-            mViewPager.setAdapter(null);
-        }
+            @Override
+            public void onPageSelected(int position) {
 
-        mViewPager.setAdapter(pageAdapter);
-        mViewPager.setCurrentItem(0, true);*/
-        //mViewPager.postDelayed(() -> mViewPager.setCurrentItem(0), 100);
-       /*  mViewPager.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            }
 
-            mViewPager.setCurrentItem(0, false);
-        });*/
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
