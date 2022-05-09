@@ -91,6 +91,14 @@ public class RegisterStepThreeFragment extends Fragment {
         void onButtonClicked(View view);
     }
 
+    public static RegisterStepThreeFragment newInstance(int page, String title) {
+        RegisterStepThreeFragment contactsFragment = new RegisterStepThreeFragment();
+        Bundle args = new Bundle();
+        args.putInt("page", page);
+        args.putString("title", title);
+        contactsFragment.setArguments(args);
+        return contactsFragment;
+    }
 
     @Nullable
     @Override
@@ -143,12 +151,12 @@ public class RegisterStepThreeFragment extends Fragment {
             }
         });
 
-        mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButton3.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
+        /*mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
+        mBackButton3.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
 
-        mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
+        /*mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(v ->
-                mOnButtonClickListener.onButtonClicked(v));
+                mOnButtonClickListener.onButtonClicked(v));*/
 
         mRegistrationPicture.setOnClickListener(v -> chooseImage());
 

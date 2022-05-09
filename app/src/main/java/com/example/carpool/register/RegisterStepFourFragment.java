@@ -90,6 +90,15 @@ public class RegisterStepFourFragment extends Fragment {
         void onButtonClicked(View view);
     }
 
+    public static RegisterStepFourFragment newInstance(int page, String title) {
+        RegisterStepFourFragment contactsFragment = new RegisterStepFourFragment();
+        Bundle args = new Bundle();
+        args.putInt("page", page);
+        args.putString("title", title);
+        contactsFragment.setArguments(args);
+        return contactsFragment;
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Nullable
     @Override
@@ -159,8 +168,8 @@ public class RegisterStepFourFragment extends Fragment {
             }
         });
 
-        mBackButtonFour = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButtonFour.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
+        /*mBackButtonFour = mView.findViewById(R.id.loginBackArrowStep);
+        mBackButtonFour.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
 
         mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));

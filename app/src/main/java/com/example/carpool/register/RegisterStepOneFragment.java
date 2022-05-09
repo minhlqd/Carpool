@@ -60,6 +60,15 @@ public class RegisterStepOneFragment extends Fragment {
         void onButtonClicked(View view);
     }
 
+    public static RegisterStepOneFragment newInstance(int page, String title) {
+        RegisterStepOneFragment contactsFragment = new RegisterStepOneFragment();
+        Bundle args = new Bundle();
+        args.putInt("page", page);
+        args.putString("title", title);
+        contactsFragment.setArguments(args);
+        return contactsFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,8 +106,8 @@ public class RegisterStepOneFragment extends Fragment {
             }
         });
 
-        mBackButtonOne = mView.findViewById(R.id.loginBackArrow);
-        mBackButtonOne.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
+        /*mBackButtonOne = mView.findViewById(R.id.loginBackArrow);
+        mBackButtonOne.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
 
         return mView;
     }
