@@ -34,6 +34,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
 
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";

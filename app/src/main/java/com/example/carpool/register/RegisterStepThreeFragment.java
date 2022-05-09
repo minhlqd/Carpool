@@ -151,12 +151,12 @@ public class RegisterStepThreeFragment extends Fragment {
             }
         });
 
-        /*mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButton3.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
+        mBackButton3 = mView.findViewById(R.id.loginBackArrowStep);
+        mBackButton3.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
-        /*mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
+        mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(v ->
-                mOnButtonClickListener.onButtonClicked(v));*/
+                mOnButtonClickListener.onButtonClicked(v));
 
         mRegistrationPicture.setOnClickListener(v -> chooseImage());
 

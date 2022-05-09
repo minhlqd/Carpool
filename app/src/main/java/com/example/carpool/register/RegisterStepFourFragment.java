@@ -168,8 +168,8 @@ public class RegisterStepFourFragment extends Fragment {
             }
         });
 
-        /*mBackButtonFour = mView.findViewById(R.id.loginBackArrowStep);
-        mBackButtonFour.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
+        mBackButtonFour = mView.findViewById(R.id.loginBackArrowStep);
+        mBackButtonFour.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         mRestartRegistration = mView.findViewById(R.id.restartRegistrationBtn);
         mRestartRegistration.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));

@@ -1,13 +1,9 @@
 package com.example.carpool.utils;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.carpool.adapter.BookingAdapter;
-import com.example.carpool.booked.BookedActivity;
 import com.example.carpool.models.BookingResults;
 import com.example.carpool.models.Info;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.Currency;
-import java.util.Stack;
 
 public class Utils {
     public static final String KEY_LOCATION = "location";

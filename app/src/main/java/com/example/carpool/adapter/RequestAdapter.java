@@ -34,10 +34,10 @@ import java.util.Currency;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * create by minhmx on 22/04/2022
+ * create by minhmx on 09/05/2022
  */
 
-public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHolder> {
+public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;
     private ArrayList<BookingResults> mBookingResults;
@@ -45,7 +45,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
     private ResponseBooked responseBooked;
     private DatabaseReference mRef;
 
-    public BookingAdapter(Context context, ArrayList<BookingResults> mBookingResults, Boolean isDriver, ResponseBooked responseBooked, DatabaseReference databaseReference){
+    public RequestAdapter(Context context, ArrayList<BookingResults> mBookingResults, Boolean isDriver, ResponseBooked responseBooked, DatabaseReference databaseReference){
         this.mContext = context;
         this.mBookingResults = mBookingResults;
         this.isDriver = isDriver;
@@ -53,7 +53,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.MyViewHo
         this.mRef = databaseReference;
     }
 
-    public BookingAdapter(String[] myDataset) {
+    public RequestAdapter(String[] myDataset) {
         mDataset = myDataset;
     }
 

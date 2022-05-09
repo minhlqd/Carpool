@@ -3,11 +3,9 @@ package com.example.carpool.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ParticipantsAdapter;
 import com.example.carpool.R;
-import com.example.carpool.models.Info;
-import com.example.carpool.models.RequestUser;
 import com.example.carpool.utils.FirebaseMethods;
-import com.example.carpool.utils.UniversalImageLoader;
 import com.example.carpool.models.Participants;
 import com.example.carpool.models.User;
-import com.example.carpool.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -103,7 +97,7 @@ public class ParticipantsDialog extends Dialog implements
     private void setupWidgets(){
 
         //Setup recycler view
-        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));

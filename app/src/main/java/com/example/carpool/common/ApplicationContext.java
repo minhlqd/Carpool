@@ -3,6 +3,10 @@ package com.example.carpool.common;
 
 import android.app.Application;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class ApplicationContext extends Application {
 
     private static ApplicationContext mContext;

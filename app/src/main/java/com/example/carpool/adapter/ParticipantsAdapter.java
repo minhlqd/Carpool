@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;

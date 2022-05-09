@@ -74,7 +74,7 @@ public class FrequentRouteActivity extends AppCompatActivity {
             Log.i(TAG, "onCreate: " + user_id);
         }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);

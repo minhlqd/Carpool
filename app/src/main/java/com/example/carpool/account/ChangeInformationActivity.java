@@ -43,6 +43,10 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class ChangeInformationActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private FirebaseAuth mAuth;

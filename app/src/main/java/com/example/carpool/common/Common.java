@@ -5,6 +5,10 @@ import android.util.Log;
 import com.example.carpool.remote.FCMClient;
 import com.example.carpool.remote.IFCMService;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class Common {
 
     public static String fcmURL = "https://fcm.googleapis.com/";

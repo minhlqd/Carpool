@@ -1,7 +1,5 @@
 package com.example.carpool.rides;
 
-import static com.example.carpool.utils.Utils.checkNotifications;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -76,7 +74,7 @@ public class RidesActivity extends AppCompatActivity {
         checkNotificationsRide();
 
         //Setup recycler view
-        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         rides = new ArrayList<>();
 

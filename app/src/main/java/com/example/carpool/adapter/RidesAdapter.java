@@ -32,6 +32,10 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;

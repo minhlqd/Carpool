@@ -98,16 +98,16 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
 
         //instantiate objects
         //mViewPager = findViewById(R.id.container);
-        mRelativeLayout = findViewById(R.id.removeableLayout);
+        /*mRelativeLayout = findViewById(R.id.removeableLayout);*/
 
-        mTabLayout = findViewById(R.id.tabs);
-        mViewPager = findViewById(R.id.viewpager);
+        /*mTabLayout = findViewById(R.id.tabs);
+        mViewPager = findViewById(R.id.viewpager);*/
 
         /*setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("TabLayout ViewPager");*/
 
         setViewPager();
-        mTabLayout.setupWithViewPager(mViewPager);
+        /*mTabLayout.setupWithViewPager(mViewPager);*/
 
         setupFirebaseAuth();
     }
@@ -125,10 +125,10 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
     }
 
     private void setViewPager() {
-        mRelativeLayout.setVisibility(View.GONE);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
-        RegisterViewPagerAdapter adapter = new RegisterViewPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
+        /*mRelativeLayout.setVisibility(View.GONE);*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, mRegisterStepOneFragment).commit();
+        //RegisterViewPagerAdapter adapter = new RegisterViewPagerAdapter(getSupportFragmentManager());
+        /*mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(0);
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -145,13 +145,13 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onButtonClicked(View view) {
-        int currPos = mViewPager.getCurrentItem();
+        //int currPos = mViewPager.getCurrentItem();
 
         switch (view.getId()) {
 
@@ -190,7 +190,8 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
                 break;
 
             case R.id.loginBackArrowStep:
-                mViewPager.setCurrentItem(currPos - 1);
+                /*mViewPager.setCurrentItem(currPos - 1);*/
+                onBackPressed();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + view.getId());

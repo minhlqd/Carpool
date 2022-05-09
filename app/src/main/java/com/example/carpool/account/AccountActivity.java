@@ -54,6 +54,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+* create by minhmx on 22/04/2022
+*/
 
 public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "AccountActivity";

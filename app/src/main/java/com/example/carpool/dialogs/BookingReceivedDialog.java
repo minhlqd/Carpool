@@ -11,6 +11,10 @@ import android.widget.Toast;
 import com.example.carpool.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class BookingReceivedDialog extends Dialog implements
         View.OnClickListener  {
 

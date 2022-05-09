@@ -40,7 +40,7 @@
                     tools:listitem="@layout/individual_participants"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/recycler_view_request"
                     android:layout_marginBottom="10dp"
                     android:scrollbars="vertical">
                 </androidx.recyclerview.widget.RecyclerView>

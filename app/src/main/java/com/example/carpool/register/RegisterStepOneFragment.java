@@ -106,8 +106,8 @@ public class RegisterStepOneFragment extends Fragment {
             }
         });
 
-        /*mBackButtonOne = mView.findViewById(R.id.loginBackArrow);
-        mBackButtonOne.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));*/
+        mBackButtonOne = mView.findViewById(R.id.loginBackArrow);
+        mBackButtonOne.setOnClickListener(v -> mOnButtonClickListener.onButtonClicked(v));
 
         return mView;
     }

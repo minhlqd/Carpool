@@ -21,6 +21,10 @@ import com.example.carpool.models.FrequentRouteResults;
 
 import java.util.ArrayList;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class FrequentRouteAdapter extends RecyclerView.Adapter<FrequentRouteAdapter.MyViewHolder> {
 
     private final Context mContext;

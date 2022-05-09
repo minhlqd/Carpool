@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carpool.adapter.SearchAdapter;
 import com.example.carpool.R;
 import com.example.carpool.models.OfferRide;
-import com.example.carpool.models.Ride;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -85,7 +84,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         mNoResultsFoundLayout = (RelativeLayout) findViewById(R.id.noResultsFoundLayout);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

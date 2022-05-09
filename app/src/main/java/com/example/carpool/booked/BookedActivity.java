@@ -1,7 +1,6 @@
 package com.example.carpool.booked;
 
 import static com.example.carpool.utils.Utils.AVAILABLE_RIDE;
-import static com.example.carpool.utils.Utils.INFO;
 import static com.example.carpool.utils.Utils.REQUEST_RIDE;
 import static com.example.carpool.utils.Utils.checkNotifications;
 
@@ -23,9 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.BookingAdapter;
+import com.example.carpool.adapter.RequestAdapter;
 import com.example.carpool.R;
 import com.example.carpool.interfaces.ResponseBooked;
-import com.example.carpool.models.Info;
 import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.BookingResults;
@@ -40,6 +39,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class BookedActivity extends AppCompatActivity implements ResponseBooked {
 
     private static final String TAG = "BookedActivity";
@@ -52,10 +55,14 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
     //Recycle View variables
     private final Context mContext = BookedActivity.this;
     private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerViewBooked;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mRecycleAdapter;
-    private BookingAdapter myAdapter;
+    private RequestAdapter myAdapter;
+
+    private BookingAdapter bookedAdapter;
     private ArrayList<BookingResults> rides;
+    private ArrayList<BookingResults> books;
 
     //Firebase variables
     private FirebaseUser currentUser;
@@ -81,12 +88,17 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         notFoundBooked = findViewById(R.id.notFoundBooked);
         notFoundIcon = findViewById(R.id.notFoundIcon);
 
-        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<BookingResults>();
+        books = new ArrayList<>();
+
+        mRecyclerViewBooked = findViewById(R.id.recycler_view_booked);
+        mRecyclerViewBooked.setHasFixedSize(true);
+        mRecyclerViewBooked.setLayoutManager(new LinearLayoutManager(this));
 
         mNoResultsFoundLayout = findViewById(R.id.noResultsFoundLayout);
         toolbar = findViewById(R.id.toolbar_booked_ride);
@@ -96,74 +108,57 @@ public class BookedActivity extends AppCompatActivity implements ResponseBooked 
         mRef = mFirebaseDatabase.getReference();
         if (mAuth.getCurrentUser() != null){
             user_id = mAuth.getCurrentUser().getUid();
-            mRef.child(INFO).child(user_id).addValueEventListener(new ValueEventListener() {
+            mRef.child(REQUEST_RIDE).child(user_id).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Info info = snapshot.getValue(Info.class);
-                    isDriver = info.getCarOwner();
-                    if (isDriver) {
-                        toolbar.setTitle(R.string.request);
-                        mRef.child(REQUEST_RIDE).child(user_id).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        BookingResults booking = dataSnapshot1.getValue(BookingResults.class);
-                                        if (!booking.getAccepted()) {
-                                            rides.add(booking);
-                                        }
-                                        notFoundBooked.setVisibility(View.INVISIBLE);
-                                        notFoundIcon.setVisibility(View.INVISIBLE);
-                                    }
-                                }
-
-                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
-                                mRecyclerView.setAdapter(myAdapter);
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            BookingResults booking = dataSnapshot1.getValue(BookingResults.class);
+                            if (!booking.getAccepted()) {
+                                rides.add(booking);
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                            }
-                        });
-                    } else {
-                        toolbar.setTitle(R.string.booked_rides);
-                        mRef.child(REQUEST_RIDE).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                        for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()) {
-                                            BookingResults r = dataSnapshot2.getValue(BookingResults.class);
-
-                                            if (r.getPassengerID() != null) {
-                                                if (r.getPassengerID().equals(user_id)) {
-                                                    rides.add(r);
-                                                }
-                                            }
-                                            notFoundBooked.setVisibility(View.INVISIBLE);
-                                            notFoundIcon.setVisibility(View.INVISIBLE);
-                                            /*mNoResultsFoundLayout.setVisibility(View.INVISIBLE);*/
-                                        }
-                                    }
-                                }
-
-                                myAdapter = new BookingAdapter(BookedActivity.this, rides, isDriver, BookedActivity.this, mRef);
-                                mRecyclerView.setAdapter(myAdapter);
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                            notFoundBooked.setVisibility(View.INVISIBLE);
+                            notFoundIcon.setVisibility(View.INVISIBLE);
+                        }
                     }
+
+                    myAdapter = new RequestAdapter(BookedActivity.this, rides, true, BookedActivity.this, mRef);
+                    mRecyclerView.setAdapter(myAdapter);
 
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+
+            mRef.child(REQUEST_RIDE).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                                BookingResults r = dataSnapshot2.getValue(BookingResults.class);
+
+                                if (r.getPassengerID() != null) {
+                                    if (r.getPassengerID().equals(user_id)) {
+                                        books.add(r);
+                                    }
+                                }
+                                notFoundBooked.setVisibility(View.INVISIBLE);
+                                notFoundIcon.setVisibility(View.INVISIBLE);
+                                /*mNoResultsFoundLayout.setVisibility(View.INVISIBLE);*/
+                            }
+                        }
+                    }
+
+                    bookedAdapter = new BookingAdapter(BookedActivity.this, books, false, BookedActivity.this, mRef);
+                    mRecyclerViewBooked.setAdapter(bookedAdapter);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });

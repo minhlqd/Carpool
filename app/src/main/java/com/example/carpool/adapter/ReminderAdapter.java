@@ -17,6 +17,10 @@ import com.example.carpool.models.Reminder;
 
 import java.util.ArrayList;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;

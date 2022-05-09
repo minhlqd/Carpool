@@ -17,6 +17,10 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class LeaderboardsAdapter extends RecyclerView.Adapter<LeaderboardsAdapter.MyViewHolder> {
     private String[] mDataset;
     private Context mContext;

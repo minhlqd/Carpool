@@ -24,6 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
+/**
+ * create by minhmx on 22/04/2022
+ */
+
 public class ChangePasswordActivity extends AppCompatActivity {
 
     private static final String TAG = "ChangePasswordActivity";

@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool.adapter.ReminderAdapter;
 import com.example.carpool.R;
-import com.example.carpool.utils.BottomNavigationViewHelper;
 import com.example.carpool.utils.FirebaseMethods;
 import com.example.carpool.models.Reminder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -101,7 +98,7 @@ public class ReminderActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(){
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_request);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
