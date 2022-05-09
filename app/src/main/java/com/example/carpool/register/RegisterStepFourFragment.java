@@ -133,14 +133,12 @@ public class RegisterStepFourFragment extends Fragment {
                     mCarTogglePassenger.setTextColor(Color.BLACK);
                     mCarPhoto.setImageResource(R.drawable.driver);
                     mVehicle.setVisibility(View.VISIBLE);
-                    mDestinationLinearLayout.setVisibility(View.GONE);
                     break;
                 case R.id.passenger:
                     mCarTogglePassenger.setTextColor(Color.WHITE);
                     mCarToggleDiver.setTextColor(Color.BLACK);
                     mCarPhoto.setImageResource(R.drawable.car_sharing);
                     mVehicle.setVisibility(View.GONE);
-                    mDestinationLinearLayout.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -156,9 +154,7 @@ public class RegisterStepFourFragment extends Fragment {
                     break;
 
                 case R.id.passenger:
-                    if (mDestination.getText().length() > 0 && mStartPoint.getText().length() > 0) {
-                        mOnButtonClickListener.onButtonClicked(v);
-                    }
+                    mOnButtonClickListener.onButtonClicked(v);
                     break;
             }
         });
@@ -234,14 +230,6 @@ public class RegisterStepFourFragment extends Fragment {
             return Integer.parseInt(mSeats.getText().toString());
         }
         return 0;
-    }
-
-    public String getStartPoint() {
-        return mStartPoint.getText().toString();
-    }
-
-    public String getDestination(){
-        return mDestination.getText().toString();
     }
 
     public String getRegistration() {

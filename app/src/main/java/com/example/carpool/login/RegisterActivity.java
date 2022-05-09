@@ -203,8 +203,6 @@ public class RegisterActivity  extends AppCompatActivity implements RegisterStep
         this.seats = mRegisterStepFourFragment.getSeats();
         this.carOwner = mRegisterStepFourFragment.getCarToggle();
         this.car_photo = mRegisterStepFourFragment.getCarPhoto();
-        this.destination = mRegisterStepFourFragment.getDestination();
-        this.startPoint = mRegisterStepFourFragment.getStartPoint();
         this.role = mRegisterStepFourFragment.getRole();
 
         mFirebaseMethods.createAccount(this.email, password);

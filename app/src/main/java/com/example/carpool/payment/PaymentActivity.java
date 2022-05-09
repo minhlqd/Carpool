@@ -224,7 +224,7 @@ public class PaymentActivity extends AppCompatActivity {
                             String requestId = FirebaseDatabase.getInstance().getReference().push().getKey();
                             RequestUser request = new RequestUser(requestId,driverID, passengerID, profile_photo2, profile_photo,
                                     username, 1, destination, currentLocation, 1, false,
-                                    rideID, dateOnly, pickupTime,   Float.parseFloat(cost.substring(2)), pickupLocation,
+                                    rideID, dateOnly, pickupTime,   Float.parseFloat(cost), pickupLocation,
                                     licencePlate);
 
                             myRef.child(Utils.REQUEST_RIDE)

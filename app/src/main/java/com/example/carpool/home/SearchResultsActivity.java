@@ -92,6 +92,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mRecycleAdapter);
         rides = new ArrayList<OfferRide>();
 
+        Log.d(TAG, "onDataChange: " + destination);
         mRef.child(AVAILABLE_RIDE).orderByChild("destination").equalTo(destination).limitToFirst(20)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -99,6 +100,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                         if(dataSnapshot.exists()){
                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                 OfferRide ride = dataSnapshot1.getValue(OfferRide.class);
+                                Log.d(TAG, "onDataChange: " + ride);
                                 rides.add(ride);
                                 mNoResultsFoundLayout.setVisibility(View.GONE);
                             }
